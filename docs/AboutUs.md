@@ -18,15 +18,16 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 * Role: Developer
 * Responsibility: Testing
 
-### Jane Doe
+### Liao Yantong
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/liaoyantong.png" width="200px">
 
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+[[github](http://github.com/LiaoYantong)]
 
-* Role: Team Lead
-* Responsibilities: UI
+
+* Role: Developer
+* Responsibilities: Code quality
+
 
 ### Lim Zi En
 
@@ -37,6 +38,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 * Role: Developer
 * Responsibilities: Docs
+
 
 ### Ng Zhe, Javier
 
