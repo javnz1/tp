@@ -42,7 +42,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ### Ng Zhe, Javier
 
-<img src="images/ngzhejavier.png" width="200px">
+<img src="images/javnz1.png" width="200px">
 
 [[github](https://github.com/javnz1)]
 
