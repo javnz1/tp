@@ -275,14 +275,51 @@ _{Explain here how the data archiving feature will be implemented}_
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                    | I want to …​                     | So that I can…​                                                        |
-| -------- | ------------------------------------------ | ------------------------------ | ---------------------------------------------------------------------- |
-| `* * *`  | new user                                   | see usage instructions         | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person               |                                                                        |
-| `* * *`  | user                                       | delete a person                | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name          | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details   | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name           | locate a person easily                                                 |
+| Priority | As a …​        | I want to …​                                                                    | So that I can…​                                                                       |
+|---------|----------------|---------------------------------------------------------------------------------|---------------------------------------------------------------------------------------|
+| `* * *` | new user       | type help to see all the commands                                               | I don't have to ask my supervisor for help.                                           |
+| `* * *` | new user       | reserve the equipment/room on a specified time/date                             | only I have access to it at that time/date                                            |
+| `* * *` | user           | issue an item to a student                                                      | the system records that the item is no longer in the store.                           |
+| `* * *` | user           | remove an equipment from inventory                                              | I can remove it                                                                       |
+| `* * *` | user           | remove an equipment name from a student                                         | I can mark the item as "Returned" when they bring it back.                            |
+| `* * *` | user           | check if a equipment is in use                                                  | I can quickly verify if a equipment is in use                                         |
+| `* * *` | user           | find a student by name                                                          | I can quickly check the loan status of a specific person standing at the counter.     |
+| `* * *` | user           | add a new student with their Name                                               | I can create a record for them in the system.                                         |
+| `* * *` | user           | add a new student with their Matric Number                                      | I can create a record for them in the system.                                         |
+| `* * *` | user           | add a new student with their Phone Number                                       | I can create a record for them in the system.                                         |
+| `* * *` | user           | add a new student with their school email                                       | I can create a record for them in the system.                                         |
+| `* * *` | user           | delete a student                                                                | I can remove records of students who have graduated or left the university.           |
+| `* *`   | user           | have a checklist of ALL equipment in inventory                                  | I can verify if the equipment is available                                            |
+| `* *`   | user           | find which student has borrowed a specific item                                 | I can update the status of an equipment manually                                      |
+| `* *`   | user           | update an equipment details                                                     | minimize chance of someone else seeing them by accident                               |
+| `* *`   | user           | block a facility for "Maintenance"                                              | no one can book the room.                                                             |
+| `* *`   | user           | be warned when adding duplicate name                                            | no redundant information is stored                                                    |
+| `* *`   | user           | keep track of history of the loans                                              | have the transaction on record                                                        |
+| `* *`   | user           | keep track of the date of the loan                                              | have the date on record                                                               |
+| `* *`   | user           | keep track of the time of the loan                                              | have the time on record                                                               |
+| `* *`   | user           | blacklist a student                                                             | the system will warn me if I try to loan to a student with a history of overdue loans |
+| `* *`   | user           | undo my last command                                                            | I can recover from accidental deletions or typos                                      |
+| `* *`   | busy user      | simple view of equipment on loan or due                                         | I can spend time chasing it                                                           |
+| `* *`   | busy user      | sort the item/room to a specified date                                          | I can know what is being used/occupied on that date                                   |
+| `* *`   | advanced user  | create tags to equipment/room as a category                                     | I can see at a glance what is borrowed/book for that category                         |
+| `* *`   | advanced user  | group equipment by function                                                     | I can find alternatives for equipment loans                                           |
+| `* *`   | advanced user  | group equipment by date                                                         | be ready to collect them for return                                                   |
+| `* *`   | advanced user  | create a list of authorized users                                               | have equipment only lent to authorized users                                          |
+| `* *`   | advanced user  | create a list of authorized equipment                                           | have restrictions on who can borrow what equipment                                    |
+| `* `    | user           | edit a student's contact details                                                | I can update if they change it.                                                       |
+| `* `    | user           | issue multiple items at once                                                    | I can loan out and keep track of multiple items easily in the system                  |
+| `* `    | user           | clear all records                                                               | I can reset if needed                                                                 |
+| `* `    | user           | check a student loan history                                                    | I can record it                                                                       |
+| `* `    | busy user      | automate sending reminder to borrower                                           | send reminders so equipment return puntually                                          |
+| `*  `   | busy user      | automate sending late reminders                                                 | to remind the borrower to return eqipment                                             |
+| `* `    | forgetful user | view a list of items due today upon launching the app                           | I am immediately informed of what needs to be returned                                |
+| `* `    | advanced user  | create alias to the equipment/rooms                                             | I can fast lookup and manage students                                                 |
+| `* `    | advanced user  | import new equipment from a file                                                | Add items more quickly                                                                |
+| `* `    | advanced user  | import new people from a file                                                   | Add people more quickly                                                               |
+| `* `    | advanced user  | export data as csv file                                                         | I can create reports for my supervisor to see                                         |
+| `* `    | advanced user  | attach events to loans                                                          | quicken the loan process during a large school event                                  |
+| `* `    | advanced user  | forecast future school events                                                   | anticipate future loans                                                               |
+| `* `    | advanced user  | automate the process of aquiring a loan by extracting from a specified request  | simpler requests can be granted more easily                                           |
 
 *{More to be added}*
 
