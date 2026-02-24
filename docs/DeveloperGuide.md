@@ -275,6 +275,8 @@ _{Explain here how the data archiving feature will be implemented}_
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
+                                                 |
+
 | Priority | As a …​        | I want to …​                                                                    | So that I can…​                                                                       |
 |---------|----------------|---------------------------------------------------------------------------------|---------------------------------------------------------------------------------------|
 | `* * *` | new user       | type help to see all the commands                                               | I don't have to ask my supervisor for help.                                           |
@@ -321,6 +323,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* `    | advanced user  | forecast future school events                                                   | anticipate future loans                                                               |
 | `* `    | advanced user  | automate the process of aquiring a loan by extracting from a specified request  | simpler requests can be granted more easily                                           |
 
+
 *{More to be added}*
 
 ### Use cases
@@ -344,6 +347,144 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * Group Tag functionality
 * View upcoming loans
 * Bulk command adding
+
+## **Use case: Reserve equipment on a specified date/time**
+
+**MSS**
+
+1. User requests to list equipment
+2. System shows a list of available equipment
+3. User selects a specific equipment item
+4. User specifies the desired date and time slot
+5. System checks the availability of the equipment
+6. System confirms the equipment is available
+7. User confirms the reservation
+8. System records the reservation
+
+   Use case ends.
+
+**Extensions**
+
+* 5a. Equipment is not available for the selected time
+  * 5a1. System informs the user that the slot is unavailable
+  * 5a2. User selects a different date/time
+  * Resume from step 4
+
+* 3a. Equipment not found in the list
+  * 3a1. System shows an error message
+  * Use case ends
+
+## **Use case: Reserve room on a specified date/time**
+
+**MSS**
+
+1. User requests to list rooms
+2. System shows a list of rooms
+3. User selects a specific room
+4. User specifies the desired date and time slot
+5. System checks for scheduling conflicts
+6. System confirms the room is available
+7. User confirms the reservation
+8. System records the booking
+
+   Use case ends.
+
+**Extensions**
+
+* 5a. Room is already booked for the selected time
+  * 5a1. System informs the user of the conflict
+  * 5a2. User selects another time slot
+  * Resume from step 4
+
+* 4a. Invalid date or time format entered
+  * 4a1. System shows validation error
+  * 4a2. User re-enters correct information
+  * Resume from step 4
+
+## **Use case: Issue an item to a student**
+
+**MSS**
+
+1. User requests to list students
+2. System shows a list of students
+3. User selects a specific student
+4. User requests to issue a specific item
+5. System checks that the item exists and is available
+6. System records the item as issued to the student
+7. System updates the item status
+
+   Use case ends.
+
+**Extensions**
+
+* 5a. Item is not available
+  * 5a1. System shows an error message
+  * Use case ends
+
+* 3a. Student not found
+  * 3a1. System shows an error message
+  * Use case ends
+
+## **Use case: Remove an item from a student**
+
+**MSS**
+
+1. User requests to list issued items
+2. System shows items currently issued to students
+3. User selects a specific issued item
+4. User requests to remove the item from the student
+5. System updates the item status to available
+6. System records the return transaction
+
+   Use case ends.
+
+**Extensions**
+
+* 3a. Item not found in issued list
+  * 3a1. System shows an error message
+  * Use case ends
+
+* 4a. Item was not issued to the selected student
+  * 4a1. System shows an error message
+  * Use case ends
+
+## **Use case: Create alias for equipment**
+
+**MSS**
+
+1. User requests to list equipment
+2. System shows list of equipment
+3. User selects a specific equipment item
+4. User enters an alias for the equipment
+5. System checks that the alias is not already used
+6. System saves the alias for the equipment
+
+   Use case ends.
+
+**Extensions**
+
+* 5a. Alias already exists
+  * 5a1. System shows an error message
+  * Use case ends
+
+* 3a. Equipment not found
+  * 3a1. System shows an error message
+  * Use case ends
+
+## **Use case: View all commands**
+
+**MSS**
+
+1. User requests to view all available commands
+2. System displays the full list of supported commands
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. No commands available (system error case)
+  * 2a1. System shows an empty list message
+  * Use case ends
 
 *{More to be added}*
 
