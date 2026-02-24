@@ -341,6 +341,47 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.
 
+**Use case: Add a Student Profile**
+
+**MSS**
+1.  Facility Manager enters the command to add a student (add-s) with the student's name, matriculation number, phone number, and email.
+2.  TrackMasterPro validates the format of the input.
+3.  TrackMasterPro checks that the student’s identity (matriculation number, phone number, and email) is unique.
+4.  TrackMasterPro registers the new student profile.
+5.  TrackMasterPro displays the success message and the details of the added student.
+
+    Use case ends.
+
+**Extensions**
+- 2a. The input format is invalid (e.g., missing a prefix or wrong data format).
+   -   2a1. TrackMasterPro shows an error message and provides the correct command format.
+   -   Use case ends.
+
+- 3a. A student with the same matriculation number, phone number or email adddress already exists.
+   -   3a1. TrackMasterPro shows an error message indicating a duplicate identity was found.
+   -   Use case ends.
+
+**Use case: View Student Loans**
+**MSS**
+1.   Facility Manager enters the command to check loans (check-s) followed by the student's matriculation number.
+2.   TrackMasterPro validates the format of the matriculation number.
+3.   TrackMasterPro searches the database for a student matching that matriculation number.
+4.   TrackMasterPro retrieves all active loan records associated with that student.
+5.   TrackMasterPro displays the student's name, matriculation number, and a list of their currently borrowed items (including status and due dates).
+
+     Use case ends.
+
+**Extensions**
+- 2a. The matriculation number format is invalid.
+   - 2a1. TrackMasterPro shows an error message indicating the correct format.
+   - Use case ends.
+- 3a. No student is found with the provided matriculation number.
+   - 3a1. TrackMasterPro informs the Manager that the user cannot be found.
+   - Use case ends.
+- 4a. The student has no active loans.
+   - 4a1. TrackMasterPro displays a message stating "No existing loans" for that student.
+   - Use case ends.
+
 **Extensions**
 
 * Authorization to borrow
