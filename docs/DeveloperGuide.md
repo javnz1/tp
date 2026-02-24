@@ -332,6 +332,97 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 (For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
 
+**Use case: Add a new equipment**
+
+**MSS**
+
+1.  Facility Manager requests to add a new equipment by providing its name, category, and status.
+2.  TrackMasterPro validates the input and checks for duplicates.
+3.  TrackMasterPro adds the equipment to the inventory.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The command format is invalid (missing n/, c/, or s/ prefixes).
+
+    * 1a1. TrackMasterPro shows an error message and the correct command format.
+
+  Use case ends.
+
+* 2a. An equipment with the same name and category already exists.
+
+    * 2a1. TrackMasterPro notifies the Facility Manager that a duplicate was found and suggests a numbered name (e.g., Basketball-1).
+
+      Use case ends.
+
+**Use case: View equipment inventory list**
+
+**MSS**
+
+1.  Facility Manager requests to view the list of equipment.
+2.  TrackMasterPro retrieves and shows a list of all equipment with their categories and statuses.
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. The inventory is empty.
+
+    * 2a1. TrackMasterPro shows a message that the inventory has not been created yet and prompts to add equipment.
+
+  Use case ends.
+
+**Use case: Remove an equipment**
+
+**MSS**
+
+1.  Facility Manager requests to View equipment inventory list
+2.  TrackMasterPro shows the list of equipment.
+3.  Facility Manager requests to delete a specific equipment in the list by its index.
+4.  TrackMasterPro deletes the equipment from the inventory.
+
+    Use case ends.
+
+**Extensions**
+
+* 3a. The given index is invalid (out of bounds or not a positive integer).
+
+    * 3a1. TrackMasterPro shows an error message.
+
+  Use case ends.
+
+* 3b. The equipment at the specified index has a "Booked" status.
+
+    * 3b1. TrackMasterPro shows an error message stating that booked equipment cannot be removed.
+
+      Use case ends.
+
+**Use case: Edit an equipment**
+
+**MSS**
+
+1.  Facility Manager requests to View equipment inventory list
+2.  TrackMasterPro shows the list of equipment.
+3.  Facility Manager requests to edit details (name, category, or status) of a specific equipment in the list by its index.
+4.  TrackMasterPro validates the new details and updates the equipment.
+
+    Use case ends.
+
+**Extensions**
+
+* 3a. The given index is invalid (out of bounds or not a positive integer).
+
+    * 3a1. TrackMasterPro shows an error message.
+
+  Use case resumes at step 2.
+
+* 3b. The Facility Manager provides an invalid command format or missing fields.
+
+    * 3b1. TrackMasterPro shows an error message and the correct command format.
+
+      Use case ends.
+
 **Use case: Delete a person**
 
 **MSS**
@@ -458,14 +549,6 @@ Extensions:
 - 4a. The student has no active loans.
    - 4a1. TrackMasterPro displays a message stating "No existing loans" for that student.
    - Use case ends.
->>>>>>> master
-
-**Extensions**
-
-* Authorization to borrow
-* Group Tag functionality
-* View upcoming loans
-* Bulk command adding
 
 **Use case: Reserve equipment on a specified date/time**
 
