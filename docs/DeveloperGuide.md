@@ -301,6 +301,28 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.
 
+**Use case: Add a Student Profile**
+
+**MSS**
+1.  Facility Manager enters the command to add a student (add-s) with the student's name, matriculation number, phone number, and email.
+2.  TrackMasterPro validates the format of the input.
+3.  TrackMasterPro checks that the student’s identity (matriculation number, phone number, and email) is unique.
+4.  TrackMasterPro registers the new student profile.
+5.  TrackMasterPro displays the success message and the details of the added student.
+
+   Use case ends.
+
+**Extensions**
+- 2a. The input format is invalid (e.g., missing a prefix or wrong data format).
+   -   2a1. TrackMasterPro shows an error message and provides the correct command format.
+   -   Use case ends.
+
+- 3a. A student with the same matriculation number, phone number or email adddress already exists.
+   -   3a1. TrackMasterPro shows an error message indicating a duplicate identity was found.
+   -   Use case ends.
+
+**Use case: Add a Student Profile**
+
 **Extensions**
 
 * Authorization to borrow
