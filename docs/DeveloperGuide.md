@@ -301,6 +301,80 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.
 
+**Use case: Tag Equipment/Room**
+
+**MSS**:
+1. User chooses to tag an equipment or room.
+2. User enters the equipment/room ID and tag.
+3. System requests for the equipment/room ID and tag.
+4. System applies the tag and displays a success message.
+   Use case ends.
+
+Extensions:<br>
+* 3a. System detects that the equipment/room ID is invalid.
+  * 3a1. System displays a failure message.
+  * 3a2. User re-enters a valid equipment/room ID and tag.
+  * Steps 3a1-3a2 are repeated until a valid ID is entered.
+  * Use case resumes from step 4.
+
+* 3b. System detects that the equipment/room has already been tagged with the same tag.
+  * 3b1. System displays a duplicate tag failure message.
+  * Use case ends.
+
+Use case: UC2 - Untag Equipment/Room
+MSS:
+1. User chooses to untag an equipment or room.
+2. User enters the equipment/room ID and tag.
+3. System requests for the equipment/room ID and tag to remove.
+4. System removes the tag and displays a success message.
+   Use case ends.
+
+Extensions:
+
+* 3a. System detects that the equipment/room ID is invalid.
+  * 3a1. System displays a failure message.
+  * Use case ends.
+
+* 3b. System detects that the tag does not exist on the equipment/room.
+  * 3b1. System displays an already-untagged failure message.
+  * Use case ends.
+
+
+Use case: UC3 - View Help Command
+MSS:
+1. User chooses to view help.
+2. System displays a list of all available commands with short descriptions.
+   Use case ends.
+
+Extensions:
+* 1a. User requests help for a specific command.
+  * 1a1. System checks if the command exists.
+  * 1a2. System displays the command details and an example usage.
+  * Use case ends.
+
+  * 1a1a. System detects that the specified command does not exist.
+    * 1a1a1. System displays a failure message indicating the command was not found.
+  * Use case ends.
+
+Use case: UC4 - Filter by Tag
+MSS:
+1. User chooses to filter by tag.
+2. System requests for the type and tag to filter by.
+3. User enters the type (equipment, room, or student) and tag.
+4. System retrieves and displays all matching results under the specified tag.
+   Use case ends.
+
+Extensions:
+* 3a. System detects that the specified type is invalid.
+  * 3a1. System displays a failure message.
+  * 3a2. User re-enters a valid type and tag.
+  * Steps 3a1-3a2 are repeated until a valid type is entered.
+  * Use case resumes from step 4.
+
+* 3b. System detects that the specified tag does not exist.
+  * 3b1. System displays a failure message indicating nothing was found under the tag.
+  * Use case ends.
+
 **Extensions**
 
 * Authorization to borrow
@@ -332,6 +406,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * **Mainstream OS**: Windows, Linux, Unix, MacOS
 * **Private contact detail**: A contact detail that is not meant to be shared with others
 
+* **Equipment** : Any item that is being loaned out for the school, saved as a string, with spaces replaced as hyphens.<br>
+   example: Wilson-Evolution-Basketball
+
+* **Room** : Any location that is being reserved, saved as a string, with spaces replaced as hyphens.<br>
+   example: MPSH-1
+
+*{More to be added}*
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Appendix: Instructions for manual testing**
@@ -385,12 +466,4 @@ testers are expected to do more *exploratory* testing.
 
 1. _{ more test cases …​ }_
 
-### Glossary
 
-Terms used:
-
-1. Equipment : Any item that is being loaned out for the school, saved as a string, with spaces replaced as hyphens.<br>
-example: Wilson-Evolution-Basketball
-
-2. Room : Any location that is being reserved, saved as a string, with spaces replaced as hyphens.<br> 
-example: MPSH-1
