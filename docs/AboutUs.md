@@ -29,14 +29,14 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 * Role: Team Lead
 * Responsibilities: UI
 
-### Johnny Doe
+### Liao Yantong
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/liaoyantong.png" width="200px">
 
-[[github](http://github.com/johndoe)] [[portfolio](team/johndoe.md)]
+[[github](http://github.com/LiaoYantong)] 
 
 * Role: Developer
-* Responsibilities: Data
+* Responsibilities: Code quality
 
 ### Jean Doe
 
