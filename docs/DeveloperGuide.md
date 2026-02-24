@@ -312,9 +312,18 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Non-Functional Requirements
 
-1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
-2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+**Technical and Environmental Requirements**
+
+1.  The system should run on Windows, macOS, and Linux, provided that Java 17 is installed on the OS.
+2.  The application should be distributed in a single JAR file.
+
+**Performance and Scalability**
+1.  The system must be able to handle at least 1,000 equipment items, 50 rooms, and 2,000 student profiles without any perceptible lag in command execution.
+2.  The system should be handle to multiple rapid commands during peak period (etc 1 command every 2 seconds)
+
+**Reliability & Data Integrity**
+1.   All data (equipment, rooms, students, and loans) must be saved to the local storage immediately after any state-changing command is executed for persistency.
+2.   If the application is closed unexpectedly, the data file must remain uncorrupted and readable upon the next launch.
 
 *{More to be added}*
 
