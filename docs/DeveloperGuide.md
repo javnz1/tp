@@ -385,8 +385,8 @@ testers are expected to do more *exploratory* testing.
 
 Terms used:
 
-1. Equipment : Any item that is being loaned out for the school, saved as a string, with spaces replaced as hyphens.
-   <br>example: Wilson-Evolution-Basketball
+1. Equipment : Any item that is being loaned out for the school, saved as a string, with spaces replaced as hyphens.<br>
+example: Wilson-Evolution-Basketball
 
-2. Room : Any location that is being reserved, saved as a string, with spaces replaced as hyphens.
-   <br> example: MPSH-1
+2. Room : Any location that is being reserved, saved as a string, with spaces replaced as hyphens.<br> 
+example: MPSH-1
