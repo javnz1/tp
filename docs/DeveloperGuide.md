@@ -262,13 +262,15 @@ _{Explain here how the data archiving feature will be implemented}_
 
 **Target user profile**:
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
-* can type fast
-* prefers typing to mouse interactions
-* is reasonably comfortable using CLI apps
+* Oversees high-traffic locations including sports halls, equipment stores, and multi-purpose rooms.
+* Prefer desktop apps over other types
+* Acts as the primary point of contact for all facility and equipment resource requests.
+* Can type fast
+* Prefers typing to mouse interactions
+* Is reasonably comfortable using CLI apps
 
-**Value proposition**: manage contacts faster than a typical mouse/GUI driven app
+**Value proposition**: The app will help facility managers keep track of bookings made by NUS students.
+
 
 
 ### User stories
