@@ -380,3 +380,13 @@ testers are expected to do more *exploratory* testing.
    1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
 
 1. _{ more test cases …​ }_
+
+### Glossary
+
+Terms used:
+
+1. Equipment : Any item that is being loaned out for the school, saved as a string, with spaces replaced as hyphens.
+   <br>example: Wilson-Evolution-Basketball
+
+2. Room : Any location that is being reserved, saved as a string, with spaces replaced as hyphens.
+   <br> example: MPSH-1
