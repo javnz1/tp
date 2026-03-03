@@ -3,9 +3,16 @@
 ![Ui](docs/images/Ui.png)
 
 * This is **a sample project for Software Engineering (SE) students**.<br>
-  Example usages:
-  * as a starting point of a course project (as opposed to writing everything from scratch)
-  * as a case study
+The app will help facility managers keep track of bookings made by NUS students: 
+
+* Streamline tracking with assigned facilities/equipment to provide a real-time schedule during peak periods (e.g. Inter-Hall-Games/Inter-College-Games, CCA trainings etc.) 
+* Quick access to list of previous borrowers and details for them 
+* Quick access to list of facilities/equipment available 
+* Alerts for time sensitive events 
+
+* This eliminates the logistical chaos of peak-period facility management at NUS. It consolidates equipment tracking and venue scheduling into a single real-time view, preventing double-bookings and lost assets while giving managers instant access to borrower accountability data when it matters most.
+
+
 * The project simulates an ongoing software project for a desktop application (called _AddressBook_) used for managing contact details.
   * It is **written in OOP fashion**. It provides a **reasonably well-written** code base **bigger** (around 6 KLoC) than what students usually write in beginner-level SE modules, without being overwhelmingly big.
   * It comes with a **reasonable level of user and developer documentation**.
