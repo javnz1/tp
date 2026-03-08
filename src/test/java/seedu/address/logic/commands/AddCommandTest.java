@@ -13,9 +13,6 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.GuiSettings;
@@ -29,6 +26,9 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.StudentId;
 import seedu.address.model.reservation.Reservation;
 import seedu.address.testutil.PersonBuilder;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class AddCommandTest {
 
