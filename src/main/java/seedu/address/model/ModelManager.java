@@ -4,6 +4,11 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -11,15 +16,44 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.model.issue.IssueRecord;
 import seedu.address.model.person.Person;
 import seedu.address.model.room.Room;
 import seedu.address.model.room.UniqueRoomList;
+import seedu.address.model.person.StudentId;
+import seedu.address.model.reservation.Reservation;
 
 /**
  * Represents the in-memory model of the address book data.
  */
 public class ModelManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
+
+    /**
+     * Temporary resource registry for the MVP.
+     */
+    private static final Set<String> VALID_RESOURCES = Collections.unmodifiableSet(
+            new HashSet<>(Arrays.asList(
+                    "HALL-1", "HALL-2", "HALL-3",
+                    "MPSH-1", "MPSH-2",
+                    "COURT-1", "COURT-2",
+                    "MPR-1", "MPR-2"
+            )));
+
+    /**
+     * Temporary item registry for the MVP.
+     */
+    private static final Set<String> VALID_ITEMS = Collections.unmodifiableSet(
+            new HashSet<>(Arrays.asList(
+                    "WILSON-EVOLUTION-BASKETBALL-1",
+                    "WILSON-EVOLUTION-BASKETBALL-2",
+                    "MOLTEN-VOLLEYBALL",
+                    "MOLTEN-VOLLEYBALL-1",
+                    "MOLTEN-VOLLEYBALL-2",
+                    "YONEX-BADMINTON-RACKET-1",
+                    "YONEX-BADMINTON-RACKET-2",
+                    "YONEX-BADMINTON-RACKET-3"
+            )));
 
     private final AddressBook addressBook;
     private final UserPrefs userPrefs;
@@ -111,10 +145,11 @@ public class ModelManager implements Model {
     @Override
     public void setPerson(Person target, Person editedPerson) {
         requireAllNonNull(target, editedPerson);
-
         addressBook.setPerson(target, editedPerson);
     }
 
+    //=========== Room ================================================================================
+  
     @Override
     public boolean hasRoom(Room room) {
         requireNonNull(room);
@@ -125,14 +160,77 @@ public class ModelManager implements Model {
     public void addRoom(Room room) {
         addressBook.addRoom(room);
         updateFilteredRoomList(PREDICATE_SHOW_ALL_ROOMS);
+      
+    //=========== Reservation ================================================================================
+
+    @Override
+    public boolean hasStudentId(StudentId studentId) {
+        requireNonNull(studentId);
+        return addressBook.getPersonList().stream()
+                .anyMatch(person -> person.getStudentId().equals(studentId));
+    }
+
+    @Override
+    public boolean hasReservableItem(String resourceId) {
+        requireNonNull(resourceId);
+        return VALID_RESOURCES.contains(Reservation.normalizeResourceId(resourceId));
+    }
+
+    @Override
+    public boolean hasConflictingReservation(Reservation reservation) {
+        requireNonNull(reservation);
+        return addressBook.hasConflictingReservation(reservation);
+    }
+
+    @Override
+    public Optional<Reservation> getConflictingReservation(Reservation reservation) {
+        requireNonNull(reservation);
+        return addressBook.getConflictingReservation(reservation);
+    }
+
+    @Override
+    public void addReservation(Reservation reservation) {
+        requireNonNull(reservation);
+        addressBook.addReservation(reservation);
+    }
+
+    @Override
+    public ObservableList<Reservation> getReservationList() {
+        return addressBook.getReservationList();
+    }
+
+
+    @Override
+    public boolean hasIssuableItem(String itemId) {
+        requireNonNull(itemId);
+        return VALID_ITEMS.contains(IssueRecord.normalizeItemId(itemId));
+    }
+
+    @Override
+    public boolean hasIssuedItem(String itemId) {
+        requireNonNull(itemId);
+        return addressBook.hasIssuedItem(itemId);
+    }
+
+    @Override
+    public Optional<IssueRecord> getIssueRecordByItemId(String itemId) {
+        requireNonNull(itemId);
+        return addressBook.getIssueRecordByItemId(itemId);
+    }
+
+    @Override
+    public void addIssueRecord(IssueRecord issueRecord) {
+        requireNonNull(issueRecord);
+        addressBook.addIssueRecord(issueRecord);
+    }
+
+    @Override
+    public ObservableList<IssueRecord> getIssueRecordList() {
+        return addressBook.getIssueRecordList();
     }
 
     //=========== Filtered Person List Accessors =============================================================
 
-    /**
-     * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of
-     * {@code versionedAddressBook}
-     */
     @Override
     public ObservableList<Person> getFilteredPersonList() {
         return filteredPersons;
@@ -150,7 +248,6 @@ public class ModelManager implements Model {
             return true;
         }
 
-        // instanceof handles nulls
         if (!(other instanceof ModelManager)) {
             return false;
         }
