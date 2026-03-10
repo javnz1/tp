@@ -1,7 +1,5 @@
 package seedu.address.storage;
 
-import static seedu.address.logic.commands.AddRoomCommand.MESSAGE_DUPLICATE_ROOM;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,7 +12,6 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Person;
-import seedu.address.model.room.Room;
 import seedu.address.model.reservation.Reservation;
 
 /**
@@ -28,7 +25,6 @@ class JsonSerializableAddressBook {
             "Reservations list contains conflicting reservation(s): %1$s";
 
     private final List<JsonAdaptedPerson> persons = new ArrayList<>();
-    private final List<JsonAdaptedRoom> rooms = new ArrayList<>();
     private final List<JsonAdaptedReservation> reservations = new ArrayList<>();
 
     /**
@@ -49,10 +45,6 @@ class JsonSerializableAddressBook {
      * Converts a given {@code ReadOnlyAddressBook} into this class for Jackson use.
      */
     public JsonSerializableAddressBook(ReadOnlyAddressBook source) {
-        persons.addAll(source.getPersonList().stream().map(JsonAdaptedPerson::new).collect(Collectors.toList()));
-      
-        rooms.addAll(source.getRoomList().stream().map(JsonAdaptedRoom::new).collect(Collectors.toList()));
-
         persons.addAll(source.getPersonList().stream()
                 .map(JsonAdaptedPerson::new)
                 .collect(Collectors.toList()));
@@ -77,13 +69,6 @@ class JsonSerializableAddressBook {
             }
             addressBook.addPerson(person);
         }
-
-        for (JsonAdaptedRoom jsonAdaptedRoom : rooms) {
-            Room room = jsonAdaptedRoom.toModelType();
-            if (addressBook.hasRoom(room)) {
-                throw new IllegalValueException(MESSAGE_DUPLICATE_ROOM);
-            }
-            addressBook.addRoom(room);
 
         for (JsonAdaptedReservation jsonAdaptedReservation : reservations) {
             Reservation reservation = jsonAdaptedReservation.toModelType();
