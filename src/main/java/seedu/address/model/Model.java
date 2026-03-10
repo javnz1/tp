@@ -19,6 +19,9 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
 
+    /** {@code Predicate} that always evaluate to true for rooms */
+    Predicate<Room> PREDICATE_SHOW_ALL_ROOMS = unused -> true;
+
     void setUserPrefs(ReadOnlyUserPrefs userPrefs);
 
     ReadOnlyUserPrefs getUserPrefs();
@@ -52,6 +55,8 @@ public interface Model {
     boolean hasRoom(Room room);
 
     ObservableList<Room> getFilteredRoomList();
+
+    void updateFilteredRoomList(Predicate<Room> predicate);
 
     boolean hasStudentId(StudentId studentId);
 

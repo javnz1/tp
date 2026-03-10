@@ -20,6 +20,8 @@ import seedu.address.model.issue.IssueRecord;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.StudentId;
 import seedu.address.model.reservation.Reservation;
+import seedu.address.model.room.Room;
+import seedu.address.model.room.UniqueRoomList;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -56,6 +58,9 @@ public class ModelManager implements Model {
     private final AddressBook addressBook;
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
+    private UniqueRoomList versionedRoomList = new UniqueRoomList();
+    private final FilteredList<Room> filteredRooms;
+
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -68,6 +73,10 @@ public class ModelManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         this.userPrefs = new UserPrefs(userPrefs);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+
+
+        versionedRoomList = new UniqueRoomList();
+        filteredRooms = new FilteredList<>(this.versionedRoomList.asUnmodifiableObservableList());
     }
 
     public ModelManager() {
@@ -142,6 +151,20 @@ public class ModelManager implements Model {
     public void setPerson(Person target, Person editedPerson) {
         requireAllNonNull(target, editedPerson);
         addressBook.setPerson(target, editedPerson);
+    }
+
+    //=========== Room ================================================================================
+
+    @Override
+    public boolean hasRoom(Room room) {
+        requireNonNull(room);
+        return versionedRoomList.contains(room);
+    }
+
+    @Override
+    public void addRoom(Room room) {
+        versionedRoomList.add(room);
+        updateFilteredRoomList(PREDICATE_SHOW_ALL_ROOMS);
     }
 
     //=========== Reservation ================================================================================
@@ -239,5 +262,18 @@ public class ModelManager implements Model {
         return addressBook.equals(otherModelManager.addressBook)
                 && userPrefs.equals(otherModelManager.userPrefs)
                 && filteredPersons.equals(otherModelManager.filteredPersons);
+    }
+
+    //=========== Filtered Room List Accessors =============================================================
+
+    @Override
+    public ObservableList<Room> getFilteredRoomList() {
+        return filteredRooms;
+    }
+
+    @Override
+    public void updateFilteredRoomList(Predicate<Room> predicate) {
+        requireNonNull(predicate);
+        filteredRooms.setPredicate(predicate);
     }
 }

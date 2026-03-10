@@ -13,12 +13,12 @@ public class Room {
 
     // Data fields
     private final Location location;
-    private final String status;
+    private final Status status;
 
     /**
      * Every field must be present and not null.
      */
-    public Room(RoomName name, Location location, String status) {
+    public Room(RoomName name, Location location, Status status) {
         requireAllNonNull(name, location, status);
         this.name = name;
         this.location = location;
@@ -27,7 +27,7 @@ public class Room {
 
     public RoomName getName() { return name; }
     public Location getLocation() { return location; }
-    public String getStatus() { return status; }
+    public Status getStatus() { return status; }
 
     /**
      * Returns true if both rooms have the same name.
