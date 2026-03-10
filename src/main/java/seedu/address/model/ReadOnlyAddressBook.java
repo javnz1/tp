@@ -4,7 +4,6 @@ import javafx.collections.ObservableList;
 import seedu.address.model.alias.AliasMapping;
 import seedu.address.model.issue.IssueRecord;
 import seedu.address.model.person.Person;
-import seedu.address.model.room.Room;
 import seedu.address.model.reservation.Reservation;
 
 /**
@@ -18,16 +17,9 @@ public interface ReadOnlyAddressBook {
     ObservableList<Person> getPersonList();
 
     /**
-     * Returns an unmodifiable view of the rooms list.
-     * This list will not contain any duplicate rooms.
-     */
-    ObservableList<Room> getRoomList();
-
-    /**
      * Returns an unmodifiable view of the reservations list.
      */
     ObservableList<Reservation> getReservationList();
-  
     /**
      * Returns an unmodifiable view of the issue record list.
      */
