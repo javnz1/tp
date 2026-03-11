@@ -61,7 +61,7 @@ public class AddStudentCommandTest {
         ModelStub modelStub = new ModelStubWithPerson(validPerson);
 
         // Rejects if matric number, phone, or email already exists
-        assertThrows(CommandException.class, AddStudentCommand.MESSAGE_DUPLICATE_STUDENT, () -> 
+        assertThrows(CommandException.class, AddStudentCommand.MESSAGE_DUPLICATE_STUDENT, () ->
                 addStudentCommand.execute(modelStub));
     }
 
