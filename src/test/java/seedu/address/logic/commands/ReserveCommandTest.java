@@ -3,24 +3,15 @@ package seedu.address.logic.commands;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static seedu.address.testutil.Assert.assertThrows;
 
-import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.Optional;
-import java.util.function.Predicate;
+
 
 import org.junit.jupiter.api.Test;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import seedu.address.commons.core.GuiSettings;
+
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.Model;
 import seedu.address.model.ModelStub;
-import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.ReadOnlyUserPrefs;
-import seedu.address.model.alias.AliasMapping;
-import seedu.address.model.issue.IssueRecord;
-import seedu.address.model.person.Person;
 import seedu.address.model.person.StudentId;
 import seedu.address.model.reservation.Reservation;
 
@@ -142,6 +133,11 @@ public class ReserveCommandTest {
         @Override
         public void addReservation(Reservation reservation) {
             reservationAdded = reservation;
+        }
+
+        @Override
+        public Optional<Reservation> getConflictingReservation(Reservation reservation) {
+            return Optional.empty();
         }
     }
 }
