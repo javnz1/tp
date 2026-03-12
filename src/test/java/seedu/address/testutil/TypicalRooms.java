@@ -18,6 +18,8 @@ public class TypicalRooms {
             .withLocation("University-Town").withStatus("Maintenance").build();
     public static final Room ROOM_C = new RoomBuilder().withName("Outdoor-Tennis-Court")
             .withLocation("Kent-Ridge").withStatus("Booked").build();
+    public static final Room ROOM_D = new RoomBuilder().withName("Outdoor-Tennis-Court")
+            .withLocation("Kent-Ridge").withStatus("Booked").withTags("Sports", "Tennis").build();
 
     private TypicalRooms() {} // prevents instantiation
 

@@ -4,6 +4,11 @@ import seedu.address.model.room.Location;
 import seedu.address.model.room.Room;
 import seedu.address.model.room.RoomName;
 import seedu.address.model.room.Status;
+import seedu.address.model.tag.Tag;
+import seedu.address.model.util.SampleDataUtil;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A utility class to help with building Room objects.
@@ -14,9 +19,11 @@ public class RoomBuilder {
     public static final String DEFAULT_LOCATION = "Sports-Centre";
     public static final String DEFAULT_STATUS = "Available";
 
+
     private RoomName name;
     private Location location;
     private Status status;
+    private Set<Tag> tags;
 
     /**
      * Creates a {@code RoomBuilder} with the default details.
@@ -25,6 +32,7 @@ public class RoomBuilder {
         name = new RoomName(DEFAULT_NAME);
         location = new Location(DEFAULT_LOCATION);
         status = new Status(DEFAULT_STATUS);
+        tags = DEFAULT_TAGS;
     }
 
     /**
@@ -57,6 +65,14 @@ public class RoomBuilder {
      */
     public RoomBuilder withStatus(String status) {
         this.status = new Status(status);
+        return this;
+    }
+
+    /**
+     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Room} that we are building.
+     */
+    public RoomBuilder withTags(String ... tags) {
+        this.tags = SampleDataUtil.getTagSet(tags);
         return this;
     }
 

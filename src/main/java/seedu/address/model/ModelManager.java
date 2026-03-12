@@ -333,6 +333,7 @@ public class ModelManager implements Model {
                 .filter(room -> room.getName().equals(roomName))
                 .findFirst()
                 .orElse(null);
+        assert targetRoom != null;
         targetRoom.deleteTag(tag);
     }
 }

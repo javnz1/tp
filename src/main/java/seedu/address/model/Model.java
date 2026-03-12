@@ -98,12 +98,7 @@ public interface Model {
 
     String resolveAlias(String input);
 
-    //============ Add tags =================================================================================
-    default void addTag(RoomName roomName, Tag tag) {
-        throw new UnsupportedOperationException("Not implemented.");
-    };
+    void addTag(RoomName roomName, Tag tag);
 
-    default void deleteTag(RoomName roomName, Tag tag) {
-        throw new UnsupportedOperationException("Not implemented.");
-    };
+    void deleteTag(RoomName roomName, Tag tag);
 }
