@@ -74,7 +74,7 @@ public class AddRoomCommandTest {
     /**
      * A Model stub that contains a single room.
      */
-    private class ModelStubWithRoom extends ModelStub {
+    private static class ModelStubWithRoom extends ModelStub {
         private final Room room;
 
         ModelStubWithRoom(Room room) {

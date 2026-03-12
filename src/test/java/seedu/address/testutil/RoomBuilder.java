@@ -32,7 +32,7 @@ public class RoomBuilder {
         name = new RoomName(DEFAULT_NAME);
         location = new Location(DEFAULT_LOCATION);
         status = new Status(DEFAULT_STATUS);
-        tags = DEFAULT_TAGS;
+        tags = new HashSet<>();
     }
 
     /**

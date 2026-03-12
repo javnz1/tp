@@ -106,7 +106,7 @@ public class AddStudentCommandTest {
     /**
      * A Model stub that always accepts the person being added.
      */
-    private class ModelStubAcceptingPersonAdded extends ModelStub {
+    private static class ModelStubAcceptingPersonAdded extends ModelStub {
         final ArrayList<Person> personsAdded = new ArrayList<>();
 
         @Override
