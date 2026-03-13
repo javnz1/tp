@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalRooms.getTypicalAddressBook;
@@ -42,7 +44,15 @@ public class ListRoomCommandTest {
     @Test
     public void execute_emptyList_throwsCommandException() {
         Model emptyModel = new ModelManager(new AddressBook(), new UserPrefs());
+        assertCommandFailure(new ListRoomCommand(), emptyModel, ListRoomCommand.MESSAGE_FAILURE);
+    }
+
+    @Test
+    public void equals() {
         ListRoomCommand listRoomCommand = new ListRoomCommand();
-        assertCommandFailure(listRoomCommand, emptyModel, ListRoomCommand.MESSAGE_FAILURE);
+        assertTrue(listRoomCommand.equals(listRoomCommand));
+        assertTrue(listRoomCommand.equals(new ListRoomCommand()));
+        assertFalse(listRoomCommand.equals(null));
+        assertFalse(listRoomCommand.equals(new ClearCommand()));
     }
 }

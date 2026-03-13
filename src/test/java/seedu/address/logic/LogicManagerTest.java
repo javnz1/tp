@@ -93,6 +93,11 @@ public class LogicManagerTest {
         assertEquals(model.getFilteredRoomList(), logic.getFilteredRoomList());
     }
 
+    @Test
+    public void getFilteredRoomList_modifyList_throwsUnsupportedOperationException() {
+        assertThrows(UnsupportedOperationException.class, () -> logic.getFilteredRoomList().remove(0));
+    }
+
     /**
      * Executes the command and confirms that
      * - no exceptions are thrown <br>

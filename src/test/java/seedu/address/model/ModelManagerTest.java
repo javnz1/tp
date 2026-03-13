@@ -218,6 +218,17 @@ public class ModelManagerTest {
     }
 
     @Test
+    public void updateFilteredRoomList_nullPredicate_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.updateFilteredRoomList(null));
+    }
+
+    @Test
+    public void updateFilteredRoomList_allRoomsPredicate_showsAllRooms() {
+        modelManager.updateFilteredRoomList(Model.PREDICATE_SHOW_ALL_ROOMS);
+        assertEquals(modelManager.getFilteredRoomList(), modelManager.getAddressBook().getRoomList());
+    }
+
+    @Test
     public void getReservationList_modifyList_throwsUnsupportedOperationException() {
         assertThrows(UnsupportedOperationException.class, () -> modelManager.getReservationList().remove(0));
     }
