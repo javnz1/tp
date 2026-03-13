@@ -1,20 +1,23 @@
 package seedu.address.ui;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import java.nio.file.Path;
+import java.util.logging.Logger;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
+
 import javafx.application.Platform;
 import javafx.stage.Stage;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.LogicManager;
 import seedu.address.model.ModelManager;
-import seedu.address.storage.StorageManager;
 import seedu.address.storage.JsonAddressBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
-import java.nio.file.Path;
-import java.util.logging.Logger;
+import seedu.address.storage.StorageManager;
 
-import org.junit.jupiter.api.io.TempDir;
 
 public class MainWindowTest {
 
@@ -34,9 +37,11 @@ public class MainWindowTest {
 
     @Test
     public void constructor_initializesCorrectly() {
-        JsonAddressBookStorage addressBookStorage = new JsonAddressBookStorage(temporaryFolder.resolve("addressBook.json"));
-        JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(temporaryFolder.resolve("userPrefs.json"));
-        StorageManager storage = new StorageManager(addressBookStorage, userPrefsStorage);
+        Path abPath = temporaryFolder.resolve("addressBook.json");
+        JsonAddressBookStorage abStorage = new JsonAddressBookStorage(abPath);
+        JsonUserPrefsStorage prefStorage = new JsonUserPrefsStorage(temporaryFolder.resolve("userPrefs.json"));
+
+        StorageManager storage = new StorageManager(abStorage, prefStorage);
         LogicManager logic = new LogicManager(new ModelManager(), storage);
 
         Platform.runLater(() -> {
