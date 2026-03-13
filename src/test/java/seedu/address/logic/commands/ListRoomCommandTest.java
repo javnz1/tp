@@ -1,6 +1,8 @@
 package seedu.address.logic.commands;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
@@ -54,5 +56,12 @@ public class ListRoomCommandTest {
         assertTrue(listRoomCommand.equals(new ListRoomCommand()));
         assertFalse(listRoomCommand.equals(null));
         assertFalse(listRoomCommand.equals(new ClearCommand()));
+    }
+
+    @Test
+    public void hashcode() {
+        ListRoomCommand listRoomCommand = new ListRoomCommand();
+        assertEquals(listRoomCommand.hashCode(), new ListRoomCommand().hashCode());
+        assertNotEquals(listRoomCommand.hashCode(), new ListCommand().hashCode());
     }
 }

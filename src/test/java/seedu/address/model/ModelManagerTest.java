@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_ROOMS;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
@@ -24,6 +25,7 @@ import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.StudentId;
 import seedu.address.model.reservation.Reservation;
 import seedu.address.testutil.AddressBookBuilder;
+import seedu.address.testutil.RoomBuilder;
 
 public class ModelManagerTest {
 
@@ -213,7 +215,7 @@ public class ModelManagerTest {
 
     @Test
     public void updateFilteredRoomList_showsAllRooms() {
-        modelManager.updateFilteredRoomList(Model.PREDICATE_SHOW_ALL_ROOMS);
+        modelManager.updateFilteredRoomList(PREDICATE_SHOW_ALL_ROOMS);
         assertEquals(modelManager.getFilteredRoomList(), modelManager.getAddressBook().getRoomList());
     }
 
@@ -224,7 +226,7 @@ public class ModelManagerTest {
 
     @Test
     public void updateFilteredRoomList_allRoomsPredicate_showsAllRooms() {
-        modelManager.updateFilteredRoomList(Model.PREDICATE_SHOW_ALL_ROOMS);
+        modelManager.updateFilteredRoomList(PREDICATE_SHOW_ALL_ROOMS);
         assertEquals(modelManager.getFilteredRoomList(), modelManager.getAddressBook().getRoomList());
     }
 
@@ -371,6 +373,8 @@ public class ModelManagerTest {
         addressBookWithReservation.addReservation(HALL_TWO_SLOT_ONE);
         UserPrefs userPrefs = new UserPrefs();
 
+        addressBook.addRoom(ROOM_A);
+
         modelManager = new ModelManager(addressBook, userPrefs);
         ModelManager modelManagerCopy = new ModelManager(addressBook, userPrefs);
         assertTrue(modelManager.equals(modelManagerCopy));
@@ -391,5 +395,15 @@ public class ModelManagerTest {
         UserPrefs differentUserPrefs = new UserPrefs();
         differentUserPrefs.setAddressBookFilePath(Paths.get("differentFilePath"));
         assertFalse(modelManager.equals(new ModelManager(addressBook, differentUserPrefs)));
+
+        modelManager.updateFilteredRoomList(room -> false);
+        assertFalse(modelManager.equals(new ModelManager(addressBook, userPrefs)));
+
+        modelManager.updateFilteredRoomList(PREDICATE_SHOW_ALL_ROOMS);
+        assertTrue(modelManager.equals(new ModelManager(addressBook, userPrefs)));
+
+        AddressBook addressBookWithDifferentRoom = new AddressBook(addressBook);
+        addressBookWithDifferentRoom.addRoom(new RoomBuilder().withName("Unique Room 123").build());
+        assertFalse(modelManager.equals(new ModelManager(addressBookWithDifferentRoom, userPrefs)));
     }
 }
