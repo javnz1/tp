@@ -35,4 +35,22 @@ public class ListRoomCommand extends Command {
 
         return new CommandResult(MESSAGE_SUCCESS, true);
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof ListRoomCommand)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return ListRoomCommand.class.hashCode();
+    }
 }
