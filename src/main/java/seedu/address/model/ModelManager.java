@@ -72,7 +72,7 @@ public class ModelManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         this.userPrefs = new UserPrefs(userPrefs);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
-        filteredRooms = new FilteredList<>(this.addressBook.getRoomList());
+        this.filteredRooms = new FilteredList<>(this.addressBook.getRoomList());
     }
 
     public ModelManager() {
@@ -298,7 +298,8 @@ public class ModelManager implements Model {
         ModelManager otherModelManager = (ModelManager) other;
         return addressBook.equals(otherModelManager.addressBook)
                 && userPrefs.equals(otherModelManager.userPrefs)
-                && filteredPersons.equals(otherModelManager.filteredPersons);
+                && filteredPersons.equals(otherModelManager.filteredPersons)
+                && filteredRooms.equals(otherModelManager.filteredRooms);
     }
 
     //=========== Filtered Room List Accessors =============================================================

@@ -32,6 +32,7 @@ public class MainWindow extends UiPart<Stage> {
 
     // Independent Ui parts residing in this Ui container
     private PersonListPanel personListPanel;
+    private RoomListPanel roomListPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
 
@@ -163,6 +164,25 @@ public class MainWindow extends UiPart<Stage> {
         primaryStage.hide();
     }
 
+    /**
+     * Switches the display to the Room List.
+     */
+    private void showRoomList() {
+        // We create a new RoomListPanel using the filtered room list from logic
+        roomListPanel = new RoomListPanel(logic.getFilteredRoomList());
+        personListPanelPlaceholder.getChildren().clear();
+        personListPanelPlaceholder.getChildren().add(roomListPanel.getRoot());
+    }
+
+    /**
+     * Switches the display back to the Person List.
+     */
+    private void showPersonList() {
+        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        personListPanelPlaceholder.getChildren().clear();
+        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+    }
+
     public PersonListPanel getPersonListPanel() {
         return personListPanel;
     }
@@ -184,6 +204,12 @@ public class MainWindow extends UiPart<Stage> {
 
             if (commandResult.isExit()) {
                 handleExit();
+            }
+
+            if (commandResult.isShowRoomList()) {
+                showRoomList();
+            } else {
+                showPersonList();
             }
 
             return commandResult;

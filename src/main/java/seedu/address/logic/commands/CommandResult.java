@@ -19,13 +19,16 @@ public class CommandResult {
     /** The application should exit. */
     private final boolean exit;
 
+    private final boolean showRoomList;
+
     /**
      * Constructs a {@code CommandResult} with the specified fields.
      */
-    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit) {
+    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit, boolean showRoomList) {
         this.feedbackToUser = requireNonNull(feedbackToUser);
         this.showHelp = showHelp;
         this.exit = exit;
+        this.showRoomList = showRoomList;
     }
 
     /**
@@ -33,7 +36,22 @@ public class CommandResult {
      * and other fields set to their default value.
      */
     public CommandResult(String feedbackToUser) {
-        this(feedbackToUser, false, false);
+        this(feedbackToUser, false, false, false);
+    }
+
+    /**
+     * Existing constructor for Person-related commands.
+     * Defaults showRoomList to false.
+     */
+    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit) {
+        this(feedbackToUser, showHelp, exit, false);
+    }
+
+    /**
+     * Specialized constructor for toggling the Room List view.
+     */
+    public CommandResult(String feedbackToUser, boolean showRoomList) {
+        this(feedbackToUser, false, false, showRoomList);
     }
 
     public String getFeedbackToUser() {
@@ -46,6 +64,10 @@ public class CommandResult {
 
     public boolean isExit() {
         return exit;
+    }
+
+    public boolean isShowRoomList() {
+        return showRoomList;
     }
 
     @Override
@@ -62,12 +84,13 @@ public class CommandResult {
         CommandResult otherCommandResult = (CommandResult) other;
         return feedbackToUser.equals(otherCommandResult.feedbackToUser)
                 && showHelp == otherCommandResult.showHelp
-                && exit == otherCommandResult.exit;
+                && exit == otherCommandResult.exit
+                && showRoomList == otherCommandResult.showRoomList;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(feedbackToUser, showHelp, exit);
+        return Objects.hash(feedbackToUser, showHelp, exit, showRoomList);
     }
 
     @Override
@@ -76,6 +99,7 @@ public class CommandResult {
                 .add("feedbackToUser", feedbackToUser)
                 .add("showHelp", showHelp)
                 .add("exit", exit)
+                .add("showRoomList", showRoomList)
                 .toString();
     }
 
