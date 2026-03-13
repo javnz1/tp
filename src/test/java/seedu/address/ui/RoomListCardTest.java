@@ -43,12 +43,9 @@ public class RoomListCardTest {
 
         assertEquals(card1, card1);
 
-        // 2. Check null/different types (Should pass)
         assertNotEquals(card1, null);
         assertNotEquals(card1, "Not a card");
 
-        // 3. Instead of assertEquals(card1, card2), verify they represent the same data
-        // UI parts generally don't implement deep equality.
         assertTrue(card1.getRoot().isVisible());
     }
 }

@@ -25,6 +25,10 @@ public class RoomListPanel extends UiPart<Region> {
         roomListView.setCellFactory(listView -> new RoomListViewCell());
     }
 
+    ListView<Room> getRoomListView() {
+        return roomListView; // This is the @FXML variable name in your class
+    }
+
     // Internal class for the Custom Cell
     class RoomListViewCell extends ListCell<Room> {
         @Override

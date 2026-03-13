@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.logging.Logger;
@@ -33,6 +34,7 @@ public class RoomListPanelTest {
         );
         RoomListPanel roomListPanel = new RoomListPanel(roomList);
 
-        assertNotNull(roomListPanel.getRoot());
+        assertNotNull(roomListPanel.getRoomListView());
+        assertEquals(roomList, roomListPanel.getRoomListView().getItems());
     }
 }
