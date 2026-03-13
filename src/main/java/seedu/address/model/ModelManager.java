@@ -22,6 +22,8 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.StudentId;
 import seedu.address.model.reservation.Reservation;
 import seedu.address.model.room.Room;
+import seedu.address.model.room.RoomName;
+import seedu.address.model.tag.Tag;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -37,8 +39,7 @@ public class ModelManager implements Model {
                     "HALL-1", "HALL-2", "HALL-3",
                     "MPSH-1", "MPSH-2",
                     "COURT-1", "COURT-2",
-                    "MPR-1", "MPR-2"
-            )));
+                    "MPR-1", "MPR-2")));
 
     /**
      * Temporary item registry for the MVP.
@@ -52,8 +53,7 @@ public class ModelManager implements Model {
                     "MOLTEN-VOLLEYBALL-2",
                     "YONEX-BADMINTON-RACKET-1",
                     "YONEX-BADMINTON-RACKET-2",
-                    "YONEX-BADMINTON-RACKET-3"
-            )));
+                    "YONEX-BADMINTON-RACKET-3")));
 
     private final AddressBook addressBook;
     private final UserPrefs userPrefs;
@@ -79,7 +79,8 @@ public class ModelManager implements Model {
         this(new AddressBook(), new UserPrefs());
     }
 
-    //=========== UserPrefs ==================================================================================
+    // =========== UserPrefs
+    // ==================================================================================
 
     @Override
     public void setUserPrefs(ReadOnlyUserPrefs userPrefs) {
@@ -114,7 +115,8 @@ public class ModelManager implements Model {
         userPrefs.setAddressBookFilePath(addressBookFilePath);
     }
 
-    //=========== AddressBook ================================================================================
+    // =========== AddressBook
+    // ================================================================================
 
     @Override
     public void setAddressBook(ReadOnlyAddressBook addressBook) {
@@ -231,7 +233,8 @@ public class ModelManager implements Model {
         return addressBook.getIssueRecordList();
     }
 
-    //=========== Filtered Person List Accessors =============================================================
+    // =========== Filtered Person List Accessors
+    // =============================================================
 
     @Override
     public ObservableList<Person> getFilteredPersonList() {
@@ -309,5 +312,28 @@ public class ModelManager implements Model {
     public void updateFilteredRoomList(Predicate<Room> predicate) {
         requireNonNull(predicate);
         filteredRooms.setPredicate(predicate);
+    }
+
+    //============ Add tags ================================================================================
+    @Override
+    public void addTag(RoomName roomName, Tag tag) {
+        requireAllNonNull(roomName, tag);
+        Room targetRoom = addressBook.getRoomList().stream()
+                .filter(room -> room.getName().equals(roomName))
+                .findFirst()
+                .orElse(null);
+        assert targetRoom != null;
+        targetRoom.addTag(tag);
+    }
+
+    @Override
+    public void deleteTag(RoomName roomName, Tag tag) {
+        requireAllNonNull(roomName, tag);
+        Room targetRoom = addressBook.getRoomList().stream()
+                .filter(room -> room.getName().equals(roomName))
+                .findFirst()
+                .orElse(null);
+        assert targetRoom != null;
+        targetRoom.deleteTag(tag);
     }
 }

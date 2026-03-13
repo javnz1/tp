@@ -2,7 +2,13 @@ package seedu.address.model.room;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+
+import seedu.address.model.tag.Tag;
+
+
 
 /**
  * Represents a Room in the system.
@@ -16,7 +22,7 @@ public class Room {
     // Data fields
     private final Location location;
     private final Status status;
-
+    private final Set<Tag> tags = new HashSet<>();
     /**
      * Every field must be present and not null.
      * @param name A valid room name.
@@ -28,6 +34,16 @@ public class Room {
         this.name = name;
         this.location = location;
         this.status = status;
+    }
+
+    /**
+     * For checking a roomName is inside the roomList
+     * @param name A valid room name.
+     */
+    public Room(RoomName name) {
+        this.name = name;
+        this.location = new Location("placeholder");
+        this.status = new Status("Available");
     }
 
     public RoomName getName() {
@@ -79,5 +95,13 @@ public class Room {
     public int hashCode() {
         // use this to ensure consistent hashing for collections
         return Objects.hash(name, location, status);
+    }
+
+    public void addTag(Tag tag) {
+        tags.add(tag);
+    }
+
+    public void deleteTag(Tag otherTag) {
+        tags.removeIf(tag -> tag.equals(otherTag));
     }
 }

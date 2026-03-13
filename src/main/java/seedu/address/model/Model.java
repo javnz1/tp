@@ -12,6 +12,8 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.StudentId;
 import seedu.address.model.reservation.Reservation;
 import seedu.address.model.room.Room;
+import seedu.address.model.room.RoomName;
+import seedu.address.model.tag.Tag;
 
 /**
  * The API of the Model component.
@@ -96,4 +98,7 @@ public interface Model {
 
     String resolveAlias(String input);
 
+    void addTag(RoomName roomName, Tag tag);
+
+    void deleteTag(RoomName roomName, Tag tag);
 }

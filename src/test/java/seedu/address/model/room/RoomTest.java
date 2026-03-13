@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.TypicalRooms.ROOM_A;
 import static seedu.address.testutil.TypicalRooms.ROOM_B;
+//import static seedu.address.testutil.TypicalRooms.ROOM_D;
 
 import org.junit.jupiter.api.Test;
 
@@ -50,4 +51,14 @@ public class RoomTest {
         Room editedRoomA = new RoomBuilder(ROOM_A).withName("Different-Name").build();
         assertFalse(ROOM_A.equals(editedRoomA));
     }
+
+    //    @Test
+    //    public void addTag() {
+    //        Room roomD = new RoomBuilder(ROOM_D).build();
+    //    }
+    //
+    //    @Test
+    //    public void deleteTag() {
+    //        Room roomD = new RoomBuilder(ROOM_D).build();
+    //    }
 }

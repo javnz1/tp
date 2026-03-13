@@ -1,12 +1,5 @@
 {
   "persons" : [ {
-    "name" : "Alex Yeoh",
-    "studentId" : "a1234567a",
-    "phone" : "87438807",
-    "email" : "alexyeoh@example.com",
-    "address" : "Blk 30 Geylang Street 29, #06-40",
-    "tags" : [ "friends" ]
-  }, {
     "name" : "Bernice Yu",
     "studentId" : "a2345678b",
     "phone" : "99272758",
@@ -27,13 +20,6 @@
     "email" : "lidavid@example.com",
     "address" : "Blk 436 Serangoon Gardens Street 26, #16-43",
     "tags" : [ "family" ]
-  }, {
-    "name" : "Irfan Ibrahim",
-    "studentId" : "a5678901e",
-    "phone" : "92492021",
-    "email" : "irfan@example.com",
-    "address" : "Blk 47 Tampines Street 20, #17-35",
-    "tags" : [ "classmates" ]
   }, {
     "name" : "Roy Balakrishnan",
     "studentId" : "a6789012f",
