@@ -27,13 +27,6 @@
     "email" : "royb@example.com",
     "address" : "Blk 45 Aljunied Street 85, #11-31",
     "tags" : [ "colleagues" ]
-  }, {
-    "name" : "Alex",
-    "studentId" : "a2222333f",
-    "phone" : "91234567",
-    "email" : "alex@example.com",
-    "address" : "N/A",
-    "tags" : [ ]
   } ],
   "rooms" : [ {
     "name" : "MPSH-1",

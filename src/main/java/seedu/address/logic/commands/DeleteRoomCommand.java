@@ -9,6 +9,9 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.room.Room;
 
+/**
+ * Deletes a room identified using it's displayed index from the address book.
+ */
 public class DeleteRoomCommand extends Command {
 
     public static final String COMMAND_WORD = "delete-r";
@@ -55,5 +58,10 @@ public class DeleteRoomCommand extends Command {
         return other == this
                 || (other instanceof DeleteRoomCommand
                 && targetIndex.equals(((DeleteRoomCommand) other).targetIndex));
+    }
+
+    @Override
+    public int hashCode() {
+        return targetIndex.hashCode();
     }
 }
