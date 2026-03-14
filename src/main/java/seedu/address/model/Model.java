@@ -61,6 +61,10 @@ public interface Model {
         throw new UnsupportedOperationException("Not implemented.");
     }
 
+    default void deleteRoom(Room target) {
+        throw new UnsupportedOperationException("Not implemented.");
+    }
+
     default ObservableList<Room> getFilteredRoomList() {
         throw new UnsupportedOperationException("Not implemented.");
     }

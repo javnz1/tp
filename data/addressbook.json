@@ -40,20 +40,12 @@
     "location" : "Sports-Centre",
     "status" : "Available"
   }, {
-    "name" : "MPSH-5",
-    "location" : "Sports-Centre",
-    "status" : "Available"
-  }, {
     "name" : "Sports-Hall-1",
     "location" : "University-Town",
     "status" : "Booked"
   }, {
     "name" : "Outdoor-Tennis-Court",
     "location" : "Kent-Ridge",
-    "status" : "Available"
-  }, {
-    "name" : "Sports-Hall-2",
-    "location" : "University-Town",
     "status" : "Available"
   }, {
     "name" : "MPSH-3",

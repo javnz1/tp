@@ -47,6 +47,13 @@ public class Status {
         return t.equals("available") || t.equals("booked") || t.equals("maintenance");
     }
 
+    /**
+     * Returns true if the status is Booked.
+     */
+    public boolean isBooked() {
+        return value.equalsIgnoreCase("Booked");
+    }
+
     @Override
     public String toString() {
         return value;

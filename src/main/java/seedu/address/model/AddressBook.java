@@ -136,6 +136,13 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Removes {@code key} from this {@code AddressBook}.
+     */
+    public void removeRoom(Room key) {
+        rooms.remove(key);
+    }
+
+    /**
      * Returns true if the given reservation conflicts with an existing reservation.
      */
     public boolean hasConflictingReservation(Reservation reservation) {
