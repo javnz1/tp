@@ -165,6 +165,11 @@ public class ModelManager implements Model {
         updateFilteredRoomList(PREDICATE_SHOW_ALL_ROOMS);
     }
 
+    @Override
+    public void deleteRoom(Room target) {
+        addressBook.removeRoom(target);
+    }
+
     //=========== Reservation ================================================================================
 
     @Override

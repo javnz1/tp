@@ -21,6 +21,7 @@ import org.junit.jupiter.api.io.TempDir;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.DeleteRoomCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.ListRoomCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -35,6 +36,7 @@ import seedu.address.storage.JsonAddressBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.StorageManager;
 import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.RoomBuilder;
 import seedu.address.testutil.TypicalRooms;
 
 public class LogicManagerTest {
@@ -194,5 +196,14 @@ public class LogicManagerTest {
 
         String listRoomCommand = ListRoomCommand.COMMAND_WORD;
         assertCommandFailure(listRoomCommand, CommandException.class, ListRoomCommand.MESSAGE_FAILURE);
+    }
+
+    @Test
+    public void execute_deleteRoom_success() throws Exception {
+        model.addRoom(new RoomBuilder().withName("RoomToEmpty").build());
+        String deleteCommand = DeleteRoomCommand.COMMAND_WORD + " 1";
+
+        assertCommandSuccess(deleteCommand, String.format(DeleteRoomCommand.MESSAGE_DELETE_ROOM_SUCCESS,
+                model.getFilteredRoomList().get(0)), model);
     }
 }
