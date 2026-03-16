@@ -67,4 +67,12 @@ public class Equipment {
     public int hashCode() {
         return java.util.Objects.hash(name, category, status);
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s (%s) [%s]",
+                name.toString(),
+                category,
+                status.toString());
+    }
 }

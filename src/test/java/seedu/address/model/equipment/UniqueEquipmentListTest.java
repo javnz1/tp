@@ -16,6 +16,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.model.equipment.exceptions.DuplicateEquipmentException;
+import seedu.address.model.equipment.exceptions.EquipmentNotFoundException;
 
 public class UniqueEquipmentListTest {
     private final UniqueEquipmentList uniqueEquipmentList = new UniqueEquipmentList();
@@ -53,6 +54,24 @@ public class UniqueEquipmentListTest {
     public void setEquipments_listWithDuplicateEquipments_throwsDuplicateEquipmentException() {
         List<Equipment> listWithDuplicates = Arrays.asList(BASKETBALL, BASKETBALL);
         assertThrows(DuplicateEquipmentException.class, () -> uniqueEquipmentList.setEquipments(listWithDuplicates));
+    }
+
+    @Test
+    public void remove_nullEquipment_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> uniqueEquipmentList.remove(null));
+    }
+
+    @Test
+    public void remove_equipmentDoesNotExist_throwsEquipmentNotFoundException() {
+        assertThrows(EquipmentNotFoundException.class, () -> uniqueEquipmentList.remove(BASKETBALL));
+    }
+
+    @Test
+    public void remove_existingEquipment_removesEquipment() {
+        uniqueEquipmentList.add(BASKETBALL);
+        uniqueEquipmentList.remove(BASKETBALL);
+        UniqueEquipmentList expectedUniqueEquipmentList = new UniqueEquipmentList();
+        assertEquals(expectedUniqueEquipmentList, uniqueEquipmentList);
     }
 
     @Test

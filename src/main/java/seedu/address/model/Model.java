@@ -114,6 +114,8 @@ public interface Model {
 
     void addEquipment(Equipment equipment);
 
+    void deleteEquipment(Equipment target);
+
     ObservableList<Equipment> getFilteredEquipmentList();
 
     void updateFilteredEquipmentList(Predicate<Equipment> predicate);

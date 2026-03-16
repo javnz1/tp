@@ -8,6 +8,7 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.equipment.exceptions.DuplicateEquipmentException;
+import seedu.address.model.equipment.exceptions.EquipmentNotFoundException;
 
 /**
  * A list of equipments that enforces uniqueness between its elements and does not allow nulls.
@@ -36,6 +37,17 @@ public class UniqueEquipmentList implements Iterable<Equipment> {
             throw new DuplicateEquipmentException();
         }
         internalList.add(toAdd);
+    }
+
+    /**
+     * Removes the equivalent equipment from the list.
+     * The equipment must exist in the list.
+     */
+    public void remove(Equipment toRemove) {
+        requireNonNull(toRemove);
+        if (!internalList.remove(toRemove)) {
+            throw new EquipmentNotFoundException();
+        }
     }
 
     /**

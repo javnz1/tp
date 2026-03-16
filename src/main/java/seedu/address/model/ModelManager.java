@@ -256,6 +256,12 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void deleteEquipment(Equipment target) {
+        addressBook.removeEquipment(target);
+        updateFilteredEquipmentList(PREDICATE_SHOW_ALL_EQUIPMENT);
+    }
+
+    @Override
     public ObservableList<Equipment> getFilteredEquipmentList() {
         return filteredEquipments;
     }

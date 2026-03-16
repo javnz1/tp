@@ -69,12 +69,16 @@
     "category" : "Volleyball",
     "status" : "Damaged"
   }, {
-    "name" : "Tchoukball-Frame",
-    "category" : "Tchoukballs/Booked",
-    "status" : "Available"
-  }, {
     "name" : "Spalding",
     "category" : "Basketball",
     "status" : "Booked"
+  }, {
+    "name" : "Tchoukball-Frame",
+    "category" : "Tchoukball",
+    "status" : "Maintenance"
+  }, {
+    "name" : "Track-Stand",
+    "category" : "Track-and-Field",
+    "status" : "Available"
   } ]
 }

@@ -43,7 +43,6 @@ public class DeleteRoomCommand extends Command {
 
         Room roomToDelete = lastShownList.get(targetIndex.getZeroBased());
 
-        // Error handling: Check if room is booked
         if (roomToDelete.getStatus().isBooked()) {
             throw new CommandException(MESSAGE_ROOM_BOOKED);
         }

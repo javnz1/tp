@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.testutil.Assert.assertThrows;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_EQUIPMENT;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.Arrays;
@@ -18,6 +19,7 @@ import seedu.address.logic.commands.AddEquipmentCommand;
 import seedu.address.logic.commands.AddStudentCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteEquipmentCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.ExitCommand;
@@ -132,5 +134,12 @@ public class AddressBookParserTest {
     public void parseCommand_listEquipment() throws Exception {
         assertTrue(parser.parseCommand(ListEquipmentCommand.COMMAND_WORD) instanceof ListEquipmentCommand);
         assertTrue(parser.parseCommand(ListEquipmentCommand.COMMAND_WORD + " 3") instanceof ListEquipmentCommand);
+    }
+
+    @Test
+    public void parseCommand_deleteEquipment() throws Exception {
+        DeleteEquipmentCommand command = (DeleteEquipmentCommand) parser.parseCommand(
+                DeleteEquipmentCommand.COMMAND_WORD + " " + INDEX_FIRST_EQUIPMENT.getOneBased());
+        assertEquals(new DeleteEquipmentCommand(INDEX_FIRST_EQUIPMENT), command);
     }
 }

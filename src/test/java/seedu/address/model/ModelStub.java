@@ -203,6 +203,11 @@ public abstract class ModelStub implements Model {
     }
 
     @Override
+    public void deleteEquipment(Equipment target) {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    @Override
     public ObservableList<Equipment> getFilteredEquipmentList() {
         throw new AssertionError("This method should not be called.");
     }

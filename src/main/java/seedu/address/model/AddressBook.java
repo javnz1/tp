@@ -222,6 +222,14 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Removes {@code key} from this {@code AddressBook}.
+     * {@code key} must exist in the address book.
+     */
+    public void removeEquipment(Equipment key) {
+        equipments.remove(key);
+    }
+
+    /**
      * Replaces the contents of the equipment list with {@code equipments}.
      */
     public void setEquipments(List<Equipment> equipments) {
