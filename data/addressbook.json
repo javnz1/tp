@@ -49,16 +49,8 @@
   "issueRecords" : [ ],
   "aliasMappings" : [ ],
   "equipments" : [ {
-    "name" : "Wilson-Evolution-Basketball",
+    "name" : "Wilson-Basketball",
     "category" : "Basketball",
     "status" : "Available"
-  }, {
-    "name" : "Molten-Volleyball",
-    "category" : "Volleyball",
-    "status" : "Available"
-  }, {
-    "name" : "Tchoukball-Frame",
-    "category" : "Tchoukball",
-    "status" : "Booked"
   } ]
 }

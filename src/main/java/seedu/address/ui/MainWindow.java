@@ -33,6 +33,7 @@ public class MainWindow extends UiPart<Stage> {
     // Independent Ui parts residing in this Ui container
     private PersonListPanel personListPanel;
     private RoomListPanel roomListPanel;
+    private EquipmentListPanel equipmentListPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
 
@@ -47,6 +48,9 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane roomListPanelPlaceholder;
+
+    @FXML
+    private StackPane equipmentListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -123,6 +127,12 @@ public class MainWindow extends UiPart<Stage> {
         roomListPanelPlaceholder.setVisible(false);
         roomListPanelPlaceholder.setManaged(false);
 
+        equipmentListPanel = new EquipmentListPanel(logic.getFilteredEquipmentList());
+        equipmentListPanelPlaceholder.getChildren().add(equipmentListPanel.getRoot());
+
+        equipmentListPanelPlaceholder.setVisible(false);
+        equipmentListPanelPlaceholder.setManaged(false);
+
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
@@ -180,11 +190,25 @@ public class MainWindow extends UiPart<Stage> {
     /**
      * Shows the Room List and hides the Person List.
      */
+    private void handleShowEquipmentList() {
+        personListPanelPlaceholder.setVisible(false);
+        personListPanelPlaceholder.setManaged(false);
+        roomListPanelPlaceholder.setVisible(false);
+        roomListPanelPlaceholder.setManaged(false);
+        equipmentListPanelPlaceholder.setVisible(true);
+        equipmentListPanelPlaceholder.setManaged(true);
+    }
+
+    /**
+     * Shows the Room List and hides the Person List.
+     */
     private void handleShowRoomList() {
         personListPanelPlaceholder.setVisible(false);
         personListPanelPlaceholder.setManaged(false);
         roomListPanelPlaceholder.setVisible(true);
         roomListPanelPlaceholder.setManaged(true);
+        equipmentListPanelPlaceholder.setVisible(false);
+        equipmentListPanelPlaceholder.setManaged(false);
     }
 
     /**
@@ -195,6 +219,8 @@ public class MainWindow extends UiPart<Stage> {
         roomListPanelPlaceholder.setManaged(false);
         personListPanelPlaceholder.setVisible(true);
         personListPanelPlaceholder.setManaged(true);
+        equipmentListPanelPlaceholder.setVisible(false);
+        equipmentListPanelPlaceholder.setManaged(false);
     }
 
     /**
@@ -222,6 +248,10 @@ public class MainWindow extends UiPart<Stage> {
 
             if (commandResult.isExit()) {
                 handleExit();
+            }
+
+            if (commandResult.isShowEquipmentList()) {
+                handleShowEquipmentList();
             }
 
             if (commandResult.isShowRoomList()) {
