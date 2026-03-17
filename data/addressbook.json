@@ -3,30 +3,32 @@
     "name" : "Bernice Yu",
     "studentId" : "a2345678b",
     "phone" : "99272758",
-    "email" : "berniceyu@example.com",
-    "address" : "Blk 30 Lorong 3 Serangoon Gardens, #07-18",
-    "tags" : [ "colleagues", "friends" ]
+    "email" : "berniceyu@u.nus.edu",
+    "tags" : [ ]
   }, {
     "name" : "Charlotte Oliveiro",
     "studentId" : "a3456789c",
     "phone" : "93210283",
-    "email" : "charlotte@example.com",
-    "address" : "Blk 11 Ang Mo Kio Street 74, #11-04",
-    "tags" : [ "neighbours" ]
+    "email" : "charlotte@u.nus.edu",
+    "tags" : [ ]
   }, {
     "name" : "David Li",
     "studentId" : "a4567890d",
     "phone" : "91031282",
-    "email" : "lidavid@example.com",
-    "address" : "Blk 436 Serangoon Gardens Street 26, #16-43",
-    "tags" : [ "family" ]
+    "email" : "lidavid@u.nus.edu",
+    "tags" : [ ]
   }, {
     "name" : "Roy Balakrishnan",
     "studentId" : "a6789012f",
     "phone" : "92624417",
-    "email" : "royb@example.com",
-    "address" : "Blk 45 Aljunied Street 85, #11-31",
-    "tags" : [ "colleagues" ]
+    "email" : "royb@u.nus.edu",
+    "tags" : [ ]
+  }, {
+    "name" : "Alice Pauline",
+    "studentId" : "a1234567a",
+    "phone" : "94351253",
+    "email" : "alice@u.nus.edu",
+    "tags" : [ ]
   } ],
   "rooms" : [ {
     "name" : "MPSH-1",
@@ -58,11 +60,19 @@
     "status" : "Booked"
   } ],
   "reservations" : [ ],
-  "issueRecords" : [ ],
+  "issueRecords" : [ {
+    "itemId" : "WILSON-EVOLUTION-BASKETBALL-1",
+    "studentId" : "a3456789c",
+    "dueDateTime" : "2026-03-25 1700"
+  }, {
+    "itemId" : "MOLTEN-VOLLEYBALL",
+    "studentId" : "a3456789c",
+    "dueDateTime" : "2026-03-18 1200"
+  } ],
   "aliasMappings" : [ ],
   "equipments" : [ {
     "name" : "Wilson-Evolution",
-    "category" : "Baksteball",
+    "category" : "Basketball",
     "status" : "Available"
   }, {
     "name" : "Molten-Volleyball",

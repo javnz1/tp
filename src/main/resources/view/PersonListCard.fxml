@@ -31,6 +31,11 @@
       <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
       <!-- Removed address element -->
       <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
+      <VBox fx:id="loansContainer" styleClass="cell_small_label">
+        <padding>
+          <Insets top="5" />
+        </padding>
+      </VBox>
     </VBox>
   </GridPane>
 </HBox>
