@@ -33,31 +33,38 @@
   "rooms" : [ {
     "name" : "MPSH-1",
     "location" : "Sports-Centre",
-    "status" : "Available"
+    "status" : "Available",
+    "tags" : [ "Tag" ]
   }, {
     "name" : "Sports-Hall-1",
     "location" : "University-Town",
-    "status" : "Booked"
+    "status" : "Booked",
+    "tags" : [ ]
   }, {
     "name" : "Outdoor-Tennis-Court",
     "location" : "Kent-Ridge",
-    "status" : "Available"
+    "status" : "Available",
+    "tags" : [ ]
   }, {
     "name" : "MPSH-3",
     "location" : "Sports-Centre",
-    "status" : "Booked"
+    "status" : "Booked",
+    "tags" : [ ]
   }, {
     "name" : "Sport-Hall-2",
     "location" : "University-Town",
-    "status" : "Available"
+    "status" : "Available",
+    "tags" : [ ]
   }, {
     "name" : "Outdoor-Basketball-Court",
     "location" : "Kent-Ridge",
-    "status" : "Booked"
+    "status" : "Booked",
+    "tags" : [ ]
   }, {
     "name" : "Music-Room-1",
     "location" : "YIH",
-    "status" : "Booked"
+    "status" : "Booked",
+    "tags" : [ ]
   } ],
   "reservations" : [ ],
   "issueRecords" : [ {
@@ -73,22 +80,27 @@
   "equipments" : [ {
     "name" : "Wilson-Evolution",
     "category" : "Basketball",
-    "status" : "Available"
+    "status" : "Available",
+    "tags" : [ ]
   }, {
     "name" : "Molten-Volleyball",
     "category" : "Volleyball",
-    "status" : "Damaged"
+    "status" : "Damaged",
+    "tags" : [ ]
   }, {
     "name" : "Spalding",
     "category" : "Basketball",
-    "status" : "Booked"
+    "status" : "Booked",
+    "tags" : [ ]
   }, {
     "name" : "Tchoukball-Frame",
     "category" : "Tchoukball",
-    "status" : "Maintenance"
+    "status" : "Maintenance",
+    "tags" : [ ]
   }, {
     "name" : "Track-Stand",
     "category" : "Track-and-Field",
-    "status" : "Available"
+    "status" : "Available",
+    "tags" : [ ]
   } ]
 }

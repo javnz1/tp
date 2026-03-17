@@ -252,12 +252,105 @@ Examples:
 * `alias Wilson-Evolution-Basketball-1 b1`
 * `alias MPSH-1 hall1`
 
+
 ![alias command screenshot](images/aliasCommand.png)
 
-
-Possible errors:
+* Possible errors:
 * Invalid `ITEM_OR_ROOM_ID`
 * Alias already exists
+
+
+### 2.4 Tag and filter:
+
+### Tagging an equipment or room: `tag`
+
+Tags an equipment item or room with a label for categorisation.
+
+Format: `tag c/EQUIPMENT_NAME t/TAG` or `tag l/ROOM_NAME t/TAG`
+
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+Tags are useful for categorising equipment or rooms, such as marking items as spoilt or rooms under renovation.
+</div>
+
+* Assigns a tag to the specified equipment item or room.
+* `TAG` should be a short string containing letters, numbers, or underscores. It is not case-sensitive.
+* The system will detect and warn against duplicate tags.
+
+Duplicate handling:
+* Duplicate tags on the same equipment or room are not allowed.
+* If the tag already exists on the item or room, the command will be rejected.
+
+Examples:
+* `tag c/Wilson-Evolution-Basketball-1 t/spoilt`
+* `tag l/MPSH-1 t/renovation`
+
+![tag command screenshot](images/TagSuccess.png)
+
+Possible errors:
+* Invalid equipment or room ID
+* Tag already exists on the specified equipment or room
+* Missing command indicators, e.g. missing `t/`
+
+---
+
+### Removing a tag from an equipment or room: `untag`
+
+Removes an existing tag from an equipment item or room.
+
+Format: `untag c/EQUIPMENT_NAME t/TAG` or `untag l/ROOM_NAME t/TAG`
+
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+Use this command to remove outdated or incorrect tags from equipment or rooms.
+</div>
+
+* Removes the specified tag from the specified equipment item or room.
+* `TAG` should be a short string containing letters, numbers, or underscores. It is not case-sensitive.
+* The command will be rejected if the specified tag does not exist on the item or room.
+
+Duplicate handling:
+* Not applicable.
+
+Examples:
+* `untag c/Wilson-Evolution-Basketball-1 t/spoilt`
+* `untag l/MPSH-1 t/renovation`
+
+![untag command screenshot](images/UntagSuccess.png)
+
+Possible errors:
+* Invalid equipment or room ID
+* Tag does not exist on the specified equipment or room
+* Missing command indicators, e.g. missing `t/`
+
+---
+
+### Filtering by tag: `filter`
+
+Filters equipment items or rooms by a specified tag.
+
+Format: `filter c/ t/TAG` or `filter l/ t/TAG`
+
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+Use this command to quickly find all equipment or rooms associated with a particular tag, such as all items marked as spoilt.
+</div>
+
+* Displays all equipment items or rooms that have the specified tag.
+* `TAG` should be a string containing letters, numbers, or underscores. It is not case-sensitive.
+
+Duplicate handling:
+* Not applicable.
+
+Examples:
+* `filter c/ t/spoilt`
+* `filter l/ t/renovation`
+
+![filter command screenshot](images/FilterSuccess.png)
+
+Possible errors:
+* No equipment or rooms found with the specified tag
+* Missing command indicators, e.g. missing `t/`
+
+
+
 
 ### Archiving data files `[coming in v2.0]`
 
