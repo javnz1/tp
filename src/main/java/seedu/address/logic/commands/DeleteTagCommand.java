@@ -12,7 +12,7 @@ import seedu.address.model.tag.Taggable;
 
 
 /**
- * Command class to delete a tag
+ * Delete tag from a room/equipment.
  */
 public class DeleteTagCommand extends Command {
     public static final String COMMAND_WORD = "untag";
@@ -33,7 +33,7 @@ public class DeleteTagCommand extends Command {
     private final Tag tag;
 
     /**
-     * Creates an DeleteTagCommand to the specified room and tag
+     * Creates an DeleteTagCommand to the specified room/equipment and tag
      */
     public DeleteTagCommand(Taggable target, Tag tag) {
         requireNonNull(target);

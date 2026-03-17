@@ -12,7 +12,7 @@ import seedu.address.model.tag.Taggable;
 
 
 /**
- * stuff
+ * Adds Tag to a room or equipment.
  */
 public class AddTagCommand extends Command {
 
@@ -22,7 +22,7 @@ public class AddTagCommand extends Command {
             + "Parameters: "
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_LOCATION + "MPSH-1 "
-            + PREFIX_TAG + "Renovation"
+            + PREFIX_TAG + "Renovation\n"
             + COMMAND_WORD + " "
             + PREFIX_CATEGORY + "Wilson-Basketball "
             + PREFIX_TAG + "Spoilt";
@@ -35,7 +35,7 @@ public class AddTagCommand extends Command {
     private final Tag tag;
 
     /**
-     * Creates an AddTagCommand to the specified room and tag
+     * Creates an AddTagCommand to the specified room/equipment and tag
      */
     public AddTagCommand(Taggable target, Tag tag) {
         requireNonNull(target);

@@ -27,6 +27,9 @@ public abstract class Taggable {
         TAGGED_ENTRIES.remove(buildKey(typeName, name, tag));
     }
 
+    public Set<Tag> getTags() {
+        return this.tags;
+    }
     /**
      * Delete all related tags on deletion of Taggable Obejct
      */
