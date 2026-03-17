@@ -45,7 +45,7 @@ public class AddStudentCommandParserTest {
     @Test
     public void parse_allFieldsPresent_success() {
         // We set address to "N/A" and tags to empty
-        Person expectedPerson = new PersonBuilder(BOB).withAddress("N/A").withTags().build();
+        Person expectedPerson = new PersonBuilder(BOB).withTags().build();
 
         // whitespace only preamble
         assertParseSuccess(parser,

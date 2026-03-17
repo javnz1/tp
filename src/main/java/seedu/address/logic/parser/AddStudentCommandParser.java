@@ -46,7 +46,7 @@ public class AddStudentCommandParser implements Parser<AddStudentCommand> {
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
 
-        Person student = new Person(name, studentId, phone, email, new Address("N/A"), new HashSet<>());
+        Person student = new Person(name, studentId, phone, email, new HashSet<>());
 
         return new AddStudentCommand(student);
     }
