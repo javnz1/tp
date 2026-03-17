@@ -163,7 +163,7 @@ Adds a new facility or venue into the system.
 Format: `add-r n/NAME l/LOCATION s/STATUS`
 
 Acceptable values:
-* Name and Category: Alphanumeric characters and spaces. Cannot be empty. Multiple spaces between words are collapsed into a single space (e.g., John   Doe becomes John Doe). Case-sensitive for display.
+* Name and Location: Alphanumeric characters and spaces. Cannot be empty. Multiple spaces between words are collapsed into a single space (e.g., John   Doe becomes John Doe). Case-sensitive for display.
 * Status: Available, Booked, Maintenance. Cannot be empty. Case-insensitive (e.g. available is accepted).
 * Parameters can be in any order.
   e.g. if the command specifies n/NAME l/LOCATION s/STATUS, l/LOCATION n/NAME s/STATUS is also acceptable.
@@ -222,7 +222,7 @@ Duplicate handling:
 * Not applicable for a delete command.
 
 Examples:
-* `delete-r 3`.
+* `delete-r 8`.
 
 Outputs:
 * Success
