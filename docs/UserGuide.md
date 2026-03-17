@@ -349,9 +349,6 @@ Possible errors:
 * No equipment or rooms found with the specified tag
 * Missing command indicators, e.g. missing `t/`
 
-
-
-
 ### Archiving data files `[coming in v2.0]`
 
 _Details coming soon ..._
