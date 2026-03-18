@@ -3,9 +3,13 @@ layout: page
 title: User Guide
 ---
 
-AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB3 can get your contact management tasks done faster than traditional GUI apps.
+TrackMasterPro (TMP) is a **desktop management solution** tailored for **Facility Managers** who handle high-volume bookings and equipment tracking for CCAs, Clubs, and Halls. While it features a clean Graphical User Interface (GUI), it is optimized for those who prefer the speed of a Command Line Interface (CLI).
+
+During high-pressure periods such as the Inter-Hall Games (IHG), Inter-College Games (ICG), or intensive CCA training seasons, clicking through menus is too slow. If you are a fast typer, TrackMasterPro allows you to manage logistical chaos faster than any traditional mouse-based application.
+
 
 * Table of Contents
+{:toc}
   * [Quick start](#quick-start)
   * [Features](#features)
   * [FAQ](#faq)
@@ -30,13 +34,9 @@ AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized fo
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
-   * `list` : Lists all contacts.
+   * `add-s n/John Doe m/A0123456B p/91234567 e/e0123456@u.nus.edu` : Adds a new student with the name `John Doe`, matric number `A0123456B`, phone number `91234567` and email address `e0123456@u.nus.edu`.
 
-   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the Address Book.
-
-   * `delete 3` : Deletes the 3rd contact shown in the current list.
-
-   * `clear` : Deletes all contacts.
+   * `add-r` : Adds a new facility or venue into the system.
 
    * `exit` : Exits the app.
 
@@ -51,7 +51,7 @@ AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized fo
 **:information_source: Notes about the command format:**<br>
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
-  e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John-Doe`.
+  e.g. in `add-s n/NAME`, `NAME` is a parameter which can be used as `add n/John-Doe`.
 
 * Items in square brackets are optional.<br>
   e.g `n/NAME [t/TAG]` can be used as `n/John-Doe t/friend` or as `n/John-Doe`.
@@ -61,9 +61,6 @@ AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized fo
 
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
-
-* Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
-  e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </div>
@@ -249,8 +246,15 @@ Acceptable values:
 * Phone number: 8 digits continuous number
 * Email: Valid email format such as `name@domain.com`
 
+Outputs:
+* Success
+  ![AddStudentSuccess.png](images/AddStudentSuccess.png)
+* Failure
+  ![AddStudentFailure.png](images/AddStudentFailure.png)
+
 Duplicate handling:
 * If matric number, phone number or email already exist in the system, the command will be rejected to prevent duplicate identity.
+![AddStudentDuplicate.png](images/AddStudentDuplicate.png)
 
 ### Check a student's loans : `check-s`
 
@@ -264,6 +268,12 @@ Examples:
 Acceptable values:
 * Matric numbers must start with an alphabet followed by 7 digits and end with an alphabet
 
+Outputs:
+* Success
+  ![CheckStudentLoanSuccess.png](images/CheckStudentLoanSuccess.png)
+* Failure
+  ![CheckStudentLoanFailure.png](images/CheckStudentLoanFailure.png)
+
 Duplicate handling:
 * The system searches by the unique matric number, so there is no risk of returning the wrong student's data.
 
@@ -276,11 +286,18 @@ To display a list of all registered borrowers in the system.
 
 Format: `list-s​`
 
+![ListStudentsSuccess.png](images/ListStudentsSuccess.png)
+
 ### Delete a student's profile : `delete-s`
 
 To permanently delete a borrower’s record from the system database.
 
 Format: `delete-s MATRIC_NUMBER​`
+
+Examples:
+* `delete-s A0123456B`
+
+![DeleteStudentSuccess.png](images/DeleteStudentSuccess.png)
 
 Acceptable values:
 * Matric number: Start with an alphabet followed by 7 digits and end with an alphabet.
@@ -306,11 +323,11 @@ AddressBook data are saved in the hard disk automatically after any command that
 
 ### Editing the data file
 
-AddressBook data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
+TrackMasterPro data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
-If your changes to the data file makes its format invalid, AddressBook will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
-Furthermore, certain edits can cause the AddressBook to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+If your changes to the data file makes its format invalid, TrackMasterPro will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
+Furthermore, certain edits can cause the TrackMasterPro to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </div>
 
 ### Reserving a facility/equipment: `reserve`
