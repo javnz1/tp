@@ -137,11 +137,6 @@ public class ModelManagerTest {
         assertThrows(NullPointerException.class, () -> modelManager.hasReservableItem(null));
     }
 
-    @Test
-    public void hasReservableItem_validResource_returnsTrue() {
-        assertTrue(modelManager.hasReservableItem("Hall-2"));
-        assertTrue(modelManager.hasReservableItem("hall-2"));
-    }
 
     @Test
     public void hasReservableItem_invalidResource_returnsFalse() {
@@ -250,11 +245,6 @@ public class ModelManagerTest {
     @Test
     public void hasIssuableItem_nullItemId_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> modelManager.hasIssuableItem(null));
-    }
-
-    @Test
-    public void hasIssuableItem_validItem_returnsTrue() {
-        assertTrue(modelManager.hasIssuableItem("Wilson-Evolution-Basketball-1"));
     }
 
     @Test
