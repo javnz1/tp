@@ -52,17 +52,23 @@ public class IssueCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        if (!model.hasIssuableItem(issueRecordToAdd.getItemId())) {
+        String resolvedItemId = model.resolveAlias(issueRecordToAdd.getItemId());
+        IssueRecord resolvedIssueRecord = new IssueRecord(
+                resolvedItemId,
+                issueRecordToAdd.getStudentId(),
+                issueRecordToAdd.getDueDateTime());
+
+        if (!model.hasIssuableItem(resolvedIssueRecord.getItemId())) {
             throw new CommandException(String.format(
-                    MESSAGE_INVALID_ITEM, issueRecordToAdd.getItemId()));
+                    MESSAGE_INVALID_ITEM, resolvedIssueRecord.getItemId()));
         }
 
-        if (!model.hasStudentId(issueRecordToAdd.getStudentId())) {
+        if (!model.hasStudentId(resolvedIssueRecord.getStudentId())) {
             throw new CommandException(String.format(
-                    MESSAGE_INVALID_STUDENT, issueRecordToAdd.getStudentId()));
+                    MESSAGE_INVALID_STUDENT, resolvedIssueRecord.getStudentId()));
         }
 
-        Optional<IssueRecord> existingIssue = model.getIssueRecordByItemId(issueRecordToAdd.getItemId());
+        Optional<IssueRecord> existingIssue = model.getIssueRecordByItemId(resolvedIssueRecord.getItemId());
         if (existingIssue.isPresent()) {
             IssueRecord issued = existingIssue.get();
             throw new CommandException(String.format(
@@ -72,18 +78,12 @@ public class IssueCommand extends Command {
                     issued.getFormattedDueDateTime()));
         }
 
-        String resolvedItemId = model.resolveAlias(issueRecordToAdd.getItemId());
-        IssueRecord resolvedIssueRecord = new IssueRecord(
-                resolvedItemId,
-                issueRecordToAdd.getStudentId(),
-                issueRecordToAdd.getDueDateTime());
-
-        model.addIssueRecord(issueRecordToAdd);
+        model.addIssueRecord(resolvedIssueRecord);
         return new CommandResult(String.format(
                 MESSAGE_SUCCESS,
-                issueRecordToAdd.getItemId(),
-                issueRecordToAdd.getStudentId(),
-                issueRecordToAdd.getFormattedDueDateTime()));
+                resolvedIssueRecord.getItemId(),
+                resolvedIssueRecord.getStudentId(),
+                resolvedIssueRecord.getFormattedDueDateTime()));
     }
     /**
      * Returns true if both issue commands have the same issue record to add.

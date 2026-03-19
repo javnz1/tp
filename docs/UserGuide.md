@@ -340,7 +340,7 @@ Possible errors:
 
 Issues an equipment item to a student with a due date and time for return.
 
-Format: `issue ITEM_ID STUDENT_ID d/DUE_DATE_TIME`
+Format: `issue ITEM_ID STUDENT_ID DUE_DATE_TIME`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 Use this command to keep track of borrowed equipment and who is responsible for returning it.
@@ -355,8 +355,8 @@ Duplicate handling:
 * The system will show the current holder of the item and its due date/time.
 
 Examples:
-* `issue Wilson-Evolution-Basketball-1 A1203763K d/2026-03-05 1700`
-* `issue Molten-Volleyball A1206789J d/2026-03-02 1200`
+* `issue Wilson-Evolution-Basketball-1 A1203763K 2026-03-05 1700`
+* `issue Molten-Volleyball A1206789J 2026-03-02 1200`
 
 ![issue command screenshot](images/issueCommand.png)
 
