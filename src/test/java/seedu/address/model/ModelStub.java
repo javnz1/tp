@@ -219,6 +219,11 @@ public abstract class ModelStub implements Model {
     public void updateFilteredEquipmentList(Predicate<Equipment> predicate) {
         throw new AssertionError("This method should not be called.");
     }
+    @Override
+    public boolean hasEquipmentName(Equipment equipment) {
+        throw new AssertionError("This method should not be called.");
+    }
+
 }
 
 

@@ -28,6 +28,15 @@ public class UniqueEquipmentList implements Iterable<Equipment> {
     }
 
     /**
+     * Returns true if the list contains an equivalent equipment as the given argument.
+     */
+    public boolean containsName(Equipment toCheck) {
+        requireNonNull(toCheck);
+        return internalList.stream().anyMatch(toCheck::isSameEquipmentName);
+    }
+
+
+    /**
      * Adds an equipment to the list.
      * The equipment must not already exist in the list.
      */

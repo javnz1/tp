@@ -47,7 +47,7 @@ public class DeleteTagCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
         //Ensure that target is inside storage
-        if (model.hasTaggable(target)) {
+        if (!model.hasTaggable(target)) {
             throw new CommandException(MESSAGE_ERROR);
         }
 

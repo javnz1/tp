@@ -214,6 +214,14 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Returns true if an equipment with the same name as {@code equipment} exists in the address book.
+     */
+    public boolean hasEquipmentName(Equipment equipment) {
+        requireNonNull(equipment);
+        return equipments.containsName(equipment);
+    }
+
+    /**
      * Adds an equipment to the address book.
      * The equipment must not already exist in the address book.
      */

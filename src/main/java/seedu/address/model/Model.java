@@ -108,6 +108,8 @@ public interface Model {
 
     boolean hasEquipment(Equipment equipment);
 
+    boolean hasEquipmentName(Equipment equipment);
+
     void addEquipment(Equipment equipment);
 
     void deleteEquipment(Equipment target);
