@@ -49,17 +49,24 @@ public class ReserveCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        if (!model.hasReservableItem(reservationToAdd.getResourceId())) {
+        String resolvedResourceId = model.resolveAlias(reservationToAdd.getResourceId());
+        Reservation resolvedReservation = new Reservation(
+                resolvedResourceId,
+                reservationToAdd.getStudentId(),
+                reservationToAdd.getStartDateTime(),
+                reservationToAdd.getEndDateTime());
+
+        if (!model.hasReservableItem(resolvedReservation.getResourceId())) {
             throw new CommandException(String.format(
-                    MESSAGE_INVALID_RESOURCE, reservationToAdd.getResourceId()));
+                    MESSAGE_INVALID_RESOURCE, resolvedReservation.getResourceId()));
         }
 
-        if (!model.hasStudentId(reservationToAdd.getStudentId())) {
+        if (!model.hasStudentId(resolvedReservation.getStudentId())) {
             throw new CommandException(String.format(
-                    MESSAGE_INVALID_STUDENT, reservationToAdd.getStudentId()));
+                    MESSAGE_INVALID_STUDENT, resolvedReservation.getStudentId()));
         }
 
-        Optional<Reservation> conflictingReservation = model.getConflictingReservation(reservationToAdd);
+        Optional<Reservation> conflictingReservation = model.getConflictingReservation(resolvedReservation);
         if (conflictingReservation.isPresent()) {
             Reservation existing = conflictingReservation.get();
             throw new CommandException(String.format(
@@ -69,20 +76,13 @@ public class ReserveCommand extends Command {
                     existing.getFormattedEndDateTime()));
         }
 
-        String resolvedResourceId = model.resolveAlias(reservationToAdd.getResourceId());
-        Reservation resolvedReservation = new Reservation(
-                resolvedResourceId,
-                reservationToAdd.getStudentId(),
-                reservationToAdd.getStartDateTime(),
-                reservationToAdd.getEndDateTime());
-
-        model.addReservation(reservationToAdd);
+        model.addReservation(resolvedReservation);
         return new CommandResult(String.format(
                 MESSAGE_SUCCESS,
-                reservationToAdd.getResourceId(),
-                reservationToAdd.getStudentId(),
-                reservationToAdd.getFormattedStartDateTime(),
-                reservationToAdd.getFormattedEndDateTime()));
+                resolvedReservation.getResourceId(),
+                resolvedReservation.getStudentId(),
+                resolvedReservation.getFormattedStartDateTime(),
+                resolvedReservation.getFormattedEndDateTime()));
     }
 
     /**
