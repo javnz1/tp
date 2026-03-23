@@ -65,6 +65,9 @@ public interface Model {
         throw new UnsupportedOperationException("Not implemented.");
     }
 
+
+    void setRoom(Room target, Room editedRoom);
+
     default void deleteRoom(Room target) {
         throw new UnsupportedOperationException("Not implemented.");
     }

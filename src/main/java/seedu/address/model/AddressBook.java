@@ -125,6 +125,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.rooms.setRooms(rooms);
     }
 
+    public void setRoom(Room target, Room editedRoom) {
+        requireNonNull(editedRoom);
+        rooms.setRoom(target, editedRoom);
+    }
+
     /**
      * Returns true if the address book contains a room with the same identity as {@code room}.
      */

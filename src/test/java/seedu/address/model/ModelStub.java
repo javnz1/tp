@@ -13,6 +13,7 @@ import seedu.address.model.issue.IssueRecord;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.StudentId;
 import seedu.address.model.reservation.Reservation;
+import seedu.address.model.room.Room;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.Taggable;
 
@@ -94,6 +95,12 @@ public abstract class ModelStub implements Model {
 
     @Override
     public boolean hasStudentId(StudentId studentId) {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    //=========== Room =============================================================
+    @Override
+    public void setRoom(Room target, Room editedRoom) {
         throw new AssertionError("This method should not be called.");
     }
 

@@ -169,6 +169,13 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void setRoom(Room target, Room editedRoom) {
+        requireNonNull(target);
+        addressBook.setRoom(target, editedRoom);
+        updateFilteredRoomList(PREDICATE_SHOW_ALL_ROOMS);
+    }
+
+    @Override
     public void deleteRoom(Room target) {
         target.onDelete();
         addressBook.removeRoom(target);

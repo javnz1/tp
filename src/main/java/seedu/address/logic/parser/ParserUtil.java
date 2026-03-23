@@ -21,6 +21,7 @@ import seedu.address.model.person.StudentId;
 import seedu.address.model.reservation.Reservation;
 import seedu.address.model.room.Location;
 import seedu.address.model.room.RoomName;
+import seedu.address.model.room.Status;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -162,6 +163,18 @@ public class ParserUtil {
         requireNonNull(location);
         String trimmedLocation = location.trim();
         return new Location(trimmedLocation);
+    }
+
+    /**
+     * Parses a {@code String status} into a {@code Status}.
+     */
+    public static Status parseStatus(String status) throws ParseException {
+        requireNonNull(status);
+        String trimmedStatus = status.trim();
+        if (!Status.isValidStatus(trimmedStatus)) {
+            throw new ParseException("Status should be one of: Available, Booked, Maintenance.");
+        }
+        return new Status(trimmedStatus);
     }
 
     /**
