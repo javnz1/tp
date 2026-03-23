@@ -75,6 +75,22 @@ public class EditEquipmentCommand extends Command {
         return new Equipment(updatedName, updatedCategory, updatedStatus);
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof EditEquipmentCommand)) {
+            return false;
+        }
+
+        // state check
+        EditEquipmentCommand e = (EditEquipmentCommand) other;
+        return index.equals(e.index)
+                && editEquipmentDescriptor.equals(e.editEquipmentDescriptor);
+    }
+
     /**
      * Stores the details to edit the equipment with. Each non-empty field value will replace the
      * corresponding field value of the equipment.
