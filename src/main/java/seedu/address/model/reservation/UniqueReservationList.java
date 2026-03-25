@@ -110,6 +110,22 @@ public class UniqueReservationList implements Iterable<Reservation> {
         return internalList.equals(otherUniqueReservationList.internalList);
     }
 
+    /**
+     * Returns the matching reservation, if any.
+     */
+    public Optional<Reservation> getMatchingReservation(Reservation reservation) {
+        requireNonNull(reservation);
+        return internalList.stream().filter(reservation::equals).findFirst();
+    }
+
+    /**
+     * Removes the equivalent reservation from the list.
+     */
+    public void remove(Reservation toRemove) {
+        requireNonNull(toRemove);
+        internalList.remove(toRemove);
+    }
+
     @Override
     public int hashCode() {
         return internalList.hashCode();

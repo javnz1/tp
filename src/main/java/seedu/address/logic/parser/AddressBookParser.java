@@ -14,6 +14,7 @@ import seedu.address.logic.commands.AddRoomCommand;
 import seedu.address.logic.commands.AddStudentCommand;
 import seedu.address.logic.commands.AddTagCommand;
 import seedu.address.logic.commands.AliasCommand;
+import seedu.address.logic.commands.CancelReservationCommand;
 import seedu.address.logic.commands.CheckStudentLoansCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
@@ -33,6 +34,7 @@ import seedu.address.logic.commands.ListEquipmentCommand;
 import seedu.address.logic.commands.ListRoomCommand;
 import seedu.address.logic.commands.ListStudentCommand;
 import seedu.address.logic.commands.ReserveCommand;
+import seedu.address.logic.commands.ReturnCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -137,6 +139,12 @@ public class AddressBookParser {
 
         case CheckStudentLoansCommand.COMMAND_WORD:
             return new CheckStudentLoansCommandParser().parse(arguments);
+
+        case ReturnCommand.COMMAND_WORD:
+            return new ReturnCommandParser().parse(arguments);
+
+        case CancelReservationCommand.COMMAND_WORD:
+            return new CancelReservationCommandParser().parse(arguments);
 
         default:
             logger.finer("This user input caused a ParseException: " + userInput);

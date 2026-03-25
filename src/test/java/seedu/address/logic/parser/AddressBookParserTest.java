@@ -9,6 +9,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_EQUIPMENT;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddEquipmentCommand;
 import seedu.address.logic.commands.AddStudentCommand;
+import seedu.address.logic.commands.CancelReservationCommand;
 import seedu.address.logic.commands.CheckStudentLoansCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
@@ -30,15 +32,19 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.ListEquipmentCommand;
 import seedu.address.logic.commands.ListStudentCommand;
+import seedu.address.logic.commands.ReturnCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.equipment.Equipment;
 import seedu.address.model.equipment.EquipmentName;
 import seedu.address.model.equipment.EquipmentStatus;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.StudentId;
+import seedu.address.model.reservation.Reservation;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
+
 
 public class AddressBookParserTest {
 
@@ -150,5 +156,21 @@ public class AddressBookParserTest {
         CheckStudentLoansCommand command = (CheckStudentLoansCommand) parser.parseCommand(
                 CheckStudentLoansCommand.COMMAND_WORD + " " + ALICE.getStudentId());
         assertEquals(new CheckStudentLoansCommand(ALICE.getStudentId()), command);
+    }
+    @Test
+    public void parseCommand_return() throws Exception {
+        assertEquals(new ReturnCommand("Wilson-Evolution-Basketball-1"),
+                parser.parseCommand(ReturnCommand.COMMAND_WORD + " Wilson-Evolution-Basketball-1"));
+    }
+
+    @Test
+    public void parseCommand_cancel() throws Exception {
+        Reservation reservation = new Reservation("Hall-2", new StudentId("a1234567a"),
+                LocalDateTime.of(2099, 3, 15, 9, 0),
+                LocalDateTime.of(2099, 3, 15, 11, 0));
+
+        assertEquals(new CancelReservationCommand(reservation),
+                parser.parseCommand(CancelReservationCommand.COMMAND_WORD
+                        + " Hall-2 a1234567a f/2099-03-15 0900 t/2099-03-15 1100"));
     }
 }

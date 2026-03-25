@@ -338,6 +338,24 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public Optional<Reservation> getMatchingReservation(Reservation reservation) {
+        requireNonNull(reservation);
+        return addressBook.getMatchingReservation(reservation);
+    }
+
+    @Override
+    public void removeReservation(Reservation reservation) {
+        requireNonNull(reservation);
+        addressBook.removeReservation(reservation);
+    }
+
+    @Override
+    public void removeIssueRecord(IssueRecord issueRecord) {
+        requireNonNull(issueRecord);
+        addressBook.removeIssueRecord(issueRecord);
+    }
+
+    @Override
     public boolean equals(Object other) {
         if (other == this) {
             return true;

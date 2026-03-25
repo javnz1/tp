@@ -12,6 +12,7 @@ import javafx.collections.ObservableList;
 import seedu.address.model.issue.exceptions.DuplicateIssueRecordException;
 import seedu.address.model.issue.exceptions.ItemAlreadyIssuedException;
 
+
 /**
  * A list of issue records that enforces uniqueness between its elements and ensures
  * that a single item cannot be issued more than once at the same time.
@@ -140,6 +141,17 @@ public class UniqueIssueRecordList implements Iterable<IssueRecord> {
     public int hashCode() {
         return internalList.hashCode();
     }
+
+    /**
+     * Removes the equivalent issue record from the list.
+     *
+     * @param toRemove The issue record to remove.
+     */
+    public void remove(IssueRecord toRemove) {
+        requireNonNull(toRemove);
+        internalList.remove(toRemove);
+    }
+
 
     /**
      * Returns a string representation of this issue record list.

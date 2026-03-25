@@ -96,6 +96,12 @@ public interface Model {
 
     boolean hasAliasableTarget(String targetId);
 
+    Optional<Reservation> getMatchingReservation(Reservation reservation);
+
+    void removeReservation(Reservation reservation);
+
+    void removeIssueRecord(IssueRecord issueRecord);
+
     boolean hasAliasName(String aliasName);
 
     Optional<AliasMapping> getAliasMappingByName(String aliasName);

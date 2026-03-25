@@ -397,6 +397,43 @@ Examples:
 * Invalid `ITEM_OR_ROOM_ID`
 * Alias already exists
 
+### Return an equipment: `return`
+
+Returns an issued equipment item back to the inventory.
+
+**Format**
+`return ITEM_ID`
+
+**Example**
+`return Wilson-Evolution-Basketball-1`
+
+**Success**
+`WILSON-EVOLUTION-BASKETBALL-1 returned successfully from a1234567a`
+
+**Failure**
+- item is not currently issued
+- invalid command format
+
+**Notes**
+- aliases are supported, so if `b1` is an alias for `Wilson-Evolution-Basketball-1`, then `return b1` also works
+
+### Cancel a reservation: `cancel`
+
+Cancels an existing reservation.
+
+**Format**
+`cancel ITEM_OR_ROOM_ID STUDENT_ID f/START_DATE_TIME t/END_DATE_TIME`
+
+**Date/time format**
+`yyyy-MM-dd HHmm`
+
+**Example**
+`cancel Hall-2 a1234567a f/2099-03-15 0900 t/2099-03-15 1100`
+
+**Success**
+
+Reservation cancelled:
+Reserved HALL-2 by Student a1234567a from 2099-03-15 0900 to 2099-03-15 1100
 
 ### 2.4 Tag & Filter:
 
