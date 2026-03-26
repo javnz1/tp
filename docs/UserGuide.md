@@ -57,8 +57,8 @@ During high-pressure periods such as the Inter-Hall Games (IHG), Inter-College G
 * Items in square brackets are optional.<br>
   e.g `n/NAME [t/TAG]` can be used as `n/John-Doe t/friend` or as `n/John-Doe`.
 
-* Items with `…`​ after them can be used multiple times including zero times.<br>
-  e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+* Items with `…` after them can be used multiple times including zero times.<br>
+  e.g. `[t/TAG]…` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
@@ -292,7 +292,7 @@ Possible errors:
 
 Adds a new borrower in the database so they can begin borrowing items or booking facilities.
 
-Format: `add-s n/NAME m/MATRIC_NUMBER p/PHONE_NUMBER e/EMAIL​`
+Format: `add-s n/NAME m/MATRIC_NUMBER p/PHONE_NUMBER e/EMAIL`
 
 Examples:
 *  `add-s n/John Doe m/A0123456B p/91234567 e/e0123456@u.nus.edu` Adds a new student with the name `John Doe`, matric number `A0123456B`, phone number `91234567` and email address `e0123456@u.nus.edu`.
@@ -317,7 +317,7 @@ Duplicate handling:
 
 To check the list of equipment or venues loaned to a student.
 
-Format: `check-s MATRIC_NUMBER​`
+Format: `check-s MATRIC_NUMBER`
 
 Examples:
 * `check-s A0123456B`
@@ -341,7 +341,7 @@ Possible errors:
 
 To display a list of all registered borrowers in the system.
 
-Format: `list-s​`
+Format: `list-s`
 
 ![ListStudentsSuccess.png](images/ListStudentsSuccess.png)
 
@@ -349,7 +349,7 @@ Format: `list-s​`
 
 To permanently delete a borrower’s record from the system database.
 
-Format: `delete-s MATRIC_NUMBER​`
+Format: `delete-s MATRIC_NUMBER`
 
 Examples:
 * `delete-s A0123456B`
@@ -369,7 +369,7 @@ Edits an existing student's details in the address book.
 Format: `edit-s INDEX [n/NAME] [p/PHONE] [e/EMAIL]`
 
 Acceptable values:
-* Edits the person at the specified INDEX. The index refers to the index number shown in the displayed person list. The index must be a positive integer `1, 2, 3, …​`
+* Edits the person at the specified INDEX. The index refers to the index number shown in the displayed person list. The index must be a positive integer `1, 2, 3, …`
 * Matric number is not modifiable.
 * The order does not matter (e.g., `p/` can come before `n/`).
 * (With at least one of the fields)
@@ -432,6 +432,10 @@ Cancels an existing reservation.
 Reservation cancelled:
 Reserved HALL-2 by Student a1234567a from 2099-03-15 0900 to 2099-03-15 1100
 
+**Failure**
+`Error:
+Wilson-Evolution-Basketball-1 is not currently issued.`
+
 #### Issuing an equipment item: `issue`
 
 Issues an equipment item to a student with a due date and time for return.
@@ -480,6 +484,8 @@ Returns an issued equipment item back to the inventory.
 **Failure**
 - item is not currently issued
 - invalid command format
+`Error:
+No matching reservation found for Hall-2 by a1234567a from 2099-03-15 0900 to 2099-03-15 1100`
 
 **Notes**
 - aliases are supported, so if `b1` is an alias for `Wilson-Evolution-Basketball-1`, then `return b1` also works
