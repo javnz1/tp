@@ -57,8 +57,8 @@ During high-pressure periods such as the Inter-Hall Games (IHG), Inter-College G
 * Items in square brackets are optional.<br>
   e.g `n/NAME [t/TAG]` can be used as `n/John-Doe t/friend` or as `n/John-Doe`.
 
-* Items with `…`​ after them can be used multiple times including zero times.<br>
-  e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+* Items with `…` after them can be used multiple times including zero times.<br>
+  e.g. `[t/TAG]…` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
@@ -292,7 +292,7 @@ Possible errors:
 
 Adds a new borrower in the database so they can begin borrowing items or booking facilities.
 
-Format: `add-s n/NAME m/MATRIC_NUMBER p/PHONE_NUMBER e/EMAIL​`
+Format: `add-s n/NAME m/MATRIC_NUMBER p/PHONE_NUMBER e/EMAIL`
 
 Examples:
 *  `add-s n/John Doe m/A0123456B p/91234567 e/e0123456@u.nus.edu` Adds a new student with the name `John Doe`, matric number `A0123456B`, phone number `91234567` and email address `e0123456@u.nus.edu`.
@@ -317,7 +317,7 @@ Duplicate handling:
 
 To check the list of equipment or venues loaned to a student.
 
-Format: `check-s MATRIC_NUMBER​`
+Format: `check-s MATRIC_NUMBER`
 
 Examples:
 * `check-s A0123456B`
@@ -341,7 +341,7 @@ Possible errors:
 
 To display a list of all registered borrowers in the system.
 
-Format: `list-s​`
+Format: `list-s`
 
 ![ListStudentsSuccess.png](images/ListStudentsSuccess.png)
 
@@ -349,7 +349,7 @@ Format: `list-s​`
 
 To permanently delete a borrower’s record from the system database.
 
-Format: `delete-s MATRIC_NUMBER​`
+Format: `delete-s MATRIC_NUMBER`
 
 Examples:
 * `delete-s A0123456B`
@@ -366,10 +366,10 @@ Possible errors:
 
 Edits an existing student's details in the address book.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL]`
+Format: `edit-s INDEX [n/NAME] [p/PHONE] [e/EMAIL]`
 
 Acceptable values:
-* Edits the person at the specified INDEX. The index refers to the index number shown in the displayed person list. The index must be a positive integer `1, 2, 3, …​`
+* Edits the person at the specified INDEX. The index refers to the index number shown in the displayed person list. The index must be a positive integer `1, 2, 3, …`
 * Matric number is not modifiable.
 * The order does not matter (e.g., `p/` can come before `n/`).
 * (With at least one of the fields)
@@ -378,7 +378,7 @@ Acceptable values:
     * Email: Valid email format (e.g., `e0123456@u.nus.edu`).
 
 Examples:
-* `edit-e 2 n/Tom p/91234561 e/e1234567@u.nus.edu`.
+* `edit-s 2 n/Tom p/91234561 e/e1234567@u.nus.edu`.
 
 
 ### 2.4 Loans & Reservations
@@ -414,6 +414,28 @@ Possible errors:
 * End time is earlier than start time
 * Reservation conflicts with an existing booking
 
+#### Cancel a reservation: `cancel`
+
+Cancels an existing reservation.
+
+**Format**
+`cancel ITEM_OR_ROOM_ID STUDENT_ID f/START_DATE_TIME t/END_DATE_TIME`
+
+**Date/time format**
+`yyyy-MM-dd HHmm`
+
+**Example**
+`cancel Hall-2 a1234567a f/2099-03-15 0900 t/2099-03-15 1100`
+
+**Success**
+
+Reservation cancelled:
+Reserved HALL-2 by Student a1234567a from 2099-03-15 0900 to 2099-03-15 1100
+
+**Failure**
+`Error:
+Wilson-Evolution-Basketball-1 is not currently issued.`
+
 #### Issuing an equipment item: `issue`
 
 Issues an equipment item to a student with a due date and time for return.
@@ -446,6 +468,29 @@ Possible errors:
 * Invalid due date/time format
 * Due date/time is in the past
 
+#### Return an equipment: `return`
+
+Returns an issued equipment item back to the inventory.
+
+**Format**
+`return ITEM_ID`
+
+**Example**
+`return Wilson-Evolution-Basketball-1`
+
+**Success**
+`WILSON-EVOLUTION-BASKETBALL-1 returned successfully from a1234567a`
+
+**Failure**
+- item is not currently issued
+- invalid command format
+`Error:
+No matching reservation found for Hall-2 by a1234567a from 2099-03-15 0900 to 2099-03-15 1100`
+
+**Notes**
+- aliases are supported, so if `b1` is an alias for `Wilson-Evolution-Basketball-1`, then `return b1` also works
+
+
 #### Creating an alias: `alias`
 
 Creates a short alias for an equipment item or room.
@@ -475,49 +520,7 @@ Examples:
 * Invalid `ITEM_OR_ROOM_ID`
 * Alias already exists
 
-### Return an equipment: `return`
 
-Returns an issued equipment item back to the inventory.
-
-**Format**
-`return ITEM_ID`
-
-**Example**
-`return Wilson-Evolution-Basketball-1`
-
-**Success**
-`WILSON-EVOLUTION-BASKETBALL-1 returned successfully from a1234567a`
-
-**Failure**
-- item is not currently issued
-- invalid command format
-`Error:
-No matching reservation found for Hall-2 by a1234567a from 2099-03-15 0900 to 2099-03-15 1100`
-
-**Notes**
-- aliases are supported, so if `b1` is an alias for `Wilson-Evolution-Basketball-1`, then `return b1` also works
-
-### Cancel a reservation: `cancel`
-
-Cancels an existing reservation.
-
-**Format**
-`cancel ITEM_OR_ROOM_ID STUDENT_ID f/START_DATE_TIME t/END_DATE_TIME`
-
-**Date/time format**
-`yyyy-MM-dd HHmm`
-
-**Example**
-`cancel Hall-2 a1234567a f/2099-03-15 0900 t/2099-03-15 1100`
-
-**Success**
-
-`Reservation cancelled:
-Reserved HALL-2 by Student a1234567a from 2099-03-15 0900 to 2099-03-15 1100`
-
-**Failure**
-`Error:
-Wilson-Evolution-Basketball-1 is not currently issued.`
 ### 2.5 Tag & Filter:
 
 #### Tagging an item or room: `tag`
@@ -669,16 +672,20 @@ Action | Format, Examples
 **Add Equipment** | `add-e n/NAME c/CATEGORY s/STATUS` <br> e.g., `add-e n/Wilson-Evolution-Basketball c/Basketball s/Available`
 **List Equipment** | `list-e`
 **Delete Equipment**| `delete-e INDEX` <br> e.g., `delete-e 3`
+**Edit Equipment** | `edit-e INDEX [n/NAME] [c/CATEGORY] [s/STATUS]` <br> e.g. `edit-e 6 s/Booked`
 **Add Room** | `add-r n/NAME l/LOCATION s/STATUS` <br> e.g., `add-r n/MPSH-2 l/Sports-Centre s/Available`
 **List Rooms** | `list-r`
 **Delete Room** | `delete-r INDEX` <br> e.g., `delete-r 1`
+**Edit Room** | `edit-r INDEX [n/NAME] [c/LOCATION] [s/STATUS]` <br> e.g. `edit-r 3 n/Tennis-Court s/Booked`
 **Add Student** | `add-s n/NAME m/MATRIC_NUMBER p/PHONE_NUMBER e/EMAIL` <br> e.g., `add-s n/John Doe m/A0123456B p/91234567 e/e0123456@u.nus.edu`
 **Check Loans** | `check-s MATRIC_NUMBER` <br> e.g., `check-s A0123456B`
 **List Students** | `list-s`
 **Delete Student** | `delete-s MATRIC_NUMBER` <br> e.g., `delete-s A0123456B`
-**Edit Student** | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL]` <br> e.g. `edit-e 2 n/Tom p/91234561 e/e1234567@u.nus.edu`
-**Reserve** | `reserve ITEM_OR_ROOM_ID STUDENT_ID f/START_DATE_TIME t/END_DATE_TIME` <br> e.g., `reserve Hall-2 a1234567a f/2026-03-01 1400 t/2026-03-01 1600`
-**Issue** | `issue ITEM_ID STUDENT_ID d/DUE_DATE_TIME` <br> e.g., `issue Wilson-Basketball-1 A1203763K d/2026-03-05 1700`
+**Edit Student** | `edit-s INDEX [n/NAME] [p/PHONE] [e/EMAIL]` <br> e.g. `edit-s 2 n/Tom p/91234561 e/e1234567@u.nus.edu`
+**Reserve** | `reserve ITEM_OR_ROOM_ID STUDENT_ID [f/START_DATE_TIME] [t/END_DATE_TIME]` <br> e.g., `reserve Hall-2 a1234567a f/2026-03-01 1400 t/2026-03-01 1600`
+**Cancel** | `cancel ITEM_OR_ROOM_ID STUDENT_ID [f/START_DATE_TIME] [t/END_DATE_TIME]` <br> e.g., `cancel Hall-2 a1234567a f/2099-03-15 0900 t/2099-03-15 1100`
+**Issue** | `issue ITEM_ID STUDENT_ID [d/DUE_DATE_TIME]` <br> e.g., `issue Wilson-Basketball-1 A1203763K d/2026-03-05 1700`
+**Return** | `return ITEM_ID` <br> e.g. `return Wilson-Evolution-Basketball-1`
 **Tag** | `tag [c/EQUIPMENT_NAME | l/ROOM_NAME] t/TAG` <br> e.g., `tag c/Basketball-1 t/spoilt`
 **Filter** | `filter [c/ | l/] t/TAG` <br> e.g., `filter l/ t/renovation`
 **Alias** | `alias ITEM_OR_ROOM_ID ALIAS_NAME` <br> e.g., `alias MPSH-1 hall1`
