@@ -686,8 +686,8 @@ Action | Format, Examples
 **Cancel** | `cancel ITEM_OR_ROOM_ID STUDENT_ID [f/START_DATE_TIME] [t/END_DATE_TIME]` <br> e.g., `cancel Hall-2 a1234567a f/2099-03-15 0900 t/2099-03-15 1100`
 **Issue** | `issue ITEM_ID STUDENT_ID [d/DUE_DATE_TIME]` <br> e.g., `issue Wilson-Basketball-1 A1203763K d/2026-03-05 1700`
 **Return** | `return ITEM_ID` <br> e.g. `return Wilson-Evolution-Basketball-1`
-**Tag** | `tag [c/EQUIPMENT_NAME | l/ROOM_NAME] t/TAG` <br> e.g., `tag c/Basketball-1 t/spoilt`
-**Filter** | `filter [c/ | l/] t/TAG` <br> e.g., `filter l/ t/renovation`
+**Tag** | `tag [c/EQUIPMENT_NAME or l/ROOM_NAME] t/TAG` <br> e.g., `tag c/Basketball-1 t/spoilt`
+**Filter** | `filter [c/ or l/] t/TAG` <br> e.g., `filter l/ t/renovation`
 **Alias** | `alias ITEM_OR_ROOM_ID ALIAS_NAME` <br> e.g., `alias MPSH-1 hall1`
 **Clear** | `clear`
 **Exit** | `exit`
