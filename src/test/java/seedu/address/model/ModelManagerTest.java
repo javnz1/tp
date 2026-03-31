@@ -271,6 +271,11 @@ public class ModelManagerTest {
     }
 
     @Test
+    public void hasIssuableItem_maintenanceItem_returnsFalse() {
+        assertFalse(modelManager.hasIssuableItem("Molten-Volleyball"));
+    }
+
+    @Test
     public void hasAliasableTarget_nullTargetId_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> modelManager.hasAliasableTarget(null));
     }
