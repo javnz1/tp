@@ -83,6 +83,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         setRooms(newData.getRoomList());
         setReservations(newData.getReservationList());
         setIssueRecords(newData.getIssueRecordList());
+        setAliasMappings(newData.getAliasMappingList());
         setEquipments(newData.getEquipmentList());
     }
 
