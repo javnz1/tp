@@ -14,15 +14,15 @@ import seedu.address.model.person.StudentId;
 import seedu.address.model.reservation.Reservation;
 
 /**
- * Lists all loans for a specific student.
+ * Lists all loans and reservations for a specific student.
  */
 public class CheckStudentLoansCommand extends Command {
 
     public static final String COMMAND_WORD = "check-s";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Checks loans for a student. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Checks loans and reservations for a student. "
             + "Parameters: MATRIC_NUMBER";
 
-    public static final String MESSAGE_SUCCESS_HEADER = "Displaying Loans and Reservations for: %1$s (%2$s)";
+    public static final String MESSAGE_SUCCESS_HEADER = "Displaying loans and reservations for: %1$s (%2$s)";
     public static final String MESSAGE_NO_LOANS = "No existing loans/reservations.";
     public static final String MESSAGE_STUDENT_NOT_FOUND = "Unsuccessful: Cannot find user.";
 
