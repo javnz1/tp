@@ -19,6 +19,7 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.alias.AliasMapping;
+import seedu.address.model.equipment.Category;
 import seedu.address.model.equipment.Equipment;
 import seedu.address.model.equipment.EquipmentName;
 import seedu.address.model.equipment.EquipmentStatus;
@@ -383,7 +384,7 @@ public class ModelManagerTest {
         ModelManager model = new ModelManager();
         AddressBook ab = new AddressBook();
         ab.addEquipment(new Equipment(
-                new EquipmentName("Wilson-Evolution"), "Basketball", EquipmentStatus.AVAILABLE));
+                new EquipmentName("Wilson-Evolution"), new Category("Basketball"), EquipmentStatus.AVAILABLE));
         model.setAddressBook(ab);
 
         assertTrue(model.hasIssuableItem("Wilson-Evolution"));
@@ -394,7 +395,7 @@ public class ModelManagerTest {
         ModelManager model = new ModelManager();
         AddressBook ab = new AddressBook();
         ab.addEquipment(new Equipment(
-                new EquipmentName("Track-Stand"), "Track-and-Field", EquipmentStatus.BOOKED));
+                new EquipmentName("Track-Stand"), new Category("Track-and-Field"), EquipmentStatus.BOOKED));
         model.setAddressBook(ab);
 
         assertFalse(model.hasIssuableItem("Track-Stand"));
@@ -405,7 +406,7 @@ public class ModelManagerTest {
         ModelManager model = new ModelManager();
         AddressBook ab = new AddressBook();
         ab.addEquipment(new Equipment(
-                new EquipmentName("Molten-Volleyball"), "Volleyball", EquipmentStatus.MAINTENANCE));
+                new EquipmentName("Molten-Volleyball"), new Category("Volleyball"), EquipmentStatus.MAINTENANCE));
         model.setAddressBook(ab);
 
         assertFalse(model.hasIssuableItem("Molten-Volleyball"));
@@ -416,7 +417,7 @@ public class ModelManagerTest {
         ModelManager model = new ModelManager();
         AddressBook ab = new AddressBook();
         ab.addEquipment(new Equipment(
-                new EquipmentName("Wilson-Evolution"), "Basketball", EquipmentStatus.AVAILABLE));
+                new EquipmentName("Wilson-Evolution"), new Category("Basketball"), EquipmentStatus.AVAILABLE));
         ab.addAliasMapping(new AliasMapping("Wilson-Evolution", "ball"));
         model.setAddressBook(ab);
 
@@ -467,7 +468,7 @@ public class ModelManagerTest {
         ModelManager model = new ModelManager();
         AddressBook ab = new AddressBook();
         ab.addEquipment(new Equipment(
-                new EquipmentName("Wilson-Evolution"), "Basketball", EquipmentStatus.AVAILABLE));
+                new EquipmentName("Wilson-Evolution"), new Category("Basketball"), EquipmentStatus.AVAILABLE));
         model.setAddressBook(ab);
 
         assertTrue(model.hasReservableItem("Wilson-Evolution"));
@@ -478,7 +479,7 @@ public class ModelManagerTest {
         ModelManager model = new ModelManager();
         AddressBook ab = new AddressBook();
         ab.addEquipment(new Equipment(
-                new EquipmentName("Molten-Volleyball"), "Volleyball", EquipmentStatus.MAINTENANCE));
+                new EquipmentName("Molten-Volleyball"), new Category("Volleyball"), EquipmentStatus.MAINTENANCE));
         model.setAddressBook(ab);
 
         assertFalse(model.hasReservableItem("Molten-Volleyball"));
