@@ -26,8 +26,8 @@ public class EditEquipmentCommand extends Command {
             + "by the index number used in the displayed equipment list. "
             + "At least one field to edit must be provided.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + "[n/NAME] [c/CATEGORY] [s/STATUS]\n"
-            + "Example: " + COMMAND_WORD + " 1 s/Booked";
+            + "[n/NAME] [c/CATEGORY] [s/STATUS (Maintenance or Damaged only)]\n"
+            + "Example: " + COMMAND_WORD + " 1 s/Maintenance";
 
     public static final String MESSAGE_EDIT_EQUIPMENT_SUCCESS = "Updated Equipment:\n%1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -54,9 +54,25 @@ public class EditEquipmentCommand extends Command {
         }
 
         Equipment equipmentToEdit = lastShownList.get(index.getZeroBased());
+
+        if (editEquipmentDescriptor.getStatus().isPresent()) {
+            EquipmentStatus currentStatus = equipmentToEdit.getStatus();
+            EquipmentStatus requestedStatus = editEquipmentDescriptor.getStatus().get();
+
+            if (currentStatus.equals(requestedStatus)) {
+                editEquipmentDescriptor.setStatus(null);
+            } else {
+                validateStatusTransition(currentStatus, requestedStatus);
+            }
+        }
+
         Equipment editedEquipment = createEditedEquipment(equipmentToEdit, editEquipmentDescriptor);
 
-        if (!equipmentToEdit.isSameEquipment(editedEquipment) && model.hasEquipment(editedEquipment)) {
+        if (equipmentToEdit.equals(editedEquipment)) {
+            throw new CommandException("No changes detected (the information provided matches current records).");
+        }
+
+        if (!equipmentToEdit.isSameEquipmentName(editedEquipment) && model.hasEquipment(editedEquipment)) {
             throw new CommandException(MESSAGE_DUPLICATE_EQUIPMENT);
         }
 
@@ -74,6 +90,33 @@ public class EditEquipmentCommand extends Command {
         EquipmentStatus updatedStatus = editEquipmentDescriptor.getStatus().orElse(equipmentToEdit.getStatus());
 
         return new Equipment(updatedName, updatedCategory, updatedStatus);
+    }
+
+    private void validateStatusTransition(EquipmentStatus current, EquipmentStatus requested)
+            throws CommandException {
+        String currentVal = current.toString().toUpperCase();
+        String requestedVal = requested.toString().toUpperCase();
+
+        if (currentVal.equals(requestedVal)) {
+            throw new CommandException("Equipment is already in " + current.toString() + ", no status change.");
+        }
+
+        if (currentVal.equals("BOOKED")) {
+            throw new CommandException("Equipment is currently 'Booked' and its status cannot be edited as it is "
+                    + "currently issued or reserved");
+        }
+
+        if (currentVal.equals("AVAILABLE")) {
+            if (!requestedVal.equals("MAINTENANCE") && !requestedVal.equals("DAMAGED")) {
+                throw new CommandException("Equipment in 'Available' status can only be edited to 'Maintenance' or "
+                        + "'Damaged'.");
+            }
+        } else if (currentVal.equals("MAINTENANCE") || currentVal.equals("DAMAGED")) {
+            if (!requestedVal.equals("AVAILABLE")) {
+                throw new CommandException("Equipment in 'Maintenance' or 'Damaged' status can only be edited to "
+                        + "'Available'.");
+            }
+        }
     }
 
     @Override
