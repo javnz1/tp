@@ -1,12 +1,10 @@
 package seedu.address.ui;
 
 import java.time.LocalDateTime;
-import java.util.Comparator;
 import java.util.List;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
@@ -36,8 +34,6 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label email;
     @FXML
-    private FlowPane tags;
-    @FXML
     private VBox loansContainer;
     @FXML
     private VBox reservationsContainer;
@@ -53,9 +49,6 @@ public class PersonCard extends UiPart<Region> {
         name.setText(person.getName().fullName + " [" + person.getStudentId().value + "]");
         phone.setText(person.getPhone().value);
         email.setText(person.getEmail().value);
-        person.getTags().stream()
-                .sorted(Comparator.comparing(tag -> tag.tagName))
-                .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
 
         // Populate the loans container
         if (loans.isEmpty()) {

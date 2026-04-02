@@ -49,7 +49,7 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_addStudent() throws Exception {
-        Person person = new PersonBuilder().withTags().build();
+        Person person = new PersonBuilder().build();
         AddStudentCommand command = (AddStudentCommand) parser.parseCommand(PersonUtil.getAddStudentCommand(person));
         assertEquals(new AddStudentCommand(person), command);
     }
