@@ -112,7 +112,7 @@ public class AddressBookParserTest {
         Equipment equipment = new Equipment(new EquipmentName("Wilson-Evolution"),
                 new Category("Basketball"), EquipmentStatus.AVAILABLE);
         AddEquipmentCommand command = (AddEquipmentCommand) parser.parseCommand(
-                AddEquipmentCommand.COMMAND_WORD + " n/Wilson-Evolution c/Basketball s/Available");
+                AddEquipmentCommand.COMMAND_WORD + " n/Wilson-Evolution c/Basketball");
         assertEquals(new AddEquipmentCommand(equipment), command);
     }
 

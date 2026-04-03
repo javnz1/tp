@@ -11,6 +11,7 @@ import seedu.address.model.equipment.Category;
 import seedu.address.model.equipment.Equipment;
 import seedu.address.model.equipment.EquipmentName;
 import seedu.address.model.equipment.EquipmentStatus;
+import seedu.address.testutil.EquipmentBuilder;
 
 public class AddEquipmentCommandParserTest {
     private AddEquipmentCommandParser parser = new AddEquipmentCommandParser();
@@ -20,10 +21,10 @@ public class AddEquipmentCommandParserTest {
         Equipment expectedEquipment = new Equipment(new EquipmentName("Wilson-Evolution"),
                 new Category("Basketball"), EquipmentStatus.AVAILABLE);
 
-        assertParseSuccess(parser, " n/Wilson-Evolution c/Basketball s/Available",
+        assertParseSuccess(parser, " n/Wilson-Evolution c/Basketball",
                 new AddEquipmentCommand(expectedEquipment));
 
-        assertParseSuccess(parser, " n/Wilson-Evolution c/Basketball s/aVaIlAbLe",
+        assertParseSuccess(parser, " n/Wilson-Evolution c/BaSketBAll",
                 new AddEquipmentCommand(expectedEquipment));
     }
 
@@ -39,11 +40,15 @@ public class AddEquipmentCommandParserTest {
     }
 
     @Test
-    public void parse_optionalStatusMissing_failure() {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                AddEquipmentCommand.MESSAGE_USAGE);
+    public void parse_optionalStatusMissing_success() {
+        Equipment expectedEquipment = new EquipmentBuilder()
+                .withName("WILSON-BASKETBALL")
+                .withCategory("BASKETBALL")
+                .withStatus(EquipmentStatus.AVAILABLE)
+                .build();
 
-        assertParseFailure(parser, " n/Wilson-Basketball c/Basketball", expectedMessage);
+        assertParseSuccess(parser, " n/Wilson-Basketball c/Basketball",
+                new AddEquipmentCommand(expectedEquipment));
     }
 }
 

@@ -37,11 +37,6 @@
     "tags" : [ ]
   } ],
   "rooms" : [ {
-    "name" : "MPSH-1",
-    "location" : "Sports-Centre",
-    "status" : "Available",
-    "tags" : [ ]
-  }, {
     "name" : "Sports-Hall-1",
     "location" : "University-Town",
     "status" : "Available",
@@ -53,17 +48,28 @@
     "tags" : [ ]
   }, {
     "name" : "Music-Room-1",
-    "location" : "YIH",
+    "location" : "Yih",
+    "status" : "Available",
+    "tags" : [ ]
+  }, {
+    "name" : "Mpsh-2",
+    "location" : "Sports-Centre",
+    "status" : "Available",
+    "tags" : [ ]
+  }, {
+    "name" : "Mpsh-3",
+    "location" : "Sports-Centre",
+    "status" : "Available",
+    "tags" : [ ]
+  }, {
+    "name" : "Badminton-Court",
+    "location" : "Sports-Centre",
     "status" : "Available",
     "tags" : [ ]
   } ],
   "reservations" : [ ],
   "issueRecords" : [ {
-    "itemId" : "MOLTEN-VOLLEYBALL",
-    "studentId" : "a3456789c",
-    "dueDateTime" : "2027-03-18 1200"
-  }, {
-    "itemId" : "WILSON-EVOLUTION",
+    "itemId" : "MX-VOLLEYBALL",
     "studentId" : "a3456789c",
     "dueDateTime" : "2027-03-31 1300"
   } ],
@@ -71,10 +77,10 @@
   "equipments" : [ {
     "name" : "Wilson-Evolution",
     "category" : "Basketball",
-    "status" : "Booked",
+    "status" : "Available",
     "tags" : [ ]
   }, {
-    "name" : "Molten-Volleyball",
+    "name" : "Mx-Volleyball",
     "category" : "Volleyball",
     "status" : "Booked",
     "tags" : [ ]
