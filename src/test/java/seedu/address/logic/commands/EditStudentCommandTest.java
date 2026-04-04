@@ -7,12 +7,13 @@ import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+
+import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.Test;
 
@@ -23,12 +24,15 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.issue.IssueRecord;
 import seedu.address.model.person.Person;
+import seedu.address.model.reservation.Reservation;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 
 /**
- * Contains integration tests (interaction with the Model) and unit tests for EditStudentCommand.
+ * Contains integration tests (interaction with the Model) and unit tests for
+ * EditStudentCommand.
  */
 public class EditStudentCommandTest {
 
@@ -54,11 +58,10 @@ public class EditStudentCommandTest {
         Person lastPerson = model.getFilteredPersonList().get(indexLastPerson.getZeroBased());
 
         PersonBuilder personInList = new PersonBuilder(lastPerson);
-        Person editedPerson = personInList.withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
-                .withTags(VALID_TAG_HUSBAND).build();
+        Person editedPerson = personInList.withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB).build();
 
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
-                .withPhone(VALID_PHONE_BOB).withTags(VALID_TAG_HUSBAND).build();
+                .withPhone(VALID_PHONE_BOB).build();
         EditStudentCommand editCommand = new EditStudentCommand(indexLastPerson, descriptor);
         String expectedMessage = String.format(EditStudentCommand.MESSAGE_EDIT_PERSON_SUCCESS,
                 Messages.format(editedPerson));
@@ -74,8 +77,8 @@ public class EditStudentCommandTest {
         Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(firstPerson).build();
         EditStudentCommand editCommand = new EditStudentCommand(INDEX_SECOND_PERSON, descriptor);
-
-        assertCommandFailure(editCommand, model, EditStudentCommand.MESSAGE_DUPLICATE_PERSON);
+        String expectedMessage = EditStudentCommand.MESSAGE_DUPLICATE_FIELDS + " Duplicate Student ID";
+        assertCommandFailure(editCommand, model, expectedMessage);
     }
 
     @Test
@@ -85,6 +88,58 @@ public class EditStudentCommandTest {
         EditStudentCommand editCommand = new EditStudentCommand(outOfBoundIndex, descriptor);
 
         assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void execute_editNameWithActiveReservation_failure() {
+        Person personInList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+
+        Reservation res = new Reservation("Room-1", personInList.getStudentId(),
+                LocalDateTime.now().plusDays(1), LocalDateTime.now().plusDays(1).plusHours(1));
+        model.addReservation(res);
+
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName("New Name").build();
+        EditStudentCommand editCommand = new EditStudentCommand(INDEX_FIRST_PERSON, descriptor);
+
+        assertCommandFailure(editCommand, model, EditStudentCommand.MESSAGE_HAS_ACTIVE_LOANS);
+    }
+
+    @Test
+    public void execute_editPhoneWithActiveLoan_failure() {
+        Person personInList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        model.addIssueRecord(new IssueRecord("Item-1", personInList.getStudentId(),
+                LocalDateTime.now().plusDays(1)));
+
+        // Attempt to edit ONLY the phone with active loan
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withPhone("92345678").build();
+        EditStudentCommand editCommand = new EditStudentCommand(INDEX_FIRST_PERSON, descriptor);
+
+        assertCommandFailure(editCommand, model, EditStudentCommand.MESSAGE_HAS_ACTIVE_LOANS);
+    }
+
+    @Test
+    public void execute_duplicatePhoneOtherStudent_failure() {
+        Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Person secondPerson = model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
+
+        // Try to edit A's phone to match B's phone
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
+                .withPhone(secondPerson.getPhone().value).build();
+        EditStudentCommand editCommand = new EditStudentCommand(INDEX_FIRST_PERSON, descriptor);
+        String expectedMessage = EditStudentCommand.MESSAGE_DUPLICATE_FIELDS + " Duplicate Phone Number";
+        assertCommandFailure(editCommand, model, expectedMessage);
+    }
+
+    @Test
+    public void execute_duplicateEmailOtherStudent_failure() {
+        Person secondPerson = model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
+
+        // Try to edit A's email to match B's email
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
+                .withEmail(secondPerson.getEmail().value).build();
+        EditStudentCommand editCommand = new EditStudentCommand(INDEX_FIRST_PERSON, descriptor);
+        String expectedMessage = EditStudentCommand.MESSAGE_DUPLICATE_FIELDS + " Duplicate Email Address";
+        assertCommandFailure(editCommand, model, expectedMessage);
     }
 
     @Test

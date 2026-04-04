@@ -5,15 +5,11 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STUDENT_ID;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
@@ -26,7 +22,6 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.StudentId;
-import seedu.address.model.tag.Tag;
 
 /**
  * Edits the details of an existing student in the address book.
@@ -42,22 +37,28 @@ public class EditStudentCommand extends Command {
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_STUDENT_ID + "STUDENT_ID] "
             + "[" + PREFIX_PHONE + "PHONE] "
-            + "[" + PREFIX_EMAIL + "EMAIL] "
-            + "[" + PREFIX_TAG + "TAG]...\n"
+            + "[" + PREFIX_EMAIL + "EMAIL]\n"
             + "Example: " + COMMAND_WORD + " 1 "
+            + PREFIX_NAME + "John"
             + PREFIX_STUDENT_ID + "a7654321b "
             + PREFIX_PHONE + "91234567 "
-            + PREFIX_EMAIL + "johndoe@example.com";
+            + PREFIX_EMAIL + "john@nus.edu.sg";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Student: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This student already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_FIELDS = "Edit failed. Duplicate fields detected: ";
+    public static final String MESSAGE_HAS_ACTIVE_LOANS = "This student still has active loans or"
+            + " reservations linked to their current ID.";
+    public static final String MESSAGE_NEW_HAS_ACTIVE_LOANS = "The new Student ID is already"
+            + " linked to existing loan records.";
 
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
 
     /**
-     * @param index of the student in the filtered person list to edit
+     * @param index                of the student in the filtered person list to
+     *                             edit
      * @param editPersonDescriptor details to edit the person with
      */
     public EditStudentCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
@@ -78,10 +79,54 @@ public class EditStudentCommand extends Command {
         }
 
         Person personToEdit = lastShownList.get(index.getZeroBased());
+
+        boolean hasActiveLoans = model.getAddressBook().getIssueRecordList().stream()
+                .anyMatch(loan -> loan.getStudentId().equals(personToEdit.getStudentId()));
+        boolean hasReservations = model.getAddressBook().getReservationList().stream()
+                .anyMatch(res -> res.getStudentId().equals(personToEdit.getStudentId()));
+
+        // Prevent editing if current student has active loans
+        if (hasActiveLoans || hasReservations) {
+            throw new CommandException(MESSAGE_HAS_ACTIVE_LOANS);
+        }
+
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
-        if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        // Block if the matric, phone or email already exist
+        if (!personToEdit.equals(editedPerson)) {
+            Optional<Person> conflictPerson = model.getAddressBook().getPersonList().stream()
+                    .filter(p -> !p.equals(personToEdit))
+                    .filter(p -> p.getStudentId().equals(editedPerson.getStudentId())
+                            || p.getPhone().equals(editedPerson.getPhone())
+                            || p.getEmail().equals(editedPerson.getEmail()))
+                    .findFirst();
+
+            if (conflictPerson.isPresent()) {
+                Person other = conflictPerson.get();
+                String specificConflict = "";
+
+                // Identify the duplicated field
+                if (other.getStudentId().equals(editedPerson.getStudentId())) {
+                    specificConflict = " Duplicate Student ID";
+                } else if (other.getPhone().equals(editedPerson.getPhone())) {
+                    specificConflict = " Duplicate Phone Number";
+                } else {
+                    specificConflict = " Duplicate Email Address";
+                }
+
+                throw new CommandException(MESSAGE_DUPLICATE_FIELDS + specificConflict);
+            }
+
+            if (!personToEdit.getStudentId().equals(editedPerson.getStudentId())) {
+                boolean newIdHasActive = model.getAddressBook().getIssueRecordList().stream()
+                        .anyMatch(loan -> loan.getStudentId().equals(editedPerson.getStudentId()))
+                        || model.getAddressBook().getReservationList().stream()
+                                .anyMatch(res -> res.getStudentId().equals(editedPerson.getStudentId()));
+
+                if (newIdHasActive) {
+                    throw new CommandException(MESSAGE_NEW_HAS_ACTIVE_LOANS);
+                }
+            }
         }
 
         model.setPerson(personToEdit, editedPerson);
@@ -100,9 +145,8 @@ public class EditStudentCommand extends Command {
         StudentId updatedStudentId = editPersonDescriptor.getStudentId().orElse(personToEdit.getStudentId());
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
-        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(updatedName, updatedStudentId, updatedPhone, updatedEmail, updatedTags);
+        return new Person(updatedName, updatedStudentId, updatedPhone, updatedEmail);
     }
 
     @Override
@@ -136,9 +180,9 @@ public class EditStudentCommand extends Command {
         private StudentId studentId;
         private Phone phone;
         private Email email;
-        private Set<Tag> tags;
 
-        public EditPersonDescriptor() {}
+        public EditPersonDescriptor() {
+        }
 
         /**
          * Copy constructor.
@@ -148,14 +192,13 @@ public class EditStudentCommand extends Command {
             setStudentId(toCopy.studentId);
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
-            setTags(toCopy.tags);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, studentId, phone, email, tags);
+            return CollectionUtil.isAnyNonNull(name, studentId, phone, email);
         }
 
         public void setName(Name name) {
@@ -190,20 +233,6 @@ public class EditStudentCommand extends Command {
             return Optional.ofNullable(email);
         }
 
-        /**
-         * Sets {@code tags} to this object's {@code tags}.
-         */
-        public void setTags(Set<Tag> tags) {
-            this.tags = (tags != null) ? new HashSet<>(tags) : null;
-        }
-
-        /**
-         * Returns an unmodifiable tag set.
-         */
-        public Optional<Set<Tag>> getTags() {
-            return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
-        }
-
         @Override
         public boolean equals(Object other) {
             if (other == this) {
@@ -218,8 +247,7 @@ public class EditStudentCommand extends Command {
             return Objects.equals(name, otherEditPersonDescriptor.name)
                     && Objects.equals(studentId, otherEditPersonDescriptor.studentId)
                     && Objects.equals(phone, otherEditPersonDescriptor.phone)
-                    && Objects.equals(email, otherEditPersonDescriptor.email)
-                    && Objects.equals(tags, otherEditPersonDescriptor.tags);
+                    && Objects.equals(email, otherEditPersonDescriptor.email);
         }
 
         @Override
@@ -229,7 +257,6 @@ public class EditStudentCommand extends Command {
                     .add("studentId", studentId)
                     .add("phone", phone)
                     .add("email", email)
-                    .add("tags", tags)
                     .toString();
         }
     }

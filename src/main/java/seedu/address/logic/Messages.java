@@ -38,17 +38,14 @@ public class Messages {
      */
     public static String format(Person person) {
         final StringBuilder builder = new StringBuilder();
-        builder.append(person.getName())
+        builder.append("\nName: ")
+                .append(person.getName())
                 .append("; Student ID: ")
                 .append(person.getStudentId())
                 .append("; Phone: ")
                 .append(person.getPhone())
                 .append("; Email: ")
-                .append(person.getEmail())
-                //.append("; Address: ")
-                //.append(person.getAddress())
-                .append("; Tags: ");
-        person.getTags().forEach(builder::append);
+                .append(person.getEmail());
         return builder.toString();
     }
 }
