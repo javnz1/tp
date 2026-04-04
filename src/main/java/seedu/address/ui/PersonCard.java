@@ -85,7 +85,6 @@ public class PersonCard extends UiPart<Region> {
                 resLabel.getStyleClass().add("cell_small_label");
                 resLabel.setStyle("-fx-text-fill: #FFD700;"); // Gold
                 loansContainer.getChildren().add(resLabel);
-              
                 Label status = new Label("RESERVED");
                 // Orange for reserved.
                 configureStatusStyle(status, "#ffa000");
