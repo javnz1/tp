@@ -163,7 +163,11 @@ public class ParserUtil {
     public static Location parseLocation(String location) throws ParseException {
         requireNonNull(location);
         String trimmedLocation = location.trim();
-        return new Location(trimmedLocation);
+        try {
+            return new Location(trimmedLocation);
+        } catch (IllegalArgumentException e) {
+            throw new ParseException(Location.MESSAGE_CONSTRAINTS);
+        }
     }
 
     /**
@@ -173,9 +177,9 @@ public class ParserUtil {
         requireNonNull(status);
         String trimmedStatus = status.trim();
         if (!Status.isValidStatus(trimmedStatus)) {
-            throw new ParseException("Status should be one of: Available, Booked, Maintenance.");
+            throw new ParseException(Status.MESSAGE_CONSTRAINTS);
         }
-        return new Status(trimmedStatus);
+        return Status.java_parse(trimmedStatus);
     }
 
     /**

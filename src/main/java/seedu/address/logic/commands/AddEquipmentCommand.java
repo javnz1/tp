@@ -3,7 +3,6 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CATEGORY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
@@ -20,12 +19,10 @@ public class AddEquipmentCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a piece of equipment to the inventory. "
             + "Parameters: "
             + PREFIX_NAME + "NAME "
-            + PREFIX_CATEGORY + "CATEGORY "
-            + PREFIX_STATUS + "STATUS\n"
+            + PREFIX_CATEGORY + "CATEGORY\n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_NAME + "Wilson-Evolution-Basketball "
-            + PREFIX_CATEGORY + "Basketball "
-            + PREFIX_STATUS + "Available";
+            + PREFIX_NAME + "Wilson-Evolution "
+            + PREFIX_CATEGORY + "Basketball";
 
     private final Equipment toAdd;
 
@@ -45,7 +42,8 @@ public class AddEquipmentCommand extends Command {
         }
         model.addEquipment(toAdd);
         return new CommandResult(
-                String.format(MESSAGE_SUCCESS, toAdd.getName(), toAdd.getCategory(), toAdd.getStatus()),
+                String.format(MESSAGE_SUCCESS, toAdd.getName().toString(), toAdd.getCategory().toString(),
+                        toAdd.getStatus().toString()),
                 false, false, true, true, true);
     }
 

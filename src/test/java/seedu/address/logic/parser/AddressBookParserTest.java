@@ -49,7 +49,7 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_addStudent() throws Exception {
-        Person person = new PersonBuilder().withTags().build();
+        Person person = new PersonBuilder().build();
         AddStudentCommand command = (AddStudentCommand) parser.parseCommand(PersonUtil.getAddStudentCommand(person));
         assertEquals(new AddStudentCommand(person), command);
     }
@@ -112,7 +112,7 @@ public class AddressBookParserTest {
         Equipment equipment = new Equipment(new EquipmentName("Wilson-Evolution"),
                 new Category("Basketball"), EquipmentStatus.AVAILABLE);
         AddEquipmentCommand command = (AddEquipmentCommand) parser.parseCommand(
-                AddEquipmentCommand.COMMAND_WORD + " n/Wilson-Evolution c/Basketball s/Available");
+                AddEquipmentCommand.COMMAND_WORD + " n/Wilson-Evolution c/Basketball");
         assertEquals(new AddEquipmentCommand(equipment), command);
     }
 

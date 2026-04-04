@@ -13,8 +13,8 @@ import java.util.stream.Collectors;
 public class EquipmentName {
     public static final String MESSAGE_CONSTRAINTS =
             """
-                    Names should only contain alphanumeric characters and hyphens (-), no spaces allowed, and it should
-                    not be blank.
+                    Equipment Name should only contain alphanumeric characters and single hyphens (-) in between,
+                    no spaces or consecutive hyphens (--) are allowed, and it should not be blank.
                     Example: n/Wilson-Evolution
                     """;
 
