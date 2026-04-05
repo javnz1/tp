@@ -100,24 +100,24 @@ New equipment is set to `Available` status by default.
 **Format:** `add-e n/NAME c/CATEGORY`
 
 **Acceptable values:**
-* `Name`: Equipment Name should only contain alphanumeric characters and single hyphens (-) in between,
-  no spaces or consecutive hyphens (--) are allowed, and it should not be blank. (e.g. `Wilson-Evolution`)
-* `Category`: Equipment Category should only contain alphanumeric characters and single hyphens (-) in between,
-  no spaces or consecutive hyphens (--) are allowed, and it should not be blank. (e.g. `Basketball`) <br><br>
+* `Name`: Equipment Name should only contain alphanumeric characters and single hyphens (`-`) in between,
+  no spaces or consecutive hyphens (`--`) are allowed, and it should not be blank. (e.g. `Wilson-Evolution`)
+* `Category`: Equipment Category should only contain alphanumeric characters and single hyphens (`-`) in between,
+  no spaces or consecutive hyphens (`--`) are allowed, and it should not be blank. (e.g. `Basketball`) <br><br>
 * *Case Sensitivity:* Both fields are case-insensitive. `n/Wilson-Evolution` and `n/WILSON-EVOLUTION` are treated as the same name. `c/Basketball` and `c/BASKETBALL` are treated as the same category.
 * *Parameters can be in any order:*
   e.g. if the command specifies `n/NAME c/CATEGORY`, `c/CATEGORY n/NAME` is also acceptable.
 
 **Duplicate handling:**
-* You cannot add two Equipment with the same name, even if they have different categories.
+* The system enforces unique names across the Equipment inventory list.
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 To add multiple Equipment of the same name, append a unique number (e.g. `Wilson-Evolution-1`, `Wilson-Evolution-2`)
 </div>
 
 **Examples:**
-* `add-e n/Wilson-Evolution c/Basketball`.
-* `add-e n/Yonex-Astrox c/Badminton`.
-* `add-e n/Track-Stand c/Track-And-Field`.
+* `add-e n/Wilson-Evolution c/Basketball` — Adds an equipment with name: Wilson-Evolution and category: Basketball in the current equipment list.
+* `add-e n/Yonex-Astrox c/Badminton` — Adds an equipment with name: Yonex-Astrox and category: Badminton in the current equipment list.
+* `add-e n/Track-Stand c/Track-And-Field` — Adds an equipment with name: Track-Stand and category: Track-And-Field in the current equipment list.
 
 **Outputs:**
 * Success
@@ -126,7 +126,9 @@ To add multiple Equipment of the same name, append a unique number (e.g. `Wilson
 ![addEquipmentFail.png](images/addEquipmentFail.png)
 
 **Possible errors:**
-* Invalid command such as missing `n/` and `c/` prefix
+* *Invalid command:* Missing `n/` and `c/` prefix
+* *Invalid name/category:* Using spaces, special characters (e.g. `#`, `@` etc.), or leaving fields blank.
+* *This equipment already exists:* Attempting to add a name that is already in the inventory.
 
 #### View equipment inventory list : `list-e`
 
@@ -157,56 +159,71 @@ Possible errors:
 
 Deletes equipment from the inventory.
 
-Format: `delete-e INDEX`
+**Format:** `delete-e INDEX`
 
-Acceptable values:
-* Index: Positive integer corresponding to the current displayed list from `list-e`.
+**Acceptable values:**
+* `Index`: Positive integer corresponding to the current displayed list from `list-e`. (e.g `list-e` have a size of 4, valid index range would be 1,2,3, or 4)
+<div markdown="span" class="alert alert-warning">:warning: **Warning:**
+**Strict Lockdown:** You cannot delete equipment that currently has a **Booked** status. The equipment must be returned or canceled before it can be deleted from the system.
+</div>
 
-Duplicate handling:
+**Duplicate handling:**
 * Not applicable for a delete command.
 
-Examples:
-* `delete-e 7`.
+**Examples:**
+* `delete-e 1`. — Deletes the first item in the current equipment list.
+* `delete-e 7`. — Deletes the seventh item in the current equipment list.
 
-Outputs:
+**Outputs:**
 * Success
   ![deleteEquipmentSuccess.png](images/deleteEquipmentSuccess.png)
 * Failure
   ![deleteEquipmentFail.png](images/deleteEquipmentFail.png)
 
-Possible errors:
-* Attempt to delete an equipment that is out of the inventory index list.
-* Attempt to delete an equipment that is having a ‘Booked’ status.
+**Possible errors:**
+* *Invalid index:* The index provided is 0, negative or exceeds the current equipment list index.
+* *Invalid command format:* Typing delete-e without providing an index.
+* *Equipment is Booked:* Attempt to delete equipment that is having a ‘Booked’ status.
 
 #### Edit equipment from inventory list : `edit-e`
 
 Edit details for existing equipment from the inventory.
 
-Format: `edit-e INDEX [n/NAME] [c/CATEGORY] [s/STATUS]`
+**Format:** `edit-e INDEX [n/NAME] [c/CATEGORY] [s/STATUS]`
 
-Acceptable values:
-* Index: Positive integer corresponding to the current displayed list from `list-e`.
-* (With at least one of the fields)
-    * Name: Alphanumeric characters and spaces.
-    * Category: Single word alphanumeric.
-    * Status: Available, Booked, Maintenance, Damaged.
+**Acceptable values:**
+* `Index:` Positive integer corresponding to the current displayed list from `list-e`. (e.g `list-e` have a size of 4, valid index range would be 1,2,3, or 4)
+* *(With at least one of the fields)*
+    * `Name`: Equipment Name should only contain alphanumeric characters and single hyphens (`-`) in between,
+      no spaces or consecutive hyphens (`--`) are allowed, and it should not be blank. (e.g. `Wilson-Evolution`)
+    * `Category`: Equipment Category should only contain alphanumeric characters and single hyphens (`-`) in between,
+      no spaces or consecutive hyphens (`--`) are allowed, and it should not be blank. (e.g. `Basketball`)
+    * `Status`: Can only be changed to `Maintenance` or `Damaged` if currently `Available`. If in `Maintenance` or `Damaged`, it can only be changed back to `Available`.
+<div markdown="span" class="alert alert-warning">:warning: **Warning:**
+**Strict Lockdown:** You cannot edit equipment that currently has a **Booked** status. The equipment must be returned or canceled before it can be edited.
+</div>
 
-Duplicate handling:
-* Case-insensitive for duplicate checking. If you have multiple equipment of the same name and category,
-  it should be named with a number as “Basketball-1”, “Basketball-2”, etc.
+**Duplicate handling:**
+* The system enforces unique names across the Equipment inventory list.
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+To add multiple Equipment of the same name, append a unique number (e.g. `Wilson-Evolution-1`, `Wilson-Evolution-2`)
+</div>
 
-Examples:
-* `edit-e 6 s/Booked`.
+**Examples:**
+* `edit-e 1 s/Maintenance` — Edit the first equipment to status: Maintenance. Assuming initial status is Available.
+* `edit-e 3 n/Wilson-Evo c/Bball s/Available` — Edit the third equipment to name: Wilson-Evo, category: Bball, status: Available. Assuming initial status is `Maintenance`.
 
-Outputs:
+**Outputs:**
 * Success
   ![editEquipmentSuccess.png](images/editEquipmentSuccess.png)
 * Failure
   ![editEquipmentFail.png](images/editEquipmentFail.png)
 
-Possible errors:
-* Attempt to edit an equipment that is not in the inventory.
-* Wrong command given that is not of the n/, c/, and s/ prefix.
+**Possible errors:**
+* *This equipment is currently 'Booked':* Attempting to edit a loaned equipment.
+* *This equipment already exists:* Renaming equipment to a name already in use.
+* *Invalid status transition:* Trying to move an equipment status from Maintenance to Booked.
+* *Invalid command:* Missing `n/`, `c/`, or `s/` prefix
 
 ### 2.2 Facility & Venue Management
 
