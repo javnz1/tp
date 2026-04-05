@@ -23,7 +23,7 @@ During high-pressure periods such as the Inter-Hall Games (IHG), Inter-College G
 
 1. TrackMasterPro runs on Java `17`. Check if you already have it installed in your Computer:<br>
 
-   **Windows user:** Open the Start menu, search for `cmd` and open the **Command Prompt** app. Type `java -version` and press Enter. If yous see Java `17`, you're good to go!
+   **Windows user:** Open the Start menu, search for `cmd` and open the **Command Prompt** app. Type `java -version` and press Enter. If you see Java `17`, you're good to go!
    
    **Mac users:** Open the **Terminal** app. Type `java -version` and press Enter. If yous see Java `17`, you're good to go!
 
@@ -32,7 +32,7 @@ During high-pressure periods such as the Inter-Hall Games (IHG), Inter-College G
 
    * Mac: Guide to download and install Java `17` [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
-2. Download the latest `trackmasterpro.jar` file [here](https://github.com/AY2526S2-CS2103T-T14-4/tp/releases/).
+2. Download the latest `TrackMasterPro.jar` file [here](https://github.com/AY2526S2-CS2103T-T14-4/tp/releases/).
 
 3. Copy the file to the folder you want to use as the _home folder_ for TrackMasterPro
    (e.g create a new folder called `TrackMasterPro`  on your Desktop).
@@ -40,7 +40,7 @@ During high-pressure periods such as the Inter-Hall Games (IHG), Inter-College G
 4. TrackMasterPro is launched from the **terminal**. Here's how to run it: </br>
 
    **Windows:** 
-   1. Locate your file: Open File Explorer and go to the folder where `trackmasterpro.jar` is saved.
+   1. Locate your file: Open File Explorer and go to the folder where `TrackMasterPro.jar` is saved.
 
    2. Open the Terminal: Click on the address bar at the top of the window (where the folder path is shown), type `cmd`, and hit Enter. This opens the Command Prompt directly in that folder.
 
@@ -51,7 +51,7 @@ During high-pressure periods such as the Inter-Hall Games (IHG), Inter-College G
 
    2. Navigate to the folder: Type `cd` followed by a space, then drag the folder containing the `.jar` file from Finder directly into the Terminal window. Hit **Enter**.
 
-   3. Launch the App: Type the following command and press Enter: `java -jar trackmasterpro.jar`
+   3. Launch the App: Type the following command and press Enter: `java -jar TrackMasterPro.jar`
    
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/Ui.png)
@@ -95,31 +95,38 @@ During high-pressure periods such as the Inter-Hall Games (IHG), Inter-College G
 #### Adding an equipment : `add-e`
 
 Adds a new piece of physical equipment into the inventory so it can be tracked and loaned.
+New equipment is set to `Available` status by default.
 
-Format: `add-e n/NAME c/CATEGORY s/STATUS`
+**Format:** `add-e n/NAME c/CATEGORY`
 
-Acceptable values:
-* Name: Alphanumeric characters and spaces. Cannot be empty. Multiple spaces between words are collapsed into a single space (e.g., John   Doe becomes John Doe). Case-sensitive for display.
-* Category: Single word alphabetic. Cannot be empty.
-* Status: Available, Booked, Maintenance, Damaged. Cannot be empty. Case-insensitive (e.g. available is accepted).
-* Parameters can be in any order.
-  e.g. if the command specifies n/NAME c/CATEGORY s/STATUS, c/CATEGORY n/NAME s/STATUS is also acceptable.
+**Acceptable values:**
+* `Name`: Equipment Name should only contain alphanumeric characters and single hyphens (-) in between,
+  no spaces or consecutive hyphens (--) are allowed, and it should not be blank. (e.g. `Wilson-Evolution`)
+* `Category`: Equipment Category should only contain alphanumeric characters and single hyphens (-) in between,
+  no spaces or consecutive hyphens (--) are allowed, and it should not be blank. (e.g. `Basketball`) <br><br>
+* *Case Sensitivity:* Both fields are case-insensitive. `n/Wilson-Evolution` and `n/WILSON-EVOLUTION` are treated as the same name. `c/Basketball` and `c/BASKETBALL` are treated as the same category.
+* *Parameters can be in any order:*
+  e.g. if the command specifies `n/NAME c/CATEGORY`, `c/CATEGORY n/NAME` is also acceptable.
 
-Duplicate handling:
-* Case-insensitive for duplicate checking. If you have multiple equipment of the same name and category, it should be named with a number as “Basketball-1”, “Basketball-2”, etc.
+**Duplicate handling:**
+* You cannot add two Equipment with the same name, even if they have different categories.
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+To add multiple Equipment of the same name, append a unique number (e.g. `Wilson-Evolution-1`, `Wilson-Evolution-2`)
+</div>
 
-Examples:
-* `add-e n/Wilson-Evolution-Basketball c/Basketball s/Available`.
-* `add-e n/Yonex-Astrox c/Badminton s/Booked`.
+**Examples:**
+* `add-e n/Wilson-Evolution c/Basketball`.
+* `add-e n/Yonex-Astrox c/Badminton`.
+* `add-e n/Track-Stand c/Track-And-Field`.
 
-Outputs:
+**Outputs:**
 * Success
 ![addEquipmentSuccess.png](images/addEquipmentSuccess.png)
 * Failure
 ![addEquipmentFail.png](images/addEquipmentFail.png)
 
-Possible errors:
-* Invalid command such as missing n/, c/, and s/ prefix
+**Possible errors:**
+* Invalid command such as missing `n/` and `c/` prefix
 
 #### View equipment inventory list : `list-e`
 
