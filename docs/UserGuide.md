@@ -10,12 +10,6 @@ During high-pressure periods such as the Inter-Hall Games (IHG), Inter-College G
 
 * Table of Contents
 {:toc}
-  * [Quick start](#1-quick-start)
-  * [Features](#2-features)
-  * [Data management](#3-data-management)
-  * [FAQ](#4-faq)
-  * [Known issues](#5-known-issues)
-  * [Command summary](#6-command-summary)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -532,13 +526,13 @@ Possible errors:
 Cancels an existing reservation.
 
 **Format**
-`cancel ITEM_OR_ROOM_ID STUDENT_ID f/START_DATE_TIME t/END_DATE_TIME`
+`cancel ITEM_OR_ROOM_ID STUDENT_ID f/START_DATE_TIME`
 
 **Date/time format**
 `yyyy-MM-dd HHmm`
 
 **Example**
-`cancel Hall-2 a1234567a f/2099-03-15 0900 t/2099-03-15 1100`
+`cancel Hall-2 a1234567a f/2099-03-15 0900`
 
 **Success**
 
@@ -546,8 +540,8 @@ Reservation cancelled:
 Reserved HALL-2 by Student a1234567a from 2099-03-15 0900 to 2099-03-15 1100
 
 **Failure**
-`Error:
-Wilson-Evolution-Basketball-1 is not currently issued.`
+`Error: Wilson-Evolution-Basketball-1 is not currently issued.`
+
 
 #### Issuing an equipment item: `issue`
 
@@ -596,9 +590,8 @@ Returns an issued equipment item back to the inventory.
 
 **Failure**
 - item is not currently issued
-- invalid command format
-`Error:
-No matching reservation found for Hall-2 by a1234567a from 2099-03-15 0900 to 2099-03-15 1100`
+- invalid command format <br>
+`Error: No matching reservation found for Hall-2 by a1234567a from 2099-03-15 0900 to 2099-03-15 1100`
 
 **Notes**
 - aliases are supported, so if `b1` is an alias for `Wilson-Evolution-Basketball-1`, then `return b1` also works
@@ -632,45 +625,6 @@ Examples:
 * Possible errors:
 * Invalid `ITEM_OR_ROOM_ID`
 * Alias already exists
-
-
-### Return an equipment: `return`
-
-Returns an issued equipment item back to the inventory.
-
-**Format**
-`return ITEM_ID`
-
-**Example**
-`return Wilson-Evolution-Basketball-1`
-
-**Success**
-`WILSON-EVOLUTION-BASKETBALL-1 returned successfully from a1234567a`
-
-**Failure**
-- item is not currently issued
-- invalid command format
-
-**Notes**
-- aliases are supported, so if `b1` is an alias for `Wilson-Evolution-Basketball-1`, then `return b1` also works
-
-### Cancel a reservation: `cancel`
-
-Cancels an existing reservation.
-
-**Format**
-`cancel ITEM_OR_ROOM_ID STUDENT_ID f/START_DATE_TIME`
-
-**Date/time format**
-`yyyy-MM-dd HHmm`
-
-**Example**
-`cancel Hall-2 a1234567a f/2099-03-15 0900`
-
-**Success**
-
-Reservation cancelled:
-Reserved HALL-2 by Student a1234567a from 2099-03-15 0900 to 2099-03-15 1100
 
 
 ### 2.5 Tag & Filter:
