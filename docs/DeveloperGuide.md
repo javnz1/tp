@@ -856,6 +856,238 @@ testers are expected to do more *exploratory* testing.
 
 1. _{ more test cases …​ }_
 
+### Adding an equipment
+
+1. Adding an equipment with valid fields
+
+   1. Test case: `add-e n/Wilson-Evolution c/Basketball`<br>
+      Expected: Equipment "Wilson-Evolution" added with category "Basketball". 
+      Status set to Available by default. Success message shows details.
+
+   2. Test case: `add-e c/Badminton n/Yonex-Astrox`<br>
+      Expected: Equipment "Track-Stand" added successfully. Order of n/ and c/ does not matter.
+
+2. Adding equipment with invalid name or category
+
+   1. Test case: `add-e n/Yonex Astrox c/Badminton` (Contains space)<br> 
+      Expected: No equipment added. Error message indicates names/categories should only contain alphanumeric 
+      characters and single hyphens.
+
+   2. Test case: `add-e n/ c/Basketball` (Blank name)<br>
+      Expected: Error details show name cannot be blank.
+
+3. Handling duplicate equipment names
+
+   1. Prerequisites: Wilson-Evolution already exists in the list.
+
+   2. Test case: `add-e n/Wilson-Evolution c/Sports` (Exact duplicate)<br>
+      Expected: Error message: "This equipment already exists".
+
+   3. Test case: `add-e n/WILSON-EVOLUTION c/Sports` (Case-insensitive check)<br>
+      Expected: Error message: "This equipment already exists". System treats different cases as the same name.
+
+   4. Test case: `add-e n/Wilson-Evolution-1 c/Basketball` (Numbered naming tip)<br>
+      Expected: Equipment added successfully as the name is now unique.
+
+4. Incorrect command formats
+
+   1. Test case: `add-e Wilson-Evolution Basketball` (Missing prefixes)<br>
+      Expected: Error message shows invalid command format and provides the correct usage example.
+
+   2. Other incorrect commands: `add-e n/Name`, `add-e c/Category`, `add-e` (Missing one or both parameters)<br>
+      Expected: Similar to previous; informs user of missing required fields.
+
+
+### Viewing the equipment list
+
+1. Listing equipment while the list is populated
+
+   1. Prerequisites: At least one equipment exists in the system and have run the filter tag command prior. 
+   
+   2. Test case: `list-e`<br>
+      Expected: All filters are cleared. The full list of equipment is displayed in the equipment panel. 
+      Status message indicates "Listed all equipment".
+
+2. Listing equipment when the equipment list is empty 
+
+   1. Prerequisites: Delete all equipment using the delete-e command.
+
+   2. Test case: `list-e`<br>
+      Expected: Helpful message shows "Equipment list is currently empty. Use the 'add-e' command to add your first equipment".
+
+3. Handling invalid extra input 
+
+   1. Test case: `list-e Basketball`<br>
+      Expected: No list update occurs. Error message indicates an invalid command format. The system strictly only accepts list-e without trailing parameters. 
+
+   2. Test case: `list-e 123`<br> 
+      Expected: Similar to previous. Error details show that the command does not take any arguments.
+
+
+### Removing an equipment (Status-Dependent)
+
+1. Deleting an equipment by index
+   
+   1. Prerequisites: Multiple equipment in the list. Ensure the equipment at index 1 is "Available".
+   
+   2. Test case: `delete-e 1`<br>
+      Expected: First equipment is removed. UI updates immediately.
+
+   3. Test case: `delete-e 0` or `delete-e 500` (out of bounds)<br>
+      Expected: No equipment deleted. Error message regarding invalid index shown.
+
+2. Deleting equipment not with "Available" status
+
+   1. Prerequisites: At least one equipment in the list has a "Booked" (e.g., at index 2).
+
+   2. Test case: `delete-e 2`<br>
+      Expected: No equipment is deleted. TrackMasterPro shows an error message stating that 
+      booked equipment cannot be removed and must be returned or canceled first.
+
+
+### Editing an equipment (Status-Dependent)
+
+1. Editing equipment with valid fields
+
+   1. Prerequisites: Multiple equipment in the list. Equipment at index 1 is "Available".
+
+   2. Test case: `edit-e 1 n/Spalding-TF1000`<br>
+      Expected: Only the name of the first equipment changes. Category and Status remain the same. Success message shown.
+
+   3. Test case: `edit-e 1 n/Wilson-Evo c/Bball s/Maintenance`<br>
+      Expected: Name, Category, and Status are all updated simultaneously. UI reflects all three changes.
+
+2. Status Transition Logic
+
+   1. Prerequisites: Equipment at index 1 has a "Available" status.
+
+   2. Test case: `edit-e 1 s/Maintenance` or `edit-e 1 s/Damaged`<br>
+      Expected: Status updates successfully.
+
+   3. Test case: `edit-e 1 s/Available` (while already Available)<br>
+      Expected: status is already set to this value.
+
+3. Editing equipment with "Booked" status
+
+   1. Prerequisites: Equipment at index 3 has a "Booked" status.
+
+   2. Test case: `edit-e 3 n/New-Name`<br>
+      Expected: No changes made. Error message showing the equipment is currently ‘Booked’ and cannot be edited.
+
+
+### Adding a room
+
+1. Adding a room with valid name
+
+   1. Test case: `add-r n/Mpsh-1 l/Sports-Centre`<br>
+      Expected: Room "Mpsh-1" with location "Sports-Centre" added. Status set to Available by default. 
+      Success message shown.
+
+   2. Test case: `add-r l/University-Town n/Sports-Hall-2` (Swapped parameter order)<br>
+      Expected: Room "Sports-Hall-2" added successfully. Order of n/ and l/ prefixes does not affect the outcome.
+
+2. Adding a room with invalid name or location
+
+   1. Test case: `add-r n/MPSH 2 l/Sports-Centre` (Contains space)<br>
+      Expected: No room added. Error message indicates names/locations should only contain alphanumeric characters and single hyphens.
+
+   2. Test case: `add-r n/MPSH--2 l/Sports-Centre` (Consecutive hyphens)<br>
+      Expected: No room added. Error message regarding invalid naming format. 
+
+   3. Test case: `add-r n/ l/Sports-Centre` (Blank name)<br>
+      Expected: Error message indicates name cannot be blank.
+
+3. Adding a duplicate room
+
+   1. Prerequisites: "Mpsh-1" already exists.
+
+   2. Test case: `add-r n/Mpsh-1 l/Sports-Centre`<br>
+      Expected: Error message stating the room already exists.
+
+4. Incorrect command formats 
+
+   1. Test case: `add-r MPSH-2 Sports-Centre` (Missing prefixes)<br>
+      Expected: Error message shows invalid command format and provides the correct usage example with n/ and l/. 
+
+   2. Other incorrect commands: `add-r n/Name`, `add-r l/Location`, `add-r` (Missing one or both parameters)<br>
+      Expected: Similar to previous, informs user of missing required fields.
+
+
+### Viewing the room list
+
+1. Listing rooms while the list is populated 
+
+   1. Prerequisites: At least one room exists in the system.
+
+   2. Test case: `list-r`<br>
+      Expected: All active filters are cleared. The full list of rooms is displayed in the room panel. Status message indicates "Listed all rooms".
+
+2. Listing rooms when the room list is empty 
+
+   1. Prerequisites: Delete all rooms using the delete-r command until the list is empty. 
+
+   2. Test case: `list-r`<br>
+      Expected: Helpful message shown: "Room list is currently empty. Use the 'add-r' command to add your first room!".
+
+3. Handling invalid extra input 
+
+   1. Test case: `list-r Sports-Hall`<br>
+      Expected: No list update occurs. Error message indicates an invalid command format. The system strictly only accepts list-r without any trailing text. 
+
+   2. Test case: `list-r YIH`<br>
+      Expected: Similar to previous. Error details show that the command does not take any arguments.
+
+
+### Removing a room (Status-Dependent)
+
+1. Deleting a room by index
+
+   1. Prerequisites: Room at index 1 has status "Available".
+
+   2. Test case: `delete-r 1`<br>
+      Expected: Room deleted successfully.
+
+   3. Test case: `delete-r`<br>
+      Expected: No room is deleted. Error message indicates an invalid command format and 
+      shows the correct usage: delete-r INDEX.
+
+2. Deleting equipment not with "Available" status
+
+   1. Prerequisites: Room at index 2 is set to "Booked".
+
+   2. Test case: `delete-r 2`<br>
+      Expected: No room is deleted. TrackMasterPro shows an error message stating that a booked room cannot be 
+      removed and the booking must be canceled first.
+
+
+### Editing a room (Status-Dependent)
+
+1. Editing a valid room name
+
+   1. Prerequisites: Multiple rooms in the list. The room at index 1 is currently "Available".
+
+   2. Test case: `edit-r 1 n/New-Room-Name`<br>
+      Expected: Only the name of the first room is updated. Location and Status remain unchanged.
+
+   3. Test case: `edit-r 1 n/MPSH-1 l/Sports-Centre s/Maintenance`<br> 
+      Expected: Name, Location, and Status are all updated at once. Success message shows the new details 
+      and the UI reflects the "Maintenance" status.
+
+2. Editing a room to an existing name
+
+   1. Prerequisites: "Room-A" and "Room-B" exist.
+
+   2. Test case: `edit-r 1 n/Room-B` (where index 1 is Room-A)<br>
+      Expected: Error message regarding duplicate name shown.
+
+3. Editing room with "Booked" status 
+
+   1. Prerequisites: At least one room has a Booked status (e.g., at index 3). 
+
+   2. Test case: `edit-r 3 l/New-Location`<br>
+      Expected: No changes made. Error message showing the room is currently ‘Booked’ and cannot be edited.
+
+
 ### Deleting a person
 
 1. Deleting a person while all persons are being shown
