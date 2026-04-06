@@ -201,15 +201,18 @@ public class LogicManagerTest {
         String listRoomCommand = ListRoomCommand.COMMAND_WORD;
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+
         assertCommandSuccess(listRoomCommand, ListRoomCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
-    public void execute_emptyRoomList_throwsCommandException() {
+    public void execute_emptyRoomList_successMessage() throws Exception {
         model.setAddressBook(new AddressBook());
-
         String listRoomCommand = ListRoomCommand.COMMAND_WORD;
-        assertCommandFailure(listRoomCommand, CommandException.class, ListRoomCommand.MESSAGE_FAILURE);
+        String expectedMessage = ListRoomCommand.MESSAGE_EMPTY_LIST;
+        Model expectedModel = new ModelManager(new AddressBook(), new UserPrefs());
+
+        assertCommandSuccess(listRoomCommand, expectedMessage, expectedModel);
     }
 
     @Test

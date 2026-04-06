@@ -12,11 +12,14 @@ public class ListRoomCommand extends Command {
 
     public static final String COMMAND_WORD = "list-r";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Lists all rooms managed by the system.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Shows a list of all room.\n"
+            + "Format: " + COMMAND_WORD + "\n"
             + "Example: " + COMMAND_WORD;
 
     public static final String MESSAGE_SUCCESS = "Listed all rooms";
-    public static final String MESSAGE_FAILURE = "Room List has not been created. Please proceed to add room first.";
+    public static final String MESSAGE_EMPTY_LIST = "Room list is currently empty. Use the 'add-r' command to "
+            + "add your first room!";
 
 
     @Override
@@ -26,7 +29,7 @@ public class ListRoomCommand extends Command {
         model.updateFilteredRoomList(Model.PREDICATE_SHOW_ALL_ROOMS);
 
         if (model.getFilteredRoomList().isEmpty()) {
-            throw new CommandException(MESSAGE_FAILURE);
+            return new CommandResult(MESSAGE_EMPTY_LIST, false, false, true, true, true);
         }
 
         return new CommandResult(MESSAGE_SUCCESS,

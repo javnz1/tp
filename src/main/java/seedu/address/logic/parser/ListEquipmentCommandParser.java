@@ -1,5 +1,7 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
 import seedu.address.logic.commands.ListEquipmentCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -14,8 +16,10 @@ public class ListEquipmentCommandParser implements Parser<ListEquipmentCommand> 
      * @throws ParseException if the user input does not conform the expected format
      */
     public ListEquipmentCommand parse(String args) throws ParseException {
-        // Even if there are arguments, we ignore them and just return the command.
-        // Or you can throw a ParseException if args.trim() is not empty.
+        if (!args.trim().isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListEquipmentCommand.MESSAGE_USAGE));
+        }
         return new ListEquipmentCommand();
     }
 }

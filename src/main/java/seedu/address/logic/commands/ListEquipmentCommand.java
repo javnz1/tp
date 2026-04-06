@@ -14,13 +14,13 @@ public class ListEquipmentCommand extends Command {
     public static final String COMMAND_WORD = "list-e";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Lists all equipment.\n"
+            + ": Shows a list of all equipment.\n"
             + "Format: " + COMMAND_WORD + "\n"
             + "Example: " + COMMAND_WORD;
 
     public static final String MESSAGE_SUCCESS = "Listed all equipment";
-    public static final String MESSAGE_EMPTY_LIST = "Equipment List has not been created. Please proceed to add "
-            + "equipment first.";
+    public static final String MESSAGE_EMPTY_LIST = "Equipment list is currently empty. Use the 'add-e' command to "
+            + "add your first equipment!";
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
@@ -28,7 +28,7 @@ public class ListEquipmentCommand extends Command {
         model.updateFilteredEquipmentList(PREDICATE_SHOW_ALL_EQUIPMENTS);
 
         if (model.getFilteredEquipmentList().isEmpty()) {
-            throw new CommandException(MESSAGE_EMPTY_LIST);
+            return new CommandResult(MESSAGE_EMPTY_LIST, false, false, true, true, true);
         }
 
         return new CommandResult(MESSAGE_SUCCESS,
