@@ -497,7 +497,7 @@ Reserves a room or equipment for a student at a specified date and time.
 Format: `reserve ITEM_OR_ROOM_ID STUDENT_ID f/START_DATE_TIME t/END_DATE_TIME`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-You can reserve facilities such as halls, courts, and multi-purpose rooms in advance to avoid double bookings.
+You can reserve facilities such as halls, courts, and multi-purpose rooms as well as equipments in advance to avoid double bookings.
 </div>
 
 * Creates a reservation for the specified item or room under the specified student.
