@@ -93,7 +93,8 @@ public class FilterTagCommandTest {
         FilterTagCommand command = new FilterTagCommand(ROOM_TYPE, VALID_TAG);
 
         assertThrows(CommandException.class,
-                String.format(FilterTagCommand.MESSAGE_TAG_NOT_FOUND_ROOM, VALID_TAG), () -> command.execute(modelStub));
+                String.format(FilterTagCommand.MESSAGE_TAG_NOT_FOUND_ROOM, VALID_TAG), ()
+                        -> command.execute(modelStub));
     }
 
     // ==================== Equipment Filter Tests - Positive ====================
