@@ -140,6 +140,11 @@ public abstract class ModelStub implements Model {
     }
 
     @Override
+    public Optional<String> getReservableItemError(String resourceId) {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    @Override
     public boolean hasConflictingReservation(Reservation reservation) {
         throw new AssertionError("This method should not be called.");
     }
