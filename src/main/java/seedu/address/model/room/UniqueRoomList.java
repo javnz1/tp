@@ -10,6 +10,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.room.exceptions.DuplicateRoomException;
 import seedu.address.model.room.exceptions.RoomNotFoundException;
+import seedu.address.model.tag.exceptions.DuplicateTagException;
 
 /**
  * A list of rooms that enforces uniqueness between its elements and does not allow nulls.
@@ -95,6 +96,40 @@ public class UniqueRoomList implements Iterable<Room> {
         if (!internalList.remove(toRemove)) {
             throw new RoomNotFoundException();
         }
+    }
+
+    /**
+     * Adds a tag to a room with a matching name
+     */
+    public void addRoomTag(Room toCheck, String tag) {
+        Room roomToUpdate = internalList.stream()
+                .filter(toCheck::isSameRoom)
+                .findFirst()
+                .orElseThrow(() -> new RoomNotFoundException());
+        boolean hasDuplicateTag = roomToUpdate.getTags().stream()
+                .anyMatch(existingTag -> existingTag.tagName.equalsIgnoreCase(tag));
+        if (hasDuplicateTag) {
+            throw new DuplicateTagException();
+        }
+        int index = internalList.indexOf(roomToUpdate);
+        roomToUpdate.addTag(tag);
+        internalList.set(index, roomToUpdate);
+    }
+
+    /**
+     * Delete tag from a Room in the roomList
+     * @param toCheck must exist in roomList
+     * @param tag A string
+     */
+    public void deleteRoomTag(Room toCheck, String tag) {
+        Room roomToUpdate = internalList.stream()
+                .filter(toCheck::isSameRoom)
+                .findFirst()
+                .orElseThrow(() -> new RoomNotFoundException());
+
+        int index = internalList.indexOf(roomToUpdate);
+        roomToUpdate.deleteTag(tag);
+        internalList.set(index, roomToUpdate);
     }
 
     /**

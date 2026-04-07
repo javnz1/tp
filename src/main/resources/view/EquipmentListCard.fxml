@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-
+<?import javafx.scene.layout.FlowPane?>
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
     <GridPane HBox.hgrow="ALWAYS">
         <columnConstraints>
@@ -26,6 +26,7 @@
 
                 <Label fx:id="status" styleClass="cell_small_label" text="\$status" />
             </HBox>
+            <FlowPane fx:id = "tags" />
         </VBox>
     </GridPane>
 </HBox>

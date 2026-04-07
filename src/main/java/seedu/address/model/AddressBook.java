@@ -364,4 +364,20 @@ public class AddressBook implements ReadOnlyAddressBook {
     public ObservableList<AliasMapping> getAliasMappingList() {
         return aliasMappings.asUnmodifiableObservableList();
     }
+
+    public void addRoomTag(Room room, String tag) {
+        rooms.addRoomTag(room, tag);
+    }
+
+    public void addEquipmentTag(Equipment equipment, String tag) {
+        equipments.addEquipmentTag(equipment, tag);
+    }
+
+    public void deleteRoomTag(Room room, String tag) {
+        rooms.deleteRoomTag(room, tag);
+    }
+
+    public void deleteEquipmentTag(Equipment equipment, String tag) {
+        equipments.deleteEquipmentTag(equipment, tag);
+    }
 }
