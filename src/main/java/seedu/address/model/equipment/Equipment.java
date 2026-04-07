@@ -5,8 +5,7 @@ import java.util.Set;
 
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.Taggable;
-
-
+import seedu.address.model.tag.exceptions.DuplicateTagException;
 
 
 /**
@@ -110,20 +109,23 @@ public class Equipment extends Taggable {
 
     /**
      * Adds tag from tagList on Equipment and on TaggedEntries record
-     * @param tag A valid tag
+     * @param tagName A String
      */
-    public void addTag(Tag tag) {
-        tags.add(tag);
-        registerTag(this.getClass().getSimpleName(), this.getName().toString(), tag.toString());
+    public void addTag(String tagName) {
+        if (hasBeenTagged(this.getClass().getSimpleName(), this.getName().toString(), tagName)) {
+            throw new DuplicateTagException();
+        }
+        tags.add(new Tag(tagName));
+        registerTag(this.getClass().getSimpleName(), this.getName().toString(), tagName);
     }
 
     /**
      * Removes tag from tagList on Equipment and on TaggedEntries record
-     * @param otherTag A valid Tag
+     * @param otherTag StringName of otherTag
      */
-    public void deleteTag(Tag otherTag) {
-        tags.removeIf(tag -> tag.equals(otherTag));
-        removeTag(this.getClass().getSimpleName(), this.getName().toString(), otherTag.toString());
+    public void deleteTag(String otherTag) {
+        tags.removeIf(tag -> tag.equals(new Tag(otherTag)));
+        removeTag(this.getClass().getSimpleName(), this.getName().toString(), otherTag);
     }
 
 

@@ -7,8 +7,7 @@ import java.util.Set;
 
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.Taggable;
-
-
+import seedu.address.model.tag.exceptions.DuplicateTagException;
 
 
 /**
@@ -112,21 +111,24 @@ public class Room extends Taggable {
     }
 
     /**
-     * Adds tag from tagList on Room and on TaggedEntries record
-     * @param tag A valid tag
+     * Adds tag from tagList on Room
+     * @param tagName A tagName
      */
-    public void addTag(Tag tag) {
-        tags.add(tag);
-        registerTag(this.getClass().getSimpleName(), this.getName().toString(), tag.toString());
+    public void addTag(String tagName) {
+        if (hasBeenTagged(this.getClass().getSimpleName(), this.getName().toString(), tagName)) {
+            throw new DuplicateTagException();
+        }
+        tags.add(new Tag(tagName));
+        registerTag(this.getClass().getSimpleName(), this.getName().toString(), tagName);
     }
 
     /**
-     * Removes tag from tagList on Room and on TaggedEntries record
+     * Removes tag from tagList on Room
      * @param otherTag A valid Tag
      */
-    public void deleteTag(Tag otherTag) {
-        tags.removeIf(tag -> tag.equals(otherTag));
-        removeTag(this.getClass().getSimpleName(), this.getName().toString(), otherTag.toString());
+    public void deleteTag(String otherTag) {
+        tags.removeIf(tag -> tag.equals(new Tag(otherTag)));
+        removeTag(this.getClass().getSimpleName(), this.getName().toString(), otherTag);
     }
 
     @Override

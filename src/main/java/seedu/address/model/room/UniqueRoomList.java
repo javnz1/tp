@@ -98,6 +98,28 @@ public class UniqueRoomList implements Iterable<Room> {
     }
 
     /**
+     * Adds a tag to a room with a matching name
+     */
+    public void addRoomTag(Room toCheck, String tag) {
+        internalList.stream()
+                .filter(toCheck::isSameRoom)
+                .findFirst()
+                .ifPresent(room -> room.addTag(tag));
+    }
+
+    /**
+     * Delete tag from a Room in the roomList
+     * @param toCheck must exist in roomList
+     * @param tag A string
+     */
+    public void deleteRoomTag(Room toCheck, String tag) {
+        internalList.stream()
+                .filter(toCheck::isSameRoom)
+                .findFirst()
+                .ifPresent(room -> room.deleteTag(tag));
+    }
+
+    /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
     public ObservableList<Room> asUnmodifiableObservableList() {

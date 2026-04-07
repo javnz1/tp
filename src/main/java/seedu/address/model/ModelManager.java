@@ -402,18 +402,10 @@ public class ModelManager implements Model {
     public void addTag(Taggable target, Tag tag) {
         requireAllNonNull(target, tag);
         if (target instanceof Room room) {
-            Room targetRoom = addressBook.getRoomList().stream()
-                    .filter(r -> r.getName().equals(room.getName()))
-                    .findFirst()
-                    .orElseThrow(() -> new AssertionError("Room not found: " + room.getName()));
-            targetRoom.addTag(tag);
+            addressBook.addRoomTag(room, tag.toString());
             updateFilteredRoomList(PREDICATE_SHOW_ALL_ROOMS);
         } else if (target instanceof Equipment equipment) {
-            Equipment targetEquipment = addressBook.getEquipmentList().stream()
-                    .filter(e -> e.getName().equals(equipment.getName()))
-                    .findFirst()
-                    .orElseThrow(() -> new AssertionError("Equipment not found: " + equipment.getName()));
-            targetEquipment.addTag(tag);
+            addressBook.addEquipmentTag(equipment, tag.toString());
             updateFilteredEquipmentList(PREDICATE_SHOW_ALL_EQUIPMENTS);
         } else {
             throw new AssertionError("Unknown Taggable type: " + target.getClass());
@@ -424,18 +416,10 @@ public class ModelManager implements Model {
     public void deleteTag(Taggable target, Tag tag) {
         requireAllNonNull(target, tag);
         if (target instanceof Room room) {
-            Room targetRoom = addressBook.getRoomList().stream()
-                    .filter(r -> r.getName().equals(room.getName()))
-                    .findFirst()
-                    .orElseThrow(() -> new AssertionError("Room not found: " + room.getName()));
-            targetRoom.deleteTag(tag);
+            addressBook.deleteRoomTag(room, tag.toString());
             updateFilteredRoomList(PREDICATE_SHOW_ALL_ROOMS);
         } else if (target instanceof Equipment equipment) {
-            Equipment targetEquipment = addressBook.getEquipmentList().stream()
-                    .filter(e -> e.getName().equals(equipment.getName()))
-                    .findFirst()
-                    .orElseThrow(() -> new AssertionError("Equipment not found: " + equipment.getName()));
-            targetEquipment.deleteTag(tag);
+            addressBook.deleteEquipmentTag(equipment, tag.toString());
             updateFilteredEquipmentList(PREDICATE_SHOW_ALL_EQUIPMENTS);
         } else {
             throw new AssertionError("Unknown Taggable type: " + target.getClass());

@@ -126,4 +126,30 @@ public class UniqueEquipmentList implements Iterable<Equipment> {
     public int hashCode() {
         return internalList.hashCode();
     }
+
+    /**
+     * Adds tag to an Equipment in the equipmentList
+     * @param toCheck must exist in equipmentList
+     * @param tag A string
+     */
+    public void addEquipmentTag(Equipment toCheck, String tag) {
+        internalList.stream()
+                .filter(toCheck::isSameEquipment)
+                .findFirst()
+                .ifPresent(equipment -> equipment.addTag(tag));
+    }
+
+    /**
+     * Delete tag from an Equipment in the equipmentList
+     * @param toCheck must exist in equipmentList
+     * @param tag A string
+     */
+    public void deleteEquipmentTag(Equipment toCheck, String tag) {
+        internalList.stream()
+                .filter(toCheck::isSameEquipment)
+                .findFirst()
+                .ifPresent(equipment -> equipment.deleteTag(tag));
+    }
+
+
 }

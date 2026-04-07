@@ -14,7 +14,7 @@ public abstract class Taggable {
         return typeName + ":" + name + ":" + tag;
     }
 
-    static boolean hasBeenTagged(String typeName, String name, String tag) {
+    protected boolean hasBeenTagged(String typeName, String name, String tag) {
         return TAGGED_ENTRIES.contains(buildKey(typeName, name, tag));
     }
 
@@ -42,7 +42,7 @@ public abstract class Taggable {
 
     public abstract String getNameString();
 
-    public abstract void addTag(Tag tag);
+    public abstract void addTag(String tag);
 
-    public abstract void deleteTag(Tag otherTag);
+    public abstract void deleteTag(String otherTag);
 }
