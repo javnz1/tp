@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.equipment.Category;
 import seedu.address.model.equipment.Equipment;
 import seedu.address.model.equipment.EquipmentName;
 import seedu.address.model.equipment.EquipmentStatus;
@@ -27,39 +28,33 @@ public class SampleDataUtil {
     public static Person[] getSamplePersons() {
         return new Person[] {
             new Person(new Name("Alex Yeoh"), new StudentId("A1234567A"),
-                new Phone("87438807"), new Email("alexyeoh@u.nus.edu"),
-                getTagSet()),
+                new Phone("87438807"), new Email("alexyeoh@u.nus.edu")),
             new Person(new Name("Bernice Yu"), new StudentId("A2345678B"),
-                new Phone("99272758"), new Email("berniceyu@u.nus.edu"),
-                getTagSet()),
+                new Phone("99272758"), new Email("berniceyu@u.nus.edu")),
             new Person(new Name("Charlotte Oliveiro"), new StudentId("A3456789C"),
-                new Phone("93210283"), new Email("charlotte@u.nus.edu"),
-                getTagSet()),
+                new Phone("93210283"), new Email("charlotte@u.nus.edu")),
             new Person(new Name("David Li"), new StudentId("A4567890D"),
-                new Phone("91031282"), new Email("lidavid@u.nus.edu"),
-                getTagSet()),
+                new Phone("91031282"), new Email("lidavid@u.nus.edu")),
             new Person(new Name("Irfan Ibrahim"), new StudentId("A5678901E"),
-                new Phone("92492021"), new Email("irfan@u.nus.edu"),
-                getTagSet()),
+                new Phone("92492021"), new Email("irfan@u.nus.edu")),
             new Person(new Name("Roy Balakrishnan"), new StudentId("A6789012F"),
-                new Phone("92624417"), new Email("royb@u.nus.edu"),
-                getTagSet())
+                new Phone("92624417"), new Email("royb@u.nus.edu"))
         };
     }
 
     public static Room[] getSampleRooms() {
-        return new Room[] {new Room(new RoomName("MPSH-1"), new Location("Sports-Centre"), new Status("Available")),
-            new Room(new RoomName("Sports-Hall-1"), new Location("University-Town"), new Status("Booked")),
-            new Room(new RoomName("Outdoor-Tennis-Court"), new Location("Kent-Ridge"), new Status("Available")),
-            new Room(new RoomName("Music-Room-1"), new Location("YIH"), new Status("Booked"))
+        return new Room[] {new Room(new RoomName("MPSH-1"), new Location("Sports-Centre"), Status.AVAILABLE),
+            new Room(new RoomName("Sports-Hall-1"), new Location("University-Town"), Status.AVAILABLE),
+            new Room(new RoomName("Outdoor-Tennis-Court"), new Location("Kent-Ridge"), Status.AVAILABLE),
+            new Room(new RoomName("Music-Room-1"), new Location("YIH"), Status.AVAILABLE)
         };
     }
 
     public static Equipment[] getSampleEquipments() {
         return new Equipment[] {
-            new Equipment(new EquipmentName("Wilson-Evolution"), "Basketball", EquipmentStatus.AVAILABLE),
-            new Equipment(new EquipmentName("Molten-Volleyball"), "Volleyball", EquipmentStatus.MAINTENANCE),
-            new Equipment(new EquipmentName("Track-Stand"), "Track-and-Field", EquipmentStatus.BOOKED)
+            new Equipment(new EquipmentName("Wilson-Evolution"), new Category("Basketball"), EquipmentStatus.AVAILABLE),
+            new Equipment(new EquipmentName("MX-Volleyball"), new Category("Volleyball"), EquipmentStatus.AVAILABLE),
+            new Equipment(new EquipmentName("Track-Stand"), new Category("Track-and-Field"), EquipmentStatus.AVAILABLE)
         };
     }
 

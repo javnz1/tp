@@ -3,7 +3,6 @@ package seedu.address.logic.commands;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalRooms.getTypicalAddressBook;
 
@@ -27,17 +26,14 @@ public class ListRoomCommandTest {
     }
 
     @Test
-    public void execute_listIsNotFiltered_showsSameList() {
+    public void execute_emptyRoomList_successMessage() {
+        model.setAddressBook(new AddressBook());
+        expectedModel.setAddressBook(new AddressBook());
+
         CommandResult expectedCommandResult = new CommandResult(
-                ListRoomCommand.MESSAGE_SUCCESS, false, false, true, true, true);
+                ListRoomCommand.MESSAGE_EMPTY_LIST, false, false, true, true, true);
 
         assertCommandSuccess(new ListRoomCommand(), model, expectedCommandResult, expectedModel);
-    }
-
-    @Test
-    public void execute_emptyRoomList_throwsCommandException() {
-        model.setAddressBook(new AddressBook());
-        assertCommandFailure(new ListRoomCommand(), model, ListRoomCommand.MESSAGE_FAILURE);
     }
 
     @Test

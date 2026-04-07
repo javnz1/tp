@@ -8,7 +8,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddEquipmentCommand;
 import seedu.address.logic.commands.AddRoomCommand;
 import seedu.address.logic.commands.AddStudentCommand;
@@ -18,7 +17,6 @@ import seedu.address.logic.commands.CancelReservationCommand;
 import seedu.address.logic.commands.CheckStudentLoansCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
-import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.DeleteEquipmentCommand;
 import seedu.address.logic.commands.DeleteRoomCommand;
 import seedu.address.logic.commands.DeleteStudentCommand;
@@ -31,7 +29,6 @@ import seedu.address.logic.commands.FilterTagCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.IssueCommand;
-import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.ListEquipmentCommand;
 import seedu.address.logic.commands.ListRoomCommand;
 import seedu.address.logic.commands.ListStudentCommand;
@@ -70,23 +67,14 @@ public class AddressBookParser {
 
         switch (commandWord) {
 
-        case AddCommand.COMMAND_WORD:
-            return new AddCommandParser().parse(arguments);
-
         case EditStudentCommand.COMMAND_WORD:
             return new EditStudentCommandParser().parse(arguments);
-
-        case DeleteCommand.COMMAND_WORD:
-            return new DeleteCommandParser().parse(arguments);
 
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
 
         case FindCommand.COMMAND_WORD:
             return new FindCommandParser().parse(arguments);
-
-        case ListCommand.COMMAND_WORD:
-            return new ListCommand();
 
         case AddRoomCommand.COMMAND_WORD:
             return new AddRoomCommandParser().parse(arguments);

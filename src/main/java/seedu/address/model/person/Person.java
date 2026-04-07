@@ -2,13 +2,9 @@ package seedu.address.model.person;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.model.tag.Tag;
 
 /**
  * Represents a Person in the address book.
@@ -22,19 +18,15 @@ public class Person {
     private final Phone phone;
     private final Email email;
 
-    // Data fields
-    private final Set<Tag> tags = new HashSet<>();
-
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, StudentId studentId, Phone phone, Email email, Set<Tag> tags) {
-        requireAllNonNull(name, studentId, phone, email, tags);
+    public Person(Name name, StudentId studentId, Phone phone, Email email) {
+        requireAllNonNull(name, studentId, phone, email);
         this.name = name;
         this.studentId = studentId;
         this.phone = phone;
         this.email = email;
-        this.tags.addAll(tags);
     }
 
     public Name getName() {
@@ -54,14 +46,7 @@ public class Person {
     }
 
     /**
-     * Returns an immutable tag set.
-     */
-    public Set<Tag> getTags() {
-        return Collections.unmodifiableSet(tags);
-    }
-
-    /**
-     * Returns true if both persons have the same student ID.
+     * Returns true if both persons have the same student ID, phone, email.
      * This defines a weaker notion of equality between two persons.
      */
     public boolean isSamePerson(Person otherPerson) {
@@ -92,13 +77,12 @@ public class Person {
         return name.equals(otherPerson.name)
                 && studentId.equals(otherPerson.studentId)
                 && phone.equals(otherPerson.phone)
-                && email.equals(otherPerson.email)
-                && tags.equals(otherPerson.tags);
+                && email.equals(otherPerson.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, studentId, phone, email, tags);
+        return Objects.hash(name, studentId, phone, email);
     }
 
     @Override
@@ -108,7 +92,6 @@ public class Person {
                 .add("studentId", studentId)
                 .add("phone", phone)
                 .add("email", email)
-                .add("tags", tags)
                 .toString();
     }
 }

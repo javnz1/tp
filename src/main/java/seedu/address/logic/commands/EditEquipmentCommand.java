@@ -10,6 +10,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.equipment.Category;
 import seedu.address.model.equipment.Equipment;
 import seedu.address.model.equipment.EquipmentName;
 import seedu.address.model.equipment.EquipmentStatus;
@@ -24,9 +25,9 @@ public class EditEquipmentCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the equipment identified "
             + "by the index number used in the displayed equipment list. "
             + "At least one field to edit must be provided.\n"
-            + "Parameters: INDEX (must be a positive integer) "
-            + "[n/NAME] [c/CATEGORY] [s/STATUS]\n"
-            + "Example: " + COMMAND_WORD + " 1 s/Booked";
+            + "Parameters: INDEX(must be a positive integer) "
+            + "[n/NAME] [c/CATEGORY] [s/STATUS (Available, Maintenance or Damaged only)]\n"
+            + "Example: " + COMMAND_WORD + " 1 s/Maintenance";
 
     public static final String MESSAGE_EDIT_EQUIPMENT_SUCCESS = "Updated Equipment:\n%1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -53,9 +54,30 @@ public class EditEquipmentCommand extends Command {
         }
 
         Equipment equipmentToEdit = lastShownList.get(index.getZeroBased());
+
+        if (equipmentToEdit.getStatus().toString().equalsIgnoreCase("BOOKED")) {
+            throw new CommandException("This equipment is currently 'Booked' and cannot be edited. "
+                    + "Please wait until it is returned or cancelled.");
+        }
+
+        if (editEquipmentDescriptor.getStatus().isPresent()) {
+            EquipmentStatus currentStatus = equipmentToEdit.getStatus();
+            EquipmentStatus requestedStatus = editEquipmentDescriptor.getStatus().get();
+
+            if (currentStatus.equals(requestedStatus)) {
+                editEquipmentDescriptor.setStatus(null);
+            } else {
+                validateStatusTransition(currentStatus, requestedStatus);
+            }
+        }
+
         Equipment editedEquipment = createEditedEquipment(equipmentToEdit, editEquipmentDescriptor);
 
-        if (!equipmentToEdit.isSameEquipment(editedEquipment) && model.hasEquipment(editedEquipment)) {
+        if (equipmentToEdit.equals(editedEquipment)) {
+            throw new CommandException("No changes detected (the information provided matches current records).");
+        }
+
+        if (!equipmentToEdit.isSameEquipmentName(editedEquipment) && model.hasEquipment(editedEquipment)) {
             throw new CommandException(MESSAGE_DUPLICATE_EQUIPMENT);
         }
 
@@ -69,10 +91,40 @@ public class EditEquipmentCommand extends Command {
     private static Equipment createEditedEquipment(Equipment equipmentToEdit,
                                                    EditEquipmentDescriptor editEquipmentDescriptor) {
         EquipmentName updatedName = editEquipmentDescriptor.getName().orElse(equipmentToEdit.getName());
-        String updatedCategory = editEquipmentDescriptor.getCategory().orElse(equipmentToEdit.getCategory());
+        Category updatedCategory = editEquipmentDescriptor.getCategory().orElse(equipmentToEdit.getCategory());
         EquipmentStatus updatedStatus = editEquipmentDescriptor.getStatus().orElse(equipmentToEdit.getStatus());
 
         return new Equipment(updatedName, updatedCategory, updatedStatus);
+    }
+
+    /**
+     * Validates the equipment status transition.
+     */
+    private void validateStatusTransition(EquipmentStatus current, EquipmentStatus requested)
+            throws CommandException {
+        String currentVal = current.toString().toUpperCase();
+        String requestedVal = requested.toString().toUpperCase();
+
+        if (currentVal.equals(requestedVal)) {
+            throw new CommandException("Equipment is already in " + current.toString() + ", no status change.");
+        }
+
+        if (currentVal.equals("BOOKED")) {
+            throw new CommandException("Equipment is currently 'Booked' and its status cannot be edited as it is "
+                    + "currently issued or reserved");
+        }
+
+        if (currentVal.equals("AVAILABLE")) {
+            if (!requestedVal.equals("MAINTENANCE") && !requestedVal.equals("DAMAGED")) {
+                throw new CommandException("Equipment in 'Available' status can only be edited to 'Maintenance' or "
+                        + "'Damaged'.");
+            }
+        } else if (currentVal.equals("MAINTENANCE") || currentVal.equals("DAMAGED")) {
+            if (!requestedVal.equals("AVAILABLE")) {
+                throw new CommandException("Equipment in 'Maintenance' or 'Damaged' status can only be edited to "
+                        + "'Available'.");
+            }
+        }
     }
 
     @Override
@@ -97,7 +149,7 @@ public class EditEquipmentCommand extends Command {
      */
     public static class EditEquipmentDescriptor {
         private EquipmentName name;
-        private String category;
+        private Category category;
         private EquipmentStatus status;
 
         public EditEquipmentDescriptor() {}
@@ -126,11 +178,11 @@ public class EditEquipmentCommand extends Command {
             return Optional.ofNullable(name);
         }
 
-        public void setCategory(String category) {
+        public void setCategory(Category category) {
             this.category = category;
         }
 
-        public Optional<String> getCategory() {
+        public Optional<Category> getCategory() {
             return Optional.ofNullable(category);
         }
 

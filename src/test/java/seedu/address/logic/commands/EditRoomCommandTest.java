@@ -24,7 +24,10 @@ public class EditRoomCommandTest {
 
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() {
-        Room editedRoom = new RoomBuilder().build();
+        Room originalRoom = model.getFilteredRoomList().get(INDEX_FIRST_ROOM.getZeroBased());
+
+        Room editedRoom = new RoomBuilder(originalRoom).withName("NEW-ROOM-ID").build();
+
         EditRoomCommand.EditRoomDescriptor descriptor =
                 new EditRoomDescriptorBuilder(editedRoom).build();
         EditRoomCommand editCommand = new EditRoomCommand(INDEX_FIRST_ROOM, descriptor);
@@ -32,7 +35,7 @@ public class EditRoomCommandTest {
         String expectedMessage = String.format(EditRoomCommand.MESSAGE_EDIT_ROOM_SUCCESS, editedRoom);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.setRoom(model.getFilteredRoomList().get(0), editedRoom);
+        expectedModel.setRoom(originalRoom, editedRoom);
 
         CommandResult expectedCommandResult = new CommandResult(expectedMessage,
                 false, false, true, true, true);
@@ -58,5 +61,22 @@ public class EditRoomCommandTest {
         EditRoomCommand editCommand = new EditRoomCommand(outOfBoundIndex, descriptor);
 
         assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_ROOM_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void execute_editBookedRoom_throwsCommandException() {
+        Room roomInModel = model.getFilteredRoomList().get(0);
+
+        Room bookedRoom = new RoomBuilder(roomInModel).withStatus("Booked").build();
+
+        model.setRoom(roomInModel, bookedRoom);
+
+        EditRoomCommand.EditRoomDescriptor descriptor = new EditRoomDescriptorBuilder()
+                .withLocation("New-Location").build();
+        EditRoomCommand editCommand = new EditRoomCommand(INDEX_FIRST_ROOM, descriptor);
+
+        assertCommandFailure(editCommand, model,
+                "This room is currently 'Booked' and cannot be edited. "
+                        + "Please wait until it is cancelled.");
     }
 }

@@ -205,13 +205,15 @@ public class ModelManager implements Model {
         requireNonNull(resourceId);
         String resolvedResourceId = resolveAlias(resourceId);
 
-        boolean roomExists = addressBook.getRoomList().stream()
-                .anyMatch(room -> room.getName().fullName.equalsIgnoreCase(resolvedResourceId));
+        boolean availableRoomExists = addressBook.getRoomList().stream()
+                .anyMatch(room -> room.getName().fullName.equalsIgnoreCase(resolvedResourceId)
+                        && room.getStatus().toString().equalsIgnoreCase("Available"));
 
-        boolean equipmentExists = addressBook.getEquipmentList().stream()
-                .anyMatch(equipment -> equipment.getName().fullName.equalsIgnoreCase(resolvedResourceId));
+        boolean availableEquipmentExists = addressBook.getEquipmentList().stream()
+                .anyMatch(equipment -> equipment.getName().fullName.equalsIgnoreCase(resolvedResourceId)
+                        && equipment.getStatus() == EquipmentStatus.AVAILABLE);
 
-        return roomExists || equipmentExists;
+        return availableRoomExists || availableEquipmentExists;
     }
 
     @Override
@@ -245,7 +247,8 @@ public class ModelManager implements Model {
         String resolvedItemId = resolveAlias(itemId);
 
         return addressBook.getEquipmentList().stream()
-                .anyMatch(equipment -> equipment.getName().fullName.equalsIgnoreCase(resolvedItemId));
+                .anyMatch(equipment -> equipment.getName().fullName.equalsIgnoreCase(resolvedItemId)
+                        && equipment.getStatus() == EquipmentStatus.AVAILABLE);
     }
 
     @Override
@@ -488,11 +491,11 @@ public class ModelManager implements Model {
         boolean isBooked = hasActiveBooking(normalizedResourceId);
 
         if (isBooked) {
-            return new Status("Booked");
+            return Status.BOOKED;
         }
 
         if (room.getStatus().isBooked()) {
-            return new Status("Available");
+            return Status.AVAILABLE;
         }
 
         return room.getStatus();

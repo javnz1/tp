@@ -15,7 +15,8 @@ public class ListRoomCommandParser implements Parser<ListRoomCommand> {
      */
     public ListRoomCommand parse(String args) throws ParseException {
         if (!args.trim().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListRoomCommand.MESSAGE_USAGE));
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListRoomCommand.MESSAGE_USAGE));
         }
         return new ListRoomCommand();
     }

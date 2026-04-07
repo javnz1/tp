@@ -19,13 +19,17 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.alias.AliasMapping;
+import seedu.address.model.equipment.Category;
 import seedu.address.model.equipment.Equipment;
+import seedu.address.model.equipment.EquipmentName;
 import seedu.address.model.equipment.EquipmentStatus;
 import seedu.address.model.issue.IssueRecord;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.StudentId;
 import seedu.address.model.reservation.Reservation;
+import seedu.address.model.room.Location;
 import seedu.address.model.room.Room;
+import seedu.address.model.room.RoomName;
 import seedu.address.model.room.Status;
 import seedu.address.testutil.AddressBookBuilder;
 import seedu.address.testutil.EquipmentBuilder;
@@ -34,20 +38,20 @@ import seedu.address.testutil.RoomBuilder;
 public class ModelManagerTest {
 
     private static final Reservation HALL_TWO_SLOT_ONE = new Reservation("Hall-2", new StudentId("a1234567a"),
-            LocalDateTime.of(2026, 3, 1, 14, 0),
-            LocalDateTime.of(2026, 3, 1, 16, 0));
+            LocalDateTime.of(2099, 3, 1, 14, 0),
+            LocalDateTime.of(2099, 3, 1, 16, 0));
 
     private static final Reservation HALL_TWO_CONFLICTING = new Reservation("Hall-2", new StudentId("a2345678b"),
-            LocalDateTime.of(2026, 3, 1, 15, 0),
-            LocalDateTime.of(2026, 3, 1, 17, 0));
+            LocalDateTime.of(2099, 3, 1, 15, 0),
+            LocalDateTime.of(2099, 3, 1, 17, 0));
 
     private static final Reservation HALL_TWO_ADJACENT = new Reservation("Hall-2", new StudentId("a2345678b"),
-            LocalDateTime.of(2026, 3, 1, 16, 0),
-            LocalDateTime.of(2026, 3, 1, 18, 0));
+            LocalDateTime.of(2099, 3, 1, 16, 0),
+            LocalDateTime.of(2099, 3, 1, 18, 0));
 
     private static final Reservation MPSH_ONE_SAME_TIME = new Reservation("MPSH-1", new StudentId("a2345678b"),
-            LocalDateTime.of(2026, 3, 1, 14, 0),
-            LocalDateTime.of(2026, 3, 1, 16, 0));
+            LocalDateTime.of(2099, 3, 1, 14, 0),
+            LocalDateTime.of(2099, 3, 1, 16, 0));
 
     private static final IssueRecord HALL_TWO_ISSUE = new IssueRecord("Wilson-Evolution-Basketball-1",
             new StudentId("a1234567a"),
@@ -271,6 +275,12 @@ public class ModelManagerTest {
     }
 
     @Test
+    public void hasIssuableItem_maintenanceItem_returnsFalse() {
+        assertFalse(modelManager.hasIssuableItem("Molten-Volleyball"));
+    }
+
+
+    @Test
     public void hasAliasableTarget_nullTargetId_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> modelManager.hasAliasableTarget(null));
     }
@@ -366,7 +376,127 @@ public class ModelManagerTest {
         modelManager.addReservation(HALL_TWO_SLOT_ONE);
 
         Room updatedRoom = findRoomByName("Hall-2");
-        assertEquals(new Status("Booked"), updatedRoom.getStatus());
+        assertEquals(Status.BOOKED, updatedRoom.getStatus());
+    }
+
+    @Test
+    public void hasIssuableItem_availableEquipment_returnsTrue() {
+        ModelManager model = new ModelManager();
+        AddressBook ab = new AddressBook();
+        ab.addEquipment(new Equipment(
+                new EquipmentName("Wilson-Evolution"), new Category("Basketball"), EquipmentStatus.AVAILABLE));
+        model.setAddressBook(ab);
+
+        assertTrue(model.hasIssuableItem("Wilson-Evolution"));
+    }
+
+    @Test
+    public void hasIssuableItem_bookedEquipment_returnsFalse() {
+        ModelManager model = new ModelManager();
+        AddressBook ab = new AddressBook();
+        ab.addEquipment(new Equipment(
+                new EquipmentName("Track-Stand"), new Category("Track-and-Field"), EquipmentStatus.BOOKED));
+        model.setAddressBook(ab);
+
+        assertFalse(model.hasIssuableItem("Track-Stand"));
+    }
+
+    @Test
+    public void hasIssuableItem_maintenanceEquipment_returnsFalse() {
+        ModelManager model = new ModelManager();
+        AddressBook ab = new AddressBook();
+        ab.addEquipment(new Equipment(
+                new EquipmentName("Molten-Volleyball"), new Category("Volleyball"), EquipmentStatus.MAINTENANCE));
+        model.setAddressBook(ab);
+
+        assertFalse(model.hasIssuableItem("Molten-Volleyball"));
+    }
+
+    @Test
+    public void hasIssuableItem_aliasToAvailableEquipment_returnsTrue() {
+        ModelManager model = new ModelManager();
+        AddressBook ab = new AddressBook();
+        ab.addEquipment(new Equipment(
+                new EquipmentName("Wilson-Evolution"), new Category("Basketball"), EquipmentStatus.AVAILABLE));
+        ab.addAliasMapping(new AliasMapping("Wilson-Evolution", "ball"));
+        model.setAddressBook(ab);
+
+        assertTrue(model.hasIssuableItem("ball"));
+    }
+
+    @Test
+    public void hasReservableItem_availableRoom_returnsTrue() {
+        ModelManager model = new ModelManager();
+        AddressBook ab = new AddressBook();
+        ab.addRoom(new Room(
+                new RoomName("MPSH-1"),
+                new Location("Sports-Centre"),
+                Status.AVAILABLE));
+        model.setAddressBook(ab);
+
+        assertTrue(model.hasReservableItem("MPSH-1"));
+    }
+
+    @Test
+    public void hasReservableItem_bookedRoom_returnsFalse() {
+        ModelManager model = new ModelManager();
+        AddressBook ab = new AddressBook();
+        ab.addRoom(new Room(
+                new RoomName("Sports-Hall-1"),
+                new Location("University-Town"),
+                Status.BOOKED));
+        model.setAddressBook(ab);
+
+        assertFalse(model.hasReservableItem("Sports-Hall-1"));
+    }
+
+    @Test
+    public void hasReservableItem_maintenanceRoom_returnsFalse() {
+        ModelManager model = new ModelManager();
+        AddressBook ab = new AddressBook();
+        ab.addRoom(new Room(
+                new RoomName("Music-Room-1"),
+                new Location("YIH"),
+                Status.MAINTENANCE));
+        model.setAddressBook(ab);
+
+        assertFalse(model.hasReservableItem("Music-Room-1"));
+    }
+
+    @Test
+    public void hasReservableItem_availableEquipment_returnsTrue() {
+        ModelManager model = new ModelManager();
+        AddressBook ab = new AddressBook();
+        ab.addEquipment(new Equipment(
+                new EquipmentName("Wilson-Evolution"), new Category("Basketball"), EquipmentStatus.AVAILABLE));
+        model.setAddressBook(ab);
+
+        assertTrue(model.hasReservableItem("Wilson-Evolution"));
+    }
+
+    @Test
+    public void hasReservableItem_maintenanceEquipment_returnsFalse() {
+        ModelManager model = new ModelManager();
+        AddressBook ab = new AddressBook();
+        ab.addEquipment(new Equipment(
+                new EquipmentName("Molten-Volleyball"), new Category("Volleyball"), EquipmentStatus.MAINTENANCE));
+        model.setAddressBook(ab);
+
+        assertFalse(model.hasReservableItem("Molten-Volleyball"));
+    }
+
+    @Test
+    public void hasReservableItem_aliasToAvailableRoom_returnsTrue() {
+        ModelManager model = new ModelManager();
+        AddressBook ab = new AddressBook();
+        ab.addRoom(new Room(
+                new RoomName("MPSH-1"),
+                new Location("Sports-Centre"),
+                Status.AVAILABLE));
+        ab.addAliasMapping(new AliasMapping("MPSH-1", "hall"));
+        model.setAddressBook(ab);
+
+        assertTrue(model.hasReservableItem("hall"));
     }
 
     @Test
@@ -382,7 +512,7 @@ public class ModelManagerTest {
         modelManager.removeReservation(HALL_TWO_SLOT_ONE);
 
         Room updatedRoom = findRoomByName("Hall-2");
-        assertEquals(new Status("Available"), updatedRoom.getStatus());
+        assertEquals(Status.AVAILABLE, updatedRoom.getStatus());
     }
 
     @Test
@@ -399,7 +529,7 @@ public class ModelManagerTest {
         modelManager.removeReservation(HALL_TWO_SLOT_ONE);
 
         Room updatedRoom = findRoomByName("Hall-2");
-        assertEquals(new Status("Booked"), updatedRoom.getStatus());
+        assertEquals(Status.BOOKED, updatedRoom.getStatus());
     }
 
     @Test

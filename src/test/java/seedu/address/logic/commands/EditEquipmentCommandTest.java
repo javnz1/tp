@@ -15,6 +15,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.equipment.Equipment;
+import seedu.address.model.equipment.EquipmentStatus;
 import seedu.address.testutil.EditEquipmentDescriptorBuilder;
 import seedu.address.testutil.EquipmentBuilder;
 
@@ -54,9 +55,38 @@ public class EditEquipmentCommandTest {
     public void execute_invalidEquipmentIndexUnfilteredList_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredEquipmentList().size() + 1);
         EditEquipmentCommand.EditEquipmentDescriptor descriptor =
-                new EditEquipmentDescriptorBuilder().withName("Valid Name").build();
+                new EditEquipmentDescriptorBuilder().withName("Valid-Name").build();
         EditEquipmentCommand editCommand = new EditEquipmentCommand(outOfBoundIndex, descriptor);
 
         assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_EQUIPMENT_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void execute_editBookedEquipmentFromModel_throwsCommandException() {
+        Equipment equipmentInModel = model.getFilteredEquipmentList().get(0);
+
+        Equipment bookedEquipment = new EquipmentBuilder(equipmentInModel)
+                .withStatus(EquipmentStatus.BOOKED).build();
+
+        model.setEquipment(equipmentInModel, bookedEquipment);
+
+        EditEquipmentCommand.EditEquipmentDescriptor descriptor = new EditEquipmentDescriptorBuilder()
+                .withName("New-Name").build();
+        EditEquipmentCommand editCommand = new EditEquipmentCommand(INDEX_FIRST_EQUIPMENT, descriptor);
+
+        assertCommandFailure(editCommand, model,
+                "This equipment is currently 'Booked' and cannot be edited. "
+                        + "Please wait until it is returned or cancelled.");
+    }
+
+    @Test
+    public void execute_invalidStatusTransition_throwsCommandException() {
+        Equipment equipmentInModel = model.getFilteredEquipmentList().get(0); // Assume Available
+        EditEquipmentCommand.EditEquipmentDescriptor descriptor = new EditEquipmentDescriptorBuilder()
+                .withStatus(EquipmentStatus.BOOKED).build();
+        EditEquipmentCommand editCommand = new EditEquipmentCommand(INDEX_FIRST_EQUIPMENT, descriptor);
+
+        assertCommandFailure(editCommand, model, "Equipment in 'Available' status can only be edited to"
+                + " 'Maintenance' or 'Damaged'.");
     }
 }

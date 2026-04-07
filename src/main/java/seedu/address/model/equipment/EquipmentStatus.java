@@ -14,7 +14,10 @@ public enum EquipmentStatus {
     DAMAGED;
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Status should be one of the following: Available, Booked, Maintenance, Damaged.";
+            """
+                    Status should be one of the following: Available, Maintenance, or Damaged.
+                    Example: s/Maintenance
+                    """;
 
     /**
      * Returns true if a given string is a valid status.

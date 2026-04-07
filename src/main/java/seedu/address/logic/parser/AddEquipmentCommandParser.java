@@ -3,10 +3,10 @@ package seedu.address.logic.parser;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CATEGORY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 
 import seedu.address.logic.commands.AddEquipmentCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.equipment.Category;
 import seedu.address.model.equipment.Equipment;
 import seedu.address.model.equipment.EquipmentName;
 import seedu.address.model.equipment.EquipmentStatus;
@@ -23,17 +23,17 @@ public class AddEquipmentCommandParser implements Parser<AddEquipmentCommand> {
      */
     public AddEquipmentCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_CATEGORY, PREFIX_STATUS);
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_CATEGORY);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_CATEGORY, PREFIX_STATUS)
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_CATEGORY)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     AddEquipmentCommand.MESSAGE_USAGE));
         }
 
         EquipmentName name = ParserUtil.parseEquipmentName(argMultimap.getValue(PREFIX_NAME).get());
-        String category = argMultimap.getValue(PREFIX_CATEGORY).get();
-        EquipmentStatus status = ParserUtil.parseEquipmentStatus(argMultimap.getValue(PREFIX_STATUS).get());
+        Category category = ParserUtil.parseCategory(argMultimap.getValue(PREFIX_CATEGORY).get());
+        EquipmentStatus status = EquipmentStatus.AVAILABLE;
 
         Equipment equipment = new Equipment(name, category, status);
         return new AddEquipmentCommand(equipment);

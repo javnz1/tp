@@ -29,10 +29,12 @@ public class EquipmentListCard extends UiPart<Region> {
     public EquipmentListCard(Equipment equipment, int displayedIndex) {
         super(FXML);
         id.setText(displayedIndex + ". ");
-        name.setText(equipment.getName().fullName);
-        category.setText(equipment.getCategory());
+        String nameText = equipment.getName().fullName;
+        name.setText(nameText);
 
-        // Dynamic Status Formatting
+        String categoryText = equipment.getCategory().toString();
+        category.setText("Category: " + categoryText);
+
         String statusText = equipment.getStatus().toString();
         status.setText(statusText);
         configureStatusStyle(statusText);
@@ -44,6 +46,12 @@ public class EquipmentListCard extends UiPart<Region> {
                     + " -fx-padding: 2 5 2 5; -fx-background-radius: 5;");
         } else if (statusText.equalsIgnoreCase("Booked")) {
             status.setStyle("-fx-background-color: #c62828; -fx-text-fill: white;"
+                    + " -fx-padding: 2 5 2 5; -fx-background-radius: 5;");
+        } else if (statusText.equalsIgnoreCase("Maintenance")) {
+            status.setStyle("-fx-background-color: #ffa000; -fx-text-fill: white;"
+                    + " -fx-padding: 2 5 2 5; -fx-background-radius: 5;");
+        } else if (statusText.equalsIgnoreCase("Damaged")) {
+            status.setStyle("-fx-background-color: #546e7a; -fx-text-fill: white;"
                     + " -fx-padding: 2 5 2 5; -fx-background-radius: 5;");
         }
     }
