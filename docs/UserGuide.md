@@ -505,11 +505,14 @@ You **cannot** edit any details of a student if they currently have an active eq
 
 ### 2.4 Loans & Reservations
 
-#### Reserving a facility/equipment: `reserve`
+#### Reserving a room/equipment: `reserve`
 
 Reserves a room or equipment for a student at a specified date and time.
 
-Format: `reserve ITEM_OR_ROOM_ID STUDENT_ID f/START_DATE_TIME t/END_DATE_TIME`
+**Format:** `reserve ITEM_OR_ROOM_ID STUDENT_ID f/START_DATE_TIME t/END_DATE_TIME`
+
+**Date/time format:**
+`yyyy-MM-dd HHmm`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 You can reserve facilities such as halls, courts, and multi-purpose rooms as well as equipments in advance to avoid double bookings.
@@ -519,50 +522,57 @@ You can reserve facilities such as halls, courts, and multi-purpose rooms as wel
 * The start and end date/time must be valid and the end date/time must be later than the start date/time.
 * The reservation will be rejected if it conflicts with an existing booking for the same item or room.
 
-Duplicate handling:
+**WARNING:**
+* Reservation can only be made when the room status is **Available**.
+* A room or equipment can only have **one active reservation** at a time.
+
+**Duplicate handling:**
 * Duplicate or overlapping reservations are not allowed.
 * If the specified item or room is already reserved for the requested time period, the command will be rejected.
 
-Examples:
-* `reserve Hall-2 a1234567a f/2026-03-01 1400 t/2026-03-01 1600`
-* `reserve MPSH-1 a1234567a f/2026-03-10 0900 t/2026-03-10 1200`
+**Examples:**
+* `reserve MPSH-1 a1234567a f/2027-03-10 0900 t/2027-03-10 1200`
 
+**Success**
 ![reserve command screenshot](images/reserveCommand.png)
 
-Possible errors:
+**Failure**
+![failed reserve command screenshot 1](images/bookedReserveCommand.png)
+![failed reserve command screenshot 2](images/itemReserveCommand.png)
+
+**Possible errors:**
 * Invalid `ITEM_OR_ROOM_ID`
 * Invalid `STUDENT_ID`
 * Invalid date/time format
 * End time is earlier than start time
-* Reservation conflicts with an existing booking
 
 #### Cancel a reservation: `cancel`
 
-Cancels an existing reservation.
+Cancels an **existing** reservation.
 
-**Format**
+**Format:**
 `cancel ITEM_OR_ROOM_ID STUDENT_ID f/START_DATE_TIME`
 
-**Date/time format**
+**Date/time format:**
 `yyyy-MM-dd HHmm`
 
-**Example**
-`cancel Hall-2 a1234567a f/2099-03-15 0900`
+**Example:**
+`cancel MPSH-1 a1234567a f/2027-03-10 0900`
 
 **Success**
 
-Reservation cancelled:
-Reserved HALL-2 by Student a1234567a from 2099-03-15 0900 to 2099-03-15 1100
+![cancel command screenshot](images/cancelCommand.png)
 
 **Failure**
-`Error: Wilson-Evolution-Basketball-1 is not currently issued.`
+
+![failed cancel command screenshot](images/faliedCancelCommand.png)
 
 
 #### Issuing an equipment item: `issue`
 
 Issues an equipment item to a student with a due date and time for return.
 
-Format: `issue ITEM_ID STUDENT_ID DUE_DATE_TIME`
+**Format:** `issue ITEM_ID STUDENT_ID DUE_DATE_TIME`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 Use this command to keep track of borrowed equipment and who is responsible for returning it.
@@ -572,18 +582,22 @@ Use this command to keep track of borrowed equipment and who is responsible for 
 * The due date/time must be in the future and follow the format `yyyy-MM-dd HHmm`.
 * The command will be rejected if the item is already issued to another student.
 
-Duplicate handling:
+**Duplicate handling:**
 * If the item is already issued, the system will reject the command.
 * The system will show the current holder of the item and its due date/time.
 
-Examples:
-* `issue Wilson-Evolution-Basketball-1 A1203763K 2026-03-05 1700`
-* `issue Molten-Volleyball A1206789J 2026-03-02 1200`
+**Examples:**
+* `issue Wilson-Evolution a1234567a 2027-03-05 1700`
+
+**Success**
 
 ![issue command screenshot](images/issueCommand.png)
 
+**Failure**
 
-Possible errors:
+![failed issue command screenshot](images/failedIssueCommand.png)
+
+**Possible errors:**
 * Invalid `ITEM_ID`
 * Invalid `STUDENT_ID`
 * Item is already issued
@@ -594,19 +608,23 @@ Possible errors:
 
 Returns an issued equipment item back to the inventory.
 
-**Format**
+**Format:**
 `return ITEM_ID`
 
-**Example**
-`return Wilson-Evolution-Basketball-1`
+**Example:**
+`return Wilson-Evolution`
 
 **Success**
-`WILSON-EVOLUTION-BASKETBALL-1 returned successfully from a1234567a`
+
+![return command screenshot](images/returnCommand.png)
 
 **Failure**
-- item is not currently issued
-- invalid command format <br>
-`Error: No matching reservation found for Hall-2 by a1234567a from 2099-03-15 0900 to 2099-03-15 1100`
+
+![failed return command screenshot](images/faliedReturnCommand.png)
+
+**Possible errors:**
+* Item not currently issued
+* Invalid `ITEM_ID`
 
 **Notes**
 - aliases are supported, so if `b1` is an alias for `Wilson-Evolution-Basketball-1`, then `return b1` also works
@@ -616,7 +634,7 @@ Returns an issued equipment item back to the inventory.
 
 Creates a short alias for an equipment item or room.
 
-Format: `alias ITEM_OR_ROOM_ID ALIAS_NAME`
+**Format:** `alias ITEM_OR_ROOM_ID ALIAS_NAME`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 Aliases are useful for long item or room IDs, especially during busy periods when faster command entry is helpful.
@@ -625,19 +643,22 @@ Aliases are useful for long item or room IDs, especially during busy periods whe
 * Assigns a short alias to the specified item or room.
 * `ALIAS_NAME` should be a short string containing letters, numbers, or underscores.
 * Each alias must be unique across the system.
+* Only works for reservation , issue, cancel, return commands.
 
-Duplicate handling:
+**Duplicate handling:**
 * Duplicate aliases are not allowed.
 * If the alias is already in use, the command will be rejected.
 
-Examples:
-* `alias Wilson-Evolution-Basketball-1 b1`
+**Examples:**
 * `alias MPSH-1 hall1`
 
-
+**Success**
 ![alias command screenshot](images/aliasCommand.png)
 
-* Possible errors:
+**Failure**
+![failed alias command screenshot](images/faliedAliasCommand.png)
+
+**Possible errors:**
 * Invalid `ITEM_OR_ROOM_ID`
 * Alias already exists
 
@@ -651,11 +672,11 @@ Tags an equipment item or room with a label for categorisation.
 Format: `tag c/EQUIPMENT_NAME t/TAG` or `tag l/ROOM_NAME t/TAG`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-Tags are useful for categorising equipment or rooms, such as marking items as spoilt or rooms under renovation.
+Tags are useful for categorising equipment or rooms
 </div>
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip for IHG:**
-Tag equipment as `t/IHG_RESERVED` during competition weeks to quickly filter items that should not be loaned out for casual use.
+Tag equipment as `t/IHG` during competition weeks to quickly filter items that should not be loaned out for casual use.
 </div>
 
 * Assigns a tag to the specified equipment item or room.
@@ -667,8 +688,8 @@ Duplicate handling:
 * If the tag already exists on the item or room, the command will be rejected.
 
 Examples:
-* `tag c/Wilson-Evolution-Basketball-1 t/spoilt`
-* `tag l/MPSH-1 t/renovation`
+* `tag c/Wilson-Evolution-Basketball-1 t/IHG`
+* `tag l/MPSH-1 t/IHG`
 
 ![tag command screenshot](images/TagSuccess.png)
 
@@ -697,8 +718,8 @@ Duplicate handling:
 * Not applicable.
 
 Examples:
-* `untag c/Wilson-Evolution-Basketball-1 t/spoilt`
-* `untag l/MPSH-1 t/renovation`
+* `untag c/Wilson-Evolution-Basketball-1 t/IHG`
+* `untag l/MPSH-1 t/IHG`
 
 ![untag command screenshot](images/UntagSuccess.png)
 
@@ -726,8 +747,8 @@ Duplicate handling:
 * Not applicable.
 
 Examples:
-* `filter c/ t/spoilt`
-* `filter l/ t/renovation`
+* `filter c/ t/IHG`
+* `filter l/ t/IHG`
 
 ![filter command screenshot](images/FilterSuccess.png)
 
@@ -801,12 +822,13 @@ Action | Format, Examples
 **List Students** | `list-s`
 **Delete Student** | `delete-s MATRIC_NUMBER` <br> e.g., `delete-s A0123456B`
 **Edit Student** | `edit-s INDEX [n/NAME] [p/PHONE] [e/EMAIL]` <br> e.g. `edit-s 2 n/Tom p/91234561 e/e1234567@u.nus.edu`
-**Reserve** | `reserve ITEM_OR_ROOM_ID STUDENT_ID [f/START_DATE_TIME] [t/END_DATE_TIME]` <br> e.g., `reserve Hall-2 a1234567a f/2026-03-01 1400 t/2026-03-01 1600`
-**Cancel** | `cancel ITEM_OR_ROOM_ID STUDENT_ID [f/START_DATE_TIME] [t/END_DATE_TIME]` <br> e.g., `cancel Hall-2 a1234567a f/2099-03-15 0900 t/2099-03-15 1100`
-**Issue** | `issue ITEM_ID STUDENT_ID [d/DUE_DATE_TIME]` <br> e.g., `issue Wilson-Basketball-1 A1203763K d/2026-03-05 1700`
+**Reserve** | `reserve ITEM_OR_ROOM_ID STUDENT_ID f/START_DATE_TIME t/END_DATE_TIME` <br> e.g., `reserve mpsh-1 a1234567a f/2027-03-01 1400 t/2027-03-01 1600`
+**Cancel** | `cancel ITEM_OR_ROOM_ID STUDENT_ID f/START_DATE_TIME` <br> e.g., `cancel mpsh-1 a1234567a f/2099-03-15 0900`
+**Issue** | `issue ITEM_ID STUDENT_ID DUE_DATE_TIME` <br> e.g., `issue Wilson-Basketball-1 a1234567a 2027-03-05 1700`
 **Return** | `return ITEM_ID` <br> e.g. `return Wilson-Evolution-Basketball-1`
-**Tag** | `tag [c/EQUIPMENT_NAME or l/ROOM_NAME] t/TAG` <br> e.g., `tag c/Basketball-1 t/spoilt`
-**Filter** | `filter [c/ or l/] t/TAG` <br> e.g., `filter l/ t/renovation`
+**Tag** | `tag [c/EQUIPMENT_NAME or l/ROOM_NAME] t/TAG` <br> e.g., `tag c/Basketball-1 t/IHG`
+**Untag** | `untag [c/EQUIPMENT_NAME or l/ROOM_NAME] t/TAG` <br> e.g., `tag c/Basketball-1 t/IHG`
+**Filter** | `filter [c/ or l/] t/TAG` <br> e.g., `filter l/ t/IHG`
 **Alias** | `alias ITEM_OR_ROOM_ID ALIAS_NAME` <br> e.g., `alias MPSH-1 hall1`
 **Clear** | `clear`
 **Exit** | `exit`

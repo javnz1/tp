@@ -180,13 +180,61 @@ public class ModelManager implements Model {
 
         boolean availableRoomExists = addressBook.getRoomList().stream()
                 .anyMatch(room -> room.getName().fullName.equalsIgnoreCase(resolvedResourceId)
-                        && room.getStatus().toString().equalsIgnoreCase("Available"));
+                        && room.getStatus() == Status.AVAILABLE);
 
         boolean availableEquipmentExists = addressBook.getEquipmentList().stream()
                 .anyMatch(equipment -> equipment.getName().fullName.equalsIgnoreCase(resolvedResourceId)
                         && equipment.getStatus() == EquipmentStatus.AVAILABLE);
 
         return availableRoomExists || availableEquipmentExists;
+    }
+
+    @Override
+    public Optional<String> getReservableItemError(String resourceId) {
+        requireNonNull(resourceId);
+        String resolvedResourceId = resolveAlias(resourceId);
+
+        Optional<Room> matchingRoom = addressBook.getRoomList().stream()
+                .filter(room -> room.getName().fullName.equalsIgnoreCase(resolvedResourceId))
+                .findFirst();
+
+        if (matchingRoom.isPresent()) {
+            Status status = matchingRoom.get().getStatus();
+
+            if (status == Status.BOOKED) {
+                return Optional.of(String.format("Error:%n%s is already booked and cannot be reserved.",
+                        resolvedResourceId));
+            }
+
+            if (status == Status.MAINTENANCE) {
+                return Optional.of(String.format("Error:%n%s is under maintenance and cannot be reserved.",
+                        resolvedResourceId));
+            }
+
+            return Optional.empty();
+        }
+
+        Optional<Equipment> matchingEquipment = addressBook.getEquipmentList().stream()
+                .filter(equipment -> equipment.getName().fullName.equalsIgnoreCase(resolvedResourceId))
+                .findFirst();
+
+        if (matchingEquipment.isPresent()) {
+            EquipmentStatus status = matchingEquipment.get().getStatus();
+
+            if (status == EquipmentStatus.BOOKED) {
+                return Optional.of(String.format("Error:%n%s is already booked and cannot be reserved.",
+                        resolvedResourceId));
+            }
+
+            if (status == EquipmentStatus.MAINTENANCE) {
+                return Optional.of(String.format("Error:%n%s is under maintenance and cannot be reserved.",
+                        resolvedResourceId));
+            }
+
+            return Optional.empty();
+        }
+
+        return Optional.of(String.format("Error:%n%s is not a valid registered room/item.", resolvedResourceId));
     }
 
     @Override

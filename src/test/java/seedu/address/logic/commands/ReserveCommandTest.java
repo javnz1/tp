@@ -48,6 +48,12 @@ public class ReserveCommandTest {
             }
 
             @Override
+            public Optional<String> getReservableItemError(String resourceId) {
+                return Optional.of(String.format(
+                        ReserveCommand.MESSAGE_INVALID_RESOURCE, "HALL-2"));
+            }
+
+            @Override
             public boolean hasStudentId(StudentId studentId) {
                 return true;
             }
@@ -57,6 +63,60 @@ public class ReserveCommandTest {
 
         assertThrows(CommandException.class,
                 String.format(ReserveCommand.MESSAGE_INVALID_RESOURCE,
+                        "HALL-2"), () -> reserveCommand.execute(modelStub));
+    }
+
+    @Test
+    public void execute_bookedResource_throwsCommandException() {
+        ModelStub modelStub = new ModelStub() {
+            @Override
+            public boolean hasReservableItem(String resourceId) {
+                return false;
+            }
+
+            @Override
+            public Optional<String> getReservableItemError(String resourceId) {
+                return Optional.of(String.format(
+                        ReserveCommand.MESSAGE_RESOURCE_BOOKED, "HALL-2"));
+            }
+
+            @Override
+            public boolean hasStudentId(StudentId studentId) {
+                return true;
+            }
+        };
+
+        ReserveCommand reserveCommand = new ReserveCommand(VALID_RESERVATION);
+
+        assertThrows(CommandException.class,
+                String.format(ReserveCommand.MESSAGE_RESOURCE_BOOKED,
+                        "HALL-2"), () -> reserveCommand.execute(modelStub));
+    }
+
+    @Test
+    public void execute_resourceUnderMaintenance_throwsCommandException() {
+        ModelStub modelStub = new ModelStub() {
+            @Override
+            public boolean hasReservableItem(String resourceId) {
+                return false;
+            }
+
+            @Override
+            public Optional<String> getReservableItemError(String resourceId) {
+                return Optional.of(String.format(
+                        ReserveCommand.MESSAGE_RESOURCE_MAINTENANCE, "HALL-2"));
+            }
+
+            @Override
+            public boolean hasStudentId(StudentId studentId) {
+                return true;
+            }
+        };
+
+        ReserveCommand reserveCommand = new ReserveCommand(VALID_RESERVATION);
+
+        assertThrows(CommandException.class,
+                String.format(ReserveCommand.MESSAGE_RESOURCE_MAINTENANCE,
                         "HALL-2"), () -> reserveCommand.execute(modelStub));
     }
 

@@ -17,6 +17,10 @@ import seedu.address.model.reservation.Reservation;
 public class ReserveCommand extends Command {
 
     public static final String COMMAND_WORD = "reserve";
+    public static final String MESSAGE_RESOURCE_BOOKED =
+            "Error:\n%1$s is already booked and cannot be reserved.";
+    public static final String MESSAGE_RESOURCE_MAINTENANCE =
+            "Error:\n%1$s is under maintenance and cannot be reserved.";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Reserves an item/room for a student.\n"
@@ -60,6 +64,10 @@ public class ReserveCommand extends Command {
                 reservationToAdd.getEndDateTime());
 
         if (!model.hasReservableItem(resolvedReservation.getResourceId())) {
+            Optional<String> reservableItemError = model.getReservableItemError(resolvedReservation.getResourceId());
+            if (reservableItemError.isPresent()) {
+                throw new CommandException(reservableItemError.get());
+            }
             throw new CommandException(String.format(
                     MESSAGE_INVALID_RESOURCE, resolvedReservation.getResourceId()));
         }

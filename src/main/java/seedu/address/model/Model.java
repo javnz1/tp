@@ -75,6 +75,8 @@ public interface Model {
 
     boolean hasReservableItem(String resourceId);
 
+    Optional<String> getReservableItemError(String resourceId);
+
     boolean hasConflictingReservation(Reservation reservation);
 
     Optional<Reservation> getConflictingReservation(Reservation reservation);

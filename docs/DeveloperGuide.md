@@ -764,8 +764,27 @@ Use case ends.
   * 3a1. System shows an error message
   * Use case ends
 
+**Use case: UC019 - Cancel Reservation**
+**MSS**
 
-**Use case: UC019 - Tag Equipment/Room**
+1. User chooses to cancel a reservation.
+2. User enters the reservation details required to identify the reservation.
+3. System requests the reservation to cancel.
+4. System cancels the reservation and displays a success message.
+
+   Use case ends.
+
+**Extensions**
+
+* 3a. System detects that the reservation does not exist.
+  * 3a1. System displays a failure message.
+  * Use case ends.
+
+* 3b. System detects that the reservation details entered are invalid.
+  * 3b1. System displays a failure message.
+  * Use case ends.
+
+**Use case: UC020 - Tag Equipment/Room**
 
 **MSS**
 
@@ -789,7 +808,7 @@ Use case ends.
     * Use case ends.
 
 
-**Use case: UC020 - Untag Equipment/Room**
+**Use case: UC021 - Untag Equipment/Room**
 
 **MSS**
 
