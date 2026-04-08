@@ -987,7 +987,7 @@ testers are expected to do more *exploratory* testing.
 3. Handling invalid extra input
 
    1. Test case: `list-e Basketball`<br>
-      Expected: No list update occurs. Error message indicates an invalid command format. The system strictly only accepts list-e without trailing parameters. 
+      Expected: No list update occurs. Error message indicates an invalid command format. The system strictly only accepts list-e without trailing parameters.
 
    2. Test case: `list-e 123`<br>
       Expected: Similar to previous. Error details show that the command does not take any arguments.
@@ -1057,7 +1057,7 @@ testers are expected to do more *exploratory* testing.
       Expected: No room added. Error message indicates names/locations should only contain alphanumeric characters and single hyphens.
 
    2. Test case: `add-r n/MPSH--2 l/Sports-Centre` (Consecutive hyphens)<br>
-      Expected: No room added. Error message regarding invalid naming format. 
+      Expected: No room added. Error message regarding invalid naming format.
 
    3. Test case: `add-r n/ l/Sports-Centre` (Blank name)<br>
       Expected: Error message indicates name cannot be blank.
@@ -1069,10 +1069,10 @@ testers are expected to do more *exploratory* testing.
    2. Test case: `add-r n/Mpsh-1 l/Sports-Centre`<br>
       Expected: Error message stating the room already exists.
 
-4. Incorrect command formats 
+4. Incorrect command formats
 
    1. Test case: `add-r MPSH-2 Sports-Centre` (Missing prefixes)<br>
-      Expected: Error message shows invalid command format and provides the correct usage example with n/ and l/. 
+      Expected: Error message shows invalid command format and provides the correct usage example with n/ and l/.
 
    2. Other incorrect commands: `add-r n/Name`, `add-r l/Location`, `add-r` (Missing one or both parameters)<br>
       Expected: Similar to previous, informs user of missing required fields.
@@ -1093,10 +1093,10 @@ testers are expected to do more *exploratory* testing.
    2. Test case: `list-r`<br>
       Expected: Helpful message shown: "Room list is currently empty. Use the 'add-r' command to add your first room!".
 
-3. Handling invalid extra input 
+3. Handling invalid extra input
 
    1. Test case: `list-r Sports-Hall`<br>
-      Expected: No list update occurs. Error message indicates an invalid command format. The system strictly only accepts list-r without any trailing text. 
+      Expected: No list update occurs. Error message indicates an invalid command format. The system strictly only accepts list-r without any trailing text.
 
    2. Test case: `list-r YIH`<br>
       Expected: Similar to previous. Error details show that the command does not take any arguments.
@@ -1133,7 +1133,7 @@ testers are expected to do more *exploratory* testing.
       Expected: Only the name of the first room is updated. Location and Status remain unchanged.
 
    3. Test case: `edit-r 1 n/MPSH-1 l/Sports-Centre s/Maintenance`<br>
-      Expected: Name, Location, and Status are all updated at once. Success message shows the new details 
+      Expected: Name, Location, and Status are all updated at once. Success message shows the new details
       and the UI reflects the "Maintenance" status.
 
 2. Editing a room to an existing name
@@ -1193,8 +1193,8 @@ testers are expected to do more *exploratory* testing.
       Expected: The system rejects the edit. An error message saying student has active loans or reservations.
 
 3. Edit a student's details such that they collide with another student
-   1. Prerequisites: 
-   * Student A at INDEX 1: Matric number `A0111111X`, Email `a@u.nus.edu`. 
+   1. Prerequisites:
+   * Student A at INDEX 1: Matric number `A0111111X`, Email `a@u.nus.edu`.
    * Student B at INDEX 2: Matric number `A0222222Y`, Email `b@u.nus.edu`.
    2. Test case: `edit-s 1 e/b@u.nus.edu`
       Expected: The system rejects the edit. An error message saying another student already has the same field.
