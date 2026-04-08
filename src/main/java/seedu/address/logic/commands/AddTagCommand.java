@@ -9,6 +9,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.Taggable;
+import seedu.address.model.tag.exceptions.DuplicateTagException;
 
 
 /**
@@ -48,13 +49,17 @@ public class AddTagCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+        try {
+            //Ensure that target is inside storage
+            if (!model.hasTaggable(target)) {
+                throw new CommandException(MESSAGE_ERROR + " Target equipment/room not found");
+            }
 
-        //Ensure that target is inside storage
-        if (!model.hasTaggable(target)) {
-            throw new CommandException(MESSAGE_ERROR + " Target equipment/room not found");
+            model.addTag(target, tag);
+            return new CommandResult(String.format(MESSAGE_SUCCESS, tag, target.getNameString()));
+        } catch (DuplicateTagException e) {
+            throw new CommandException(MESSAGE_ERROR + " Cannot add duplicate tag");
         }
-        model.addTag(target, tag);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, tag, target.getNameString()));
     }
 
     @Override

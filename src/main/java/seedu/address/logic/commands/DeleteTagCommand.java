@@ -9,6 +9,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.Taggable;
+import seedu.address.model.tag.exceptions.TagNotFoundException;
 
 
 /**
@@ -46,14 +47,18 @@ public class DeleteTagCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        //Ensure that target is inside storage
-        if (!model.hasTaggable(target)) {
-            throw new CommandException(MESSAGE_ERROR);
+        try {
+            //Ensure that target is inside storage
+            if (!model.hasTaggable(target)) {
+                throw new CommandException(MESSAGE_ERROR);
+            }
+
+            model.deleteTag(target, tag);
+
+            return new CommandResult(String.format(MESSAGE_SUCCESS, tag, target.getNameString()));
+        } catch (TagNotFoundException e) {
+            throw new CommandException(MESSAGE_ERROR + " Target tag not found and could not be deleted");
         }
-
-        model.deleteTag(target, tag);
-
-        return new CommandResult(String.format(MESSAGE_SUCCESS, tag, target.getNameString()));
     }
 
 
