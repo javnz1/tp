@@ -828,15 +828,12 @@ Use this command to quickly find all equipment or rooms associated with a partic
 * `TAG`: should only contain alphanumeric characters, not allowing punctuation or spaces. It is not case-sensitive, and should not be blank.
 * `filter-r` targets rooms. `filter-e` targets equipments.
 
-
-
 **Duplicate handling:**
 * Not applicable.
 
 **Examples:**
 * `filter-r IHG`
 * `filter-e IHG`
-
 
 **Outputs:**
 * Success <br>
