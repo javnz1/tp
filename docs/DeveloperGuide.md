@@ -1531,15 +1531,14 @@ testers are expected to do more *exploratory* testing.
 
 1. Support multiple reservations for the same room or equipment, as long as the booking periods do not overlap.
    In the current system, once an equipment/room is reserved, its status is immediately
-   changed to Booked which prevent it from being reserved even when there is no time conflict
-2. Include clear constraints on the booking period such as minimum and maximum reservation lengths, 
-   allowed booking hours.
-3. Enforce date validation for future reservations. Currently, users are able to reserve items for unrealistic 
-   dates far into the future, such as the year 2099. To prevent this, we will introduce a booking window that only 
-   allows reservations within a reasonable time range.
-4. Item status handling will be improved. In the current system, once an item is reserved, its status is immediately 
-   changed to Booked, which prevents it from being issued even when there is still free time before the reservation 
-   begins.
+   changed to Booked which prevent it from being reserved/issued even when there is no time conflict
+2. Enforce time validation for future reservations. Currently, users are able to reserve items for unrealistic 
+   dates far into the future, such as the year 2099. Also, extremely long reservation period is allowed. 
+   To prevent this, we will introduce a booking window that only allows reservations within a reasonable time range.
+3. Alias will be available on the UI and support reserve command as well. Currently alias only works for issue and 
+   return, users are able to issue aliased equipments and return them. Although users are allowed to alias a room, 
+   they cannot make reservation using alias. 
+
 
 ### Saving data
 

@@ -573,10 +573,11 @@ You can reserve facilities such as halls, courts, and multi-purpose rooms as wel
 * The start and end date/time must be valid and the end date/time must be later than the start date/time.
 * The reservation will be rejected if it conflicts with an existing booking for the same item or room.
 
-<div markdown="span" class="alert alert-warning">:warning: **Warning:**
-* Reservation can only be made when the room status is **Available**.
-* A room or equipment can only have **one active reservation** at a time.
+<div markdown="span" class="alert alert-warning">:warning: Warning:
+Reservation can only be made when the room status is **Available**.
+A room or equipment can only have one active reservation at a time.
 </div>
+
 
 **Duplicate handling:**
 * Duplicate or overlapping reservations are not allowed.
@@ -700,7 +701,8 @@ Aliases are useful for long item or room IDs, especially during busy periods whe
 * Assigns a short alias to the specified item or room.
 * `ALIAS_NAME` should be a short string containing letters, numbers, or underscores.
 * Each alias must be unique across the system.
-* Only works for reservation , issue, cancel, return commands.
+* Aliased equipments only work for issue, return commands. Although users can alias room, current reserve command does 
+  not support it.
 
 **Duplicate handling:**
 * Duplicate aliases are not allowed.
