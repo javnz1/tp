@@ -555,6 +555,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
    * Use case resumes at step 1.
 
 **Use case: UC010 - Delete a Student**
+
 **MSS**
 1. User requests to delete a student by their unique matric number.
 2. TrackMasterPro searches for the student.
@@ -574,6 +575,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 
 **Use case: UC011 - View Student List**
+
 **MSS**
 1. User requests to list all students.
 2. TrackMasterPro retrieves all student profiles currently in the database.
@@ -589,7 +591,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Use case: UC012 - Check Student Loans**
 
 **MSS**
-1.   Facility Manager requests to check the loan status for a specific matric number.
+1.   User requests to check the loan status for a specific matric number.
 2.   TrackMasterPro searches the database for a student matching that matriculation number.
 3.   TrackMasterPro retrieves all active loan records associated with that student.
 4.   TrackMasterPro displays the student's name, matriculation number, and a list of their currently borrowed items (including status and due dates).
@@ -755,6 +757,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
   * Use case ends
 
 **Use case: UC019 - Cancel Reservation**
+
 **MSS**
 
 1. User chooses to cancel a reservation.
