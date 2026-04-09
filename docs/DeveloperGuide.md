@@ -1542,6 +1542,11 @@ testers are expected to do more *exploratory* testing.
 4. Item status handling will be improved.In the current system, once an item is reserved, its status is immediately 
    changed to Booked, which prevents it from being issued even when there is still free time before the reservation 
    begins.
+5. Alias will be available to reserve command as well. Currently alias only works for issue and return, users are able 
+   to issue aliased equipments and return them. Although users are allowed to alias a room, they cannot make reservation
+   using alias.
+6. Will support auto time check to determine room status. Currently, a reserved room/equipment does not change its 
+   status unless users manually cancel the reservation.
 
 ### Saving data
 
