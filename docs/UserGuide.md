@@ -81,13 +81,15 @@ During high-pressure periods such as the Inter-Hall Games (IHG), Inter-College G
   e.g `n/NAME [t/TAG]` can be used as `n/John-Doe t/friend` or as `n/John-Doe`.
 
 * Items with `…` after them can be used multiple times including zero times.<br>
-  e.g. `[t/TAG]…` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+  e.g. `[t/TAG]…` can be used as many times (i.e. 0 times), `t/ICG`, `t/IFG t/CareerFest` etc.
 
-* Parameters can be in any order.<br>
+* Parameters with prefixes can be in any order(eg. n/,p/).<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </div>
+
+---
 
 ### 2.1 Equipment Management
 
@@ -131,6 +133,8 @@ Output of Name and Category will be title case -> `yonex-astrox` will be `Yonex-
 * *Invalid name/category:* Using spaces, special characters (e.g. `#`, `@` etc.), or leaving fields blank.
 * *This equipment already exists:* Attempting to add a name that is already in the inventory.
 
+---
+
 #### View equipment list : `list-e`
 
 Displays a complete list of all equipment currently stored in the equipment list. This command serves to clear 
@@ -156,6 +160,8 @@ any active filters (such as those from filter c/ t/TAG command), resetting the e
 **Possible errors:**
 * Inventory list has not been created.
 * Any extra input after `list-e`, (e.g. `list-e Basketball`, `list-e 123` etc.) will be invalid command.
+
+---
 
 #### Delete equipment from equipment list : `delete-e`
 
@@ -186,6 +192,8 @@ Deletes equipment from the equipment list.
 * *Invalid index:* The index provided is 0, negative or exceeds the current equipment list index.
 * *Invalid command format:* Typing delete-e without providing an index.
 * *Equipment is Booked:* Attempt to delete equipment that is having a ‘Booked’ status.
+
+---
 
 #### Edit equipment from equipment list : `edit-e`
 
@@ -231,6 +239,8 @@ Output of Name and Category will be title case -> `yonex-astrox` will be `Yonex-
 * *Invalid status transition:* Trying to move an equipment status from Maintenance to Booked.
 * *Invalid command:* Missing `n/`, `c/`, or `s/` prefix.
 
+---
+
 ### 2.2 Facility & Venue Management
 
 #### Adding a room (facility or venue) : `add-r`
@@ -272,6 +282,8 @@ Output of Name and Location will be title case -> `MPSH-1` will be `Mpsh-1` in t
 * *Invalid name/location:* Using spaces, special characters (e.g. `#`, `@` etc.), or leaving fields blank.
 * *This room already exists:* Attempting to add a name that is already in the inventory.
 
+---
+
 #### View room list : `list-r`
 
 Displays a complete list of all facilities and venue currently stored in the room list. This command serves to clear
@@ -289,7 +301,7 @@ any active filters (such as those from filter l/ t/TAG command), resetting the r
 * `list-r` — Resets the view of room list and displays all facilities and venue.
 
 **Outputs:**
-* Success
+* Success <br>
   ![viewRoomListSuccess.png](images/viewRoomListSuccess.png)
 * Failure <br>
   ![viewRoomListFail.png](images/viewRoomListFail.png)
@@ -297,6 +309,8 @@ any active filters (such as those from filter l/ t/TAG command), resetting the r
 **Possible errors:**
 * Room list has not been created.
 * Any extra input after `list-r`, (e.g, `list-r Sports-Hall`, `list-r YIH` etc.) will be invalid command.
+
+---
 
 #### Delete a room from room list: `delete-r`
 
@@ -327,6 +341,8 @@ Deletes a room from the room list.
 * *Invalid index:* The index provided is 0, negative or exceeds the current room list index.
 * *Invalid command format:* Typing delete-r without providing an index.
 * *Room is Booked:* Attempt to delete room that is having a ‘Booked’ status.
+
+---
 
 #### Edit room from room list : `edit-r`
 
@@ -372,6 +388,8 @@ Output of Name and Location will be title case -> `MPSH-1` will be `Mpsh-1` in t
 * *Invalid status transition:* Trying to move a room status from Maintenance to Booked.
 * *Invalid command:* Missing `n/`, `c/`, or `s/` prefix.
 
+---
+
 ### 2.3 Borrower Management
 
 #### Adding a new student profile : `add-s`
@@ -383,18 +401,19 @@ Adds a new student in the database so they can begin borrowing equipment or book
 **Acceptable values:**
 * `NAME`: Alphabets and internal spaces only (e.g., `John Lim`). No special characters or numbers (e.g., `-`, `.`, `*`). The system trims any spaces at the very beginning or end of a name.
 * `MATRIC_NUMBER`: Must be exactly 9 characters long. Starts with a letter (usually 'A'), followed by 7 digits, and ends with a check letter. (e.g., `A0123456B`). Case insensitive.
-* `PHONE`: 8-digit mobile number (e.g `81234567`).
+* `PHONE_NUMBER`: 8-digit mobile number (e.g `81234567`).
 * `EMAIL`: Valid email format (e.g., `e0123456@u.nus.edu`). Case insensitive.
 
 **Duplicate handling:**
-* To ensure data integrity, each Student must have a unique `Matric Number`, `Phone Number`, and `Email`. If any of these are already registered to another student, the command will fail.
+* To ensure data integrity, each Student must have a unique `MATRIC_NUMBER`, `PHONE_NUMBER`, and `EMAIL`. If any of these are already registered to another student, the command will fail.
 ![AddStudentDuplicate.png](images/AddStudentDuplicate.png)
 
 **Examples:**
 *  `add-s n/John Doe m/A0123456B p/91234567 e/e0123456@u.nus.edu` — Adds a new student with the name `John Doe`, matric number `A0123456B`, phone number `91234567` and email address `e0123456@u.nus.edu`.
 
 **Outputs:**
-* Success
+
+* Success<br>
   ![AddStudentSuccess.png](images/AddStudentSuccess.png)
 * Failure
   ![AddStudentFailure.png](images/AddStudentFailure.png)
@@ -403,6 +422,8 @@ Adds a new student in the database so they can begin borrowing equipment or book
 * *Invalid command*: Missing any of `n/`, `m/`, `p/`, `e/` prefix.
 * *Invalid name*: Hyphens `-`, periods `.`, and apostrophes `'`, numbers `1` in name will cause an error.
 * *Student already exists*: Attempting to add a student whose `Matric Number`, `Phone Number`, or `Email`are already in the system.
+
+---
 
 #### Check a student's loans : `check-s`
 
@@ -422,14 +443,16 @@ To check the list of equipment or rooms loaned to a student.
 * `check-s A0123456B`
 
 **Outputs:**
-* Success
+* Success<br>
   ![CheckStudentLoanSuccess.png](images/CheckStudentLoanSuccess.png)
-* Failure
+* Failure<br>
   ![CheckStudentLoanFailure.png](images/CheckStudentLoanFailure.png)
 
 **Possible errors:**
 * No matric number in the system.
 * Invalid matric number format.
+
+---
 
 #### View student list : `list-s`
 
@@ -447,11 +470,13 @@ Displays a list of all registered students in the system.
 * `list-s`.
 
 **Outputs:**
-* Success
+* Success <br>
 ![ListStudentsSuccess.png](images/ListStudentsSuccess.png)
 
 **Possible errors:**
 * Any extra input after `list-s`, (e.g. `list-s 1`, `list-e a` etc.) will be invalid command.
+
+---
 
 #### Delete student from student list : `delete-s`
 
@@ -467,22 +492,26 @@ Deletes a student’s record from the system database.
 * `delete-s A0123456B`
 
 **Outputs:**
-Success:
+Success:<br>
 ![DeleteStudentSuccess.png](images/DeleteStudentSuccess.png)
 
 Failure:
-![DeleteCommandFailure.png](images/DeleteCommandFailure.png)
-
+  * Student's matric number not found in system
+  ![DeleteCommandFailure.png](images/DeleteCommandFailure.png)
+  * Student with existing loans/reservations
+  ![DeleteCommandActiveLoans.png](images/DeleteCommandActiveLoans.png)
 
 **Possible errors:**
-* Student Not Found: The matric number entered does not exist in the current database.
-* Active Loans: Deletion is blocked if the student currently has equipment that has not been returned.
-* Active Reservations: Deletion is blocked if the student has upcoming room or facility bookings.
+* *Student Not Found*: The matric number entered does not exist in the current database.
+* *Active Loans*: Deletion is blocked if the student currently has equipment that has not been returned.
+* *Active Reservations*: Deletion is blocked if the student has upcoming room or facility bookings.
 
 <div markdown="span" class="alert alert-primary">:bulb: **Important:**
 A student profile **cannot be deleted** if there are outstanding records.
 Please ensure all borrowed items are returned and all upcoming reservations are cancelled before attempting to remove the student.
 </div>
+
+---
 
 #### Edit student from student list : `edit-s`
 
@@ -507,20 +536,23 @@ You **cannot** edit any details of a student if they currently have an active eq
 * `edit-s 2 n/Tom p/91234561 e/e1234567@u.nus.edu`.
 
 **Outputs**
-* Success
+* Success<br>
 ![EditStudentCommandSuccess.png](images/EditStudentCommandSuccess.png)
 
 * Failure
-* Missing fields
-![EditStudentCommandMissingField.png](images/EditStudentCommandMissingField.png)
+  * Missing fields<br>
+  ![EditStudentCommandMissingField.png](images/EditStudentCommandMissingField.png)
 
-* Student with existing loans/reservations
-![EditStudentCommandExistingLoan.png](images/EditStudentCommandExistingLoan.png)
+  * Student with existing loans/reservations<br>
+  ![EditStudentCommandExistingLoan.png](images/EditStudentCommandExistingLoan.png)
 
 **Possible errors:**
-* Current student still has active loans or reservations linked to their current ID.
-* Index provided is invalid.
-* A student with the edited information already exists.
+* *Active Loans*: Editing is blocked if the student currently has equipment that has not been returned.
+* *Active Reservations*: Editing is blocked if the student has upcoming room or facility bookings.
+* *Invalid index*: Index provided is invalid.
+* *Duplicated student*: A student with the edited information already exists.
+
+---
 
 ### 2.4 Loans & Reservations
 
@@ -552,10 +584,11 @@ You can reserve facilities such as halls, courts, and multi-purpose rooms as wel
 **Examples:**
 * `reserve MPSH-1 a1234567a f/2027-03-10 0900 t/2027-03-10 1200`
 
-**Success**
+**Outputs:**
+* Success<br>
 ![reserve command screenshot](images/reserveCommand.png)
 
-**Failure**
+* Failure<br>
 ![failed reserve command screenshot 1](images/bookedReserveCommand.png)
 ![failed reserve command screenshot 2](images/itemReserveCommand.png)
 
@@ -564,6 +597,8 @@ You can reserve facilities such as halls, courts, and multi-purpose rooms as wel
 * Invalid `STUDENT_ID`
 * Invalid date/time format
 * End time is earlier than start time
+
+---
 
 #### Cancel a reservation: `cancel`
 
@@ -586,6 +621,7 @@ Cancels an **existing** reservation.
 
 ![failed cancel command screenshot](images/faliedCancelCommand.png)
 
+---
 
 #### Issuing an equipment item: `issue`
 
@@ -608,12 +644,11 @@ Use this command to keep track of borrowed equipment and who is responsible for 
 **Examples:**
 * `issue Wilson-Evolution a1234567a 2027-03-05 1700`
 
-**Success**
-
+**Outputs**
+* Success
 ![issue command screenshot](images/issueCommand.png)
 
-**Failure**
-
+* Failure
 ![failed issue command screenshot](images/failedIssueCommand.png)
 
 **Possible errors:**
@@ -622,6 +657,8 @@ Use this command to keep track of borrowed equipment and who is responsible for 
 * Item is already issued
 * Invalid due date/time format
 * Due date/time is in the past
+
+---
 
 #### Return an equipment: `return`
 
@@ -633,12 +670,11 @@ Returns an issued equipment item back to the inventory.
 **Example:**
 `return Wilson-Evolution`
 
-**Success**
-
+**Outputs**
+* Success
 ![return command screenshot](images/returnCommand.png)
 
-**Failure**
-
+* Failure
 ![failed return command screenshot](images/faliedReturnCommand.png)
 
 **Possible errors:**
@@ -648,6 +684,7 @@ Returns an issued equipment item back to the inventory.
 **Notes**
 - aliases are supported, so if `b1` is an alias for `Wilson-Evolution-Basketball-1`, then `return b1` also works
 
+---
 
 #### Creating an alias: `alias`
 
@@ -681,77 +718,98 @@ Aliases are useful for long item or room IDs, especially during busy periods whe
 * Invalid `ITEM_OR_ROOM_ID`
 * Alias already exists
 
+---
 
 ### 2.5 Tag & Filter
 
-#### Tagging an item or room: `tag`
+#### Tagging an equipment or room: `tag-e` or `tag-r`
 
 Tags an equipment item or room with a label for categorisation.
+`tag-r` targets rooms. `tag-e` targets equipments.
 
-Format: `tag c/EQUIPMENT_NAME t/TAG` or `tag l/ROOM_NAME t/TAG`
+**Format:** `tag-e NAME TAG` or `tag-r NAME TAG`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-Tags are useful for categorising equipment or rooms
+Tags are useful for categorising equipment or rooms for quick viewing, and will be displayed in the UI as a blue label
 </div>
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip for IHG:**
 Tag equipment as `t/IHG` during competition weeks to quickly filter items that should not be loaned out for casual use.
 </div>
 
-* Assigns a tag to the specified equipment item or room.
-* `TAG` should be a short string containing letters, numbers, or underscores. It is not case-sensitive.
+
+**Acceptable values:**
+* `NAME:` Equipment or room name should only contain alphanumeric characters and single hyphens (`-`) in between,
+  no spaces or consecutive hyphens (`--`) are allowed, and it should not be blank. (e.g. `Sports-Hall-1`, `Basketball-1`)
+* `TAG` should only contain alphanumeric characters, not allowing punctuation or spaces. It is not case-sensitive, and should not be blank.
 * The system will detect and warn against duplicate tags.
 
-Duplicate handling:
+**Duplicate handling:**
 * Duplicate tags on the same equipment or room are not allowed.
 * If the tag already exists on the item or room, the command will be rejected.
 
-Examples:
-* `tag c/Wilson-Evolution-Basketball-1 t/IHG`
-* `tag l/MPSH-1 t/IHG`
+**Examples:**
+* `tag-e Wilson-Evolution-Basketball-1 IHG` 
+* `tag-r MPSH-1 IHG` 
 
+
+**Outputs:**
+* Success
+
+* Failure
 ![tag command screenshot](images/TagSuccess.png)
 
-Possible errors:
-* Invalid equipment or room ID
-* Tag already exists on the specified equipment or room
-* Missing command indicators, e.g. missing `t/`
+**Possible errors:**
+* *Invalid command:* Extra input.
+* *Invalid name/tag:* Using spaces, special characters (e.g. `#`, `@` etc.), or leaving fields blank.
+* *The tag already exists on room/equipment:* Attempting to add a duplicate tag.
+
 
 ---
 
-#### Removing a tag from an equipment or room: `untag`
+#### Removing a tag from an equipment or room: `untag-e` or `untag-e`
 
 Removes an existing tag from an equipment item or room.
 
-Format: `untag c/EQUIPMENT_NAME t/TAG` or `untag l/ROOM_NAME t/TAG`
+**Format:** `untag-e NAME TAG` or `untag-r NAME TAG`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 Use this command to remove outdated or incorrect tags from equipment or rooms.
 </div>
 
-* Removes the specified tag from the specified equipment item or room.
-* `TAG` should be a short string containing letters, numbers, or underscores. It is not case-sensitive.
+
+**Acceptable values:**
+* `NAME:` Equipment or room name should only contain alphanumeric characters and single hyphens (`-`) in between,
+  no spaces or consecutive hyphens (`--`) are allowed, and it should not be blank. (e.g. `Sports-Hall-1`, `Basketball-1`)
+* `TAG` should only contain alphanumeric characters, not allowing punctuation or spaces. It is not case-sensitive, and should not be blank.
+* `untag-r` targets rooms. `untag-e` targets equipments.
 * The command will be rejected if the specified tag does not exist on the item or room.
 
-Duplicate handling:
+**Duplicate handling:**
 * Not applicable.
 
-Examples:
-* `untag c/Wilson-Evolution-Basketball-1 t/IHG`
-* `untag l/MPSH-1 t/IHG`
 
+**Examples:**
+* `untag-e Wilson-Evolution-Basketball-1 IHG` 
+* `untag-r MPSH-1 IHG`
+
+
+**Outputs:**
+* Success
+
+* Failure
 ![untag command screenshot](images/UntagSuccess.png)
 
-Possible errors:
-* Invalid equipment or room ID
-* Tag does not exist on the specified equipment or room
-* Missing command indicators, e.g. missing `t/`
+**Possible errors:**
+* *Invalid command:* Extra input.
+* *Invalid name/tag:* Using spaces, special characters (e.g. `#`, `@` etc.), or leaving fields blank.
+* *The tag does not exist on room/equipment:* Attempting to delete non-existent tag.
 
 ---
 
 #### Filtering by tag: `filter-e` or `filter-r`
 
-Filters equipment items or rooms by a specified tag.
+Filters equipment items or rooms by a specified tag. Displays all equipment items or rooms that have the specified tag.
 
 Format: `filter-e TAG` or `filter-r TAG`
 
@@ -759,21 +817,30 @@ Format: `filter-e TAG` or `filter-r TAG`
 Use this command to quickly find all equipment or rooms associated with a particular tag, such as all items marked as spoilt.
 </div>
 
-* Displays all equipment items or rooms that have the specified tag.
-* `TAG` should be a string containing letters, numbers, or underscores. It is not case-sensitive.
 
-Duplicate handling:
+**Acceptable values:**
+* `TAG` should only contain alphanumeric characters, not allowing punctuation or spaces. It is not case-sensitive, and should not be blank.
+*  `l/` targets rooms. `c/` targets equipments.
+
+
+**Duplicate handling:**
 * Not applicable.
 
-Examples:
+**Examples:**
 * `filter c/ t/IHG`
 * `filter l/ t/IHG`
 
+
+**Outputs:**
+* Success
+  ![addRoomSuccess.png](images/addRoomSuccess.png)
+* Failure
 ![filter command screenshot](images/FilterSuccess.png)
 
-Possible errors:
-* No equipment or rooms found with the specified tag
-* Missing command indicators, e.g. missing `t/`
+**Possible errors:**
+* *Invalid command:* Missing `t/` prefix.
+* *Nothing tagged:* No equipment or rooms found with the specified tag
+
 
 ### 2.6 System Utilities
 
@@ -790,6 +857,8 @@ Format: `help`
 Exits the program.
 
 Format: `exit`
+
+---
 
 ## 3. Data Management
 
@@ -835,7 +904,7 @@ Action | Format, Examples
 **Add Room** | `add-r n/NAME l/LOCATION` <br> e.g., `add-r n/MPSH-2 l/Sports-Centre`
 **List Rooms** | `list-r`
 **Delete Room** | `delete-r INDEX` <br> e.g., `delete-r 1`
-**Edit Room** | `edit-r INDEX [n/NAME] [c/LOCATION] [s/STATUS]` <br> e.g. `edit-r 3 n/Tennis-Court s/Maintenance`
+**Edit Room** | `edit-r INDEX [n/NAME] [l/LOCATION] [s/STATUS]` <br> e.g. `edit-r 3 n/Tennis-Court s/Maintenance`
 **Add Student** | `add-s n/NAME m/MATRIC_NUMBER p/PHONE_NUMBER e/EMAIL` <br> e.g., `add-s n/John Doe m/A0123456B p/91234567 e/e0123456@u.nus.edu`
 **Check Loans** | `check-s MATRIC_NUMBER` <br> e.g., `check-s A0123456B`
 **List Students** | `list-s`
@@ -845,8 +914,10 @@ Action | Format, Examples
 **Cancel** | `cancel ITEM_OR_ROOM_ID STUDENT_ID f/START_DATE_TIME` <br> e.g., `cancel mpsh-1 a1234567a f/2099-03-15 0900`
 **Issue** | `issue ITEM_ID STUDENT_ID DUE_DATE_TIME` <br> e.g., `issue Wilson-Basketball-1 a1234567a 2027-03-05 1700`
 **Return** | `return ITEM_ID` <br> e.g. `return Wilson-Evolution-Basketball-1`
-**Tag** | `tag c/EQUIPMENT_NAME or l/ROOM_NAME t/TAG` <br> e.g., `tag c/Wilson-Evolution t/ICG` <br> or  `tag l/Mpsh-1 t/IHG`
-**Filter** | `filter c/ or l/ t/TAG` <br> e.g., `filter c/ t/ICG` <br> or `filter l/ t/IHG`
+**Tag** | `tag NAME TAG` <br> e.g., `tag Basketball-1 IHG or tag-r MPSH-1 IHG`
+**Untag** | `untag NAME TAG` <br> e.g., `untag Basketball-1 IHG or untag-r MPSH-1 IHG`
+**Filter** | `filter [c/ or l/] t/TAG` <br> e.g., `filter l/ t/IHG or filter c/ t/IHG`
 **Alias** | `alias ITEM_OR_ROOM_ID ALIAS_NAME` <br> e.g., `alias MPSH-1 hall1`
 **Clear** | `clear`
 **Exit** | `exit`
+

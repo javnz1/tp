@@ -158,9 +158,9 @@ The Add Student command allows Facility Manager to record a new student profile 
 #### Implementation Details
 The implementation follows the **Command Pattern**, involving the following key components:
 
-`AddStudentCommandParser`: Responsible for parsing the user input and validating the presence of required prefixes.
-`AddStudentCommand`: Contains the execution logic, ensuring the student is unique before addition.
-`Person`: The entity that encapsulates student data (`Name`, `StudentId`, `Phone`, and `Email`).
+* `AddStudentCommandParser`: Responsible for parsing the user input and validating the presence of required prefixes.
+* `AddStudentCommand`: Contains the execution logic, ensuring the student is unique before addition.
+* `Person`: The entity that encapsulates student data (`Name`, `StudentId`, `Phone`, and `Email`).
 
 #### Design Considerations
 One of the noteworthy details in the implementation is the Defensive Validation in the execution stage:
@@ -171,8 +171,7 @@ One of the noteworthy details in the implementation is the Defensive Validation 
 
 #### Execution Workflow
 1. The Facility Manager enters a command as such:
-`add-s n/John Doe m/A0123456B p/91234567 e/e0123456@u.nus.edu`
-
+`add-s n/John Doe m/A0123456B p/91234567 e/e0123456@u.nus.edu`.
 2. `LogicManager` calls `AddressBookParser#parseCommand()`.
 3. An `AddStudentCommandParser` is instantiated to tokenize the arguments. The parser uses `ArgumentTokenizer` to verify that all required prefixes (`n/`, `m/`, `p/`, `e/`) are present.
 4. A `Person` object is created and wrapped inside a new `AddStudentCommand`.
@@ -781,19 +780,17 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1. User chooses to tag an equipment or room.
-2. User enters the equipment/room ID and tag.
-3. System requests for the equipment/room ID and tag.
+2. User enters the equipment/room name and tag.
+3. System requests for the equipment/room name and tag.
 4. System applies the tag and displays a success message.
 
    Use case ends.
 
 **Extensions**
 
-* 3a. System detects that the equipment/room ID is invalid.
+* 3a. System detects that the equipment/room name is invalid.
     * 3a1. System displays a failure message.
-    * 3a2. User re-enters a valid equipment/room ID and tag.
-    * Steps 3a1-3a2 are repeated until a valid ID is entered.
-    * Use case resumes from step 4.
+    * Use case ends.
 
 * 3b. System detects that the equipment/room has already been tagged with the same tag.
     * 3b1. System displays a duplicate tag failure message.
@@ -805,20 +802,20 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1. User chooses to untag an equipment or room.
-2. User enters the equipment/room ID and tag.
-3. System requests for the equipment/room ID and tag to remove.
+2. User enters the equipment/room name and tag.
+3. System requests for the equipment/room name and tag to remove.
 4. System removes the tag and displays a success message.
 
    Use case ends.
 
 **Extensions**
 
-* 3a. System detects that the equipment/room ID is invalid.
+* 3a. System detects that the equipment/room name is invalid.
     * 3a1. System displays a failure message.
     * Use case ends.
 
 * 3b. System detects that the tag does not exist on the equipment/room.
-    * 3b1. System displays an already-untagged failure message.
+    * 3b1. System displays a missing tag failure message.
     * Use case ends.
 
 
@@ -837,9 +834,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 3a. System detects that the specified type is invalid.
     * 3a1. System displays a failure message.
-    * 3a2. User re-enters a valid type and tag.
-    * Steps 3a1-3a2 are repeated until a valid type is entered.
-    * Use case resumes from step 4.
+    * Use case ends.
 
 * 3b. System detects that the specified tag does not exist.
     * 3b1. System displays a failure message indicating nothing was found under the tag.
@@ -859,7 +854,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 1a. User requests help for a specific command.
     * 1a1. System checks if the command exists.
-    
+
       * 1a1a. System detects that the specified command does not exist.
          * 1a1a1. System displays an error message indicating the command was not found.
          * Use case ends.
@@ -868,21 +863,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * Use case ends.
 
 
-**Use case: UC024 - View all commands**
-
-**MSS**
-
-1. User requests to view all available commands
-2. System displays the full list of supported commands
-
-   Use case ends.
-
-**Extensions**
-
-* 2a. No commands available (system error case)
-  * 2a1. System shows an empty list message
-  * Use case ends
-
+*{More to be added}*
 
 ### Non-Functional Requirements
 
@@ -1178,55 +1159,163 @@ testers are expected to do more *exploratory* testing.
 
 1. Delete a student by matric number
    1. Prerequisites: A student with ID A0123456B exists in the list.
-   2. Test case: `delete-s A0123456B`
+   2. Test case: `delete-s A0123456B`<br>
       Expected: The student is removed from the list. Success message confirms the deletion.
 
 2. Delete a non-existent student
-   1. Test case: `delete-s NON_EXISTENT_ID`
+   1. Test case: `delete-s NON_EXISTENT_ID`<br>
       Expected: No change to the data. Error message indicates the student was not found.
-
+      
 3. Delete a student with existing loans/reservations
    1. Prerequisites: Student `A0123456B` currently has an equipment (e.g. "Basketball-1") borrowed or reserved.
-   2. Test case: `delete-s A0123456B`
+   2. Test case: `delete-s A0123456B`<br>
       Expected: The student is not removed from the database. An error message saying student has active loans or reservations.
+
+### Adding a tag
+
+1. Adding a tag to a room
+
+  1. Prerequisites: At least one room exists in the system, with name `Sports-Hall-1`. Use `list-r` to view all rooms.
+
+  1. Test case: `tag-r Sports-Hall-1 maintenance`<br>
+     Expected: Tag "maintenance" is added to Sports-Hall-1. Success message shown with room name and tag. Room list updates to show the new tag.
+
+  1. Test case: `tag-r Sports-Hall-1 maintenance` (adding the same tag again)<br>
+     Expected: No tag is added. Error message indicates the tag already exists for this room.
+
+  1. Test case: `tag-r NonExistentRoom IHG`<br>
+     Expected: No tag is added. Error message indicates the room does not exist in the system.
+
+  1. Other incorrect  commands to try: `tag-r`, `tag-r Sports-Hall-1`, `Sports-Hall-1 IHG`, ` tag-r Sports-Hall-1 invalid@tag`<br>
+     Expected: Error message showing invalid command format or invalid tag name (tags must be alphanumeric).
+
+2. Adding a tag to equipment
+
+  1. Prerequisites: At least one equipment exists in the system, with name `Wilson-Evolution`. Use `list-e` to view all equipment.
+
+  1. Test case: `tag-e Wilson-Evolution IHG`<br>
+     Expected: Tag "IHG" is added to Wilson-Evolution equipment. Success message shown with equipment name and tag.
+
+  1. Test case: `tag-e Wilson-Evolution IHG` (adding the same tag again)<br>
+     Expected: No tag is added. Error message indicates the tag already exists for this equipment.
+
+  1. Test case: `tag-e NonExistentEquipment broken`<br>
+     Expected: No tag is added. Error message indicates the equipment does not exist in the system.
+
+  1. Other incorrect  commands to try: `tag-e`, ` tag-e Wilson-Evolution`, ` tag-x Wilson-Evolution IHG`<br>
+     Expected: Error message showing invalid command format or invalid flag.
+
+### Deleting a tag
+
+1. Deleting a tag from a room
+
+  1. Prerequisites: At least one room with tags exists in the system. For example, Sports-Hall-1 has the tag "maintenance".
+
+  1. Test case: `tag-r Sports-Hall-1 maintenance`<br>
+     Expected: Tag "maintenance" is deleted from Sports-Hall-1. Success message shown with room name and deleted tag. Room list updates to remove the tag.
+
+  1. Test case: `tag-r Sports-Hall-1 nonexistent`<br>
+     Expected: No tag is deleted. Error message indicates the tag does not exist for this room.
+
+  1. Test case: ` tag-r NonExistentRoom maintenance`<br>
+     Expected: No tag is deleted. Error message indicates the room does not exist in the system.
+
+  1. Other incorrect  commands to try: `tag-r`, `tag-r Sports-Hall-1`, ` Sports-Hall-1 maintenance`, ` tag-r Sports-Hall-1 invalid@tag`<br>
+     Expected: Error message showing invalid command format or invalid tag name.
+
+2. Deleting a tag from equipment
+
+  1. Prerequisites: At least one equipment with tags exists in the system. For example, Wilson-Evolution has the tag "IHG".
+
+  1. Test case: `untag-e Wilson-Evolution IHG`<br>
+     Expected: Tag "IHG" is deleted from Wilson-Evolution equipment. Success message shown with equipment name and deleted tag.
+
+  1. Test case: `untag-e Wilson-Evolution nonexistent`<br>
+     Expected: No tag is deleted. Error message indicates the tag does not exist for this equipment.
+
+  1. Test case: `untag-e NonExistentEquipment IHG`<br>
+     Expected: No tag is deleted. Error message indicates the equipment does not exist in the system.
+
+  1. Other incorrect  commands to try: `tag-e`, ` tag-e Wilson-Evolution`, ` tag-x Wilson-Evolution IHG`<br>
+     Expected: Error message showing invalid command format or invalid flag.
+
+### Filtering items
+
+1. Filtering rooms by tag
+
+  1. Prerequisites: Rooms exist with various tag. For example, `Sports-Hall-1` has "maintenance" tag, Tennis-Court has "outdoor" tag.
+
+  1. Test case: `filter l/ t/maintenance`<br>
+     Expected: Only rooms with the "maintenance" tag are displayed.
+
+  1. Test case: `filter l/ t/nonexistent`<br>
+     Expected: No rooms are displayed. Message indicates 0 rooms listed.
+
+  1. Other incorrect filter commands to try: `filter`, `filter maintenance`, `filter l/ t/invalid@tag`<br>
+     Expected: Error message showing invalid command format or invalid tag name.
+
+2. Filtering equipment by tag
+
+  1. Prerequisites: Equipment exist with various tag. For example, `Wilson-Evolution` has "IHG" tag, Mx-Volleyball has "borrowed" tag.
+
+  1. Test case: `filter c/ IHG`<br>
+     Expected: Only equipment with the "IHG" tag are displayed. Number of filtered equipment shown in the status message.
+
+  1. Test case: `filter l/ nonexistent`<br>
+     Expected: No equipment are displayed. Message indicates 0 equipment listed.
+
+
+  1. Other incorrect filter commands to try: `filter IHG`, `filter c/ invalid tag` (with space)<br>
+     Expected: Error message showing invalid command format or invalid flag/tag name.
+
+3. Clearing filters
+
+  1. Prerequisites: A filter is currently active (e.g., `filter c/ maintenance` was executed).
+
+  1. Test case: `list-r` (for rooms) or `list-e` (for equipment)<br>
+     Expected: All rooms/equipment are displayed again. Filter is cleared and full list is shown.
+
+
+1. _{ more test cases …​ }_
+
 
 
 ### Editing a student
 
 1. Edit the phone number of an existing student
    1. Prerequisites: Student exists at INDEX 1
-   2. Test case: `edit-s 1 p/90001000`
+   2. Test case: `edit-s 1 p/90001000`<br>
       Expected: The phone number for John Doe updates to 90001000. Other details remain unchanged.
 
 2. Edit a student with existing loans/reservations
    1. Prerequisites: Student at INDEX 1 has an active reservation.
-   2. Test case: `edit-s 1 p/99998888`
+   2. Test case: `edit-s 1 p/99998888`<br>
       Expected: The system rejects the edit. An error message saying student has active loans or reservations.
 
 3. Edit a student's details such that they collide with another student
    1. Prerequisites:
    * Student A at INDEX 1: Matric number `A0111111X`, Email `a@u.nus.edu`.
    * Student B at INDEX 2: Matric number `A0222222Y`, Email `b@u.nus.edu`.
-   2. Test case: `edit-s 1 e/b@u.nus.edu`
+   2. Test case: `edit-s 1 e/b@u.nus.edu`<br>
       Expected: The system rejects the edit. An error message saying another student already has the same field.
 
 ### Viewing a student list
-1. Test case: `list-s`
+1. Test case: `list-s`<br>
    Expected: The UI switches to the Student List view (if not already there) and displays all registered students.
 
 ### Checking a student's loans/reservations
 1. Prerequisites: Student `A0123456B` borrowed "Basketball-1".
-2. Test case: `check-s A0123456B`
+2. Test case: `check-s A0123456B`<br>
    Expected: Shows "Basketball-1" is currently borrowed by the student.
 
 ### Saving data
 
 1. Dealing with missing data files
    1. Prerequisites: Ensure addressbook.json does not exist in the `/data` folder.
-   2. Test case: Launch the app.
+   2. Test case: Launch the app.<br>
       Expected: App launches with default sample data. A new addressbook.json is created in the `/data` folder.
 
 2. Dealing with corrupted data files
    1. Prerequisites: Open `addressbook.json` in a text editor and delete a required brace `{` or change a field name to an invalid string.
-   2. Test case: Launch the app.
+   2. Test case: Launch the app.<br>
       Expected: App launches with an empty list (0 students, 0 equipment, 0 rooms). An error log is generated.
