@@ -256,7 +256,8 @@ New room is set to `Available` status by default.
 * *Case Sensitivity:* Both fields are case-insensitive. `n/Sports-Hall-1` and `n/SPORTS-HALL-1` are treated as the same name. `l/University-Town` and `l/UNIVERSITY-TOWN` are treated as the same location.
 
 **Duplicate handling:**
-* The system enforces unique names across the room list.
+* *Name-Based Uniqueness:* The system enforces unique names across the entire room list, regardless of location.
+* *Scope of Detection:* Two rooms are considered duplicates if they share the exact same name (e.g., seminar-room-1), even if they are situated in different buildings or locations.
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 To add multiple Room of the same name, append a unique number (e.g., `Sports-Hall-1`, `Sports-Hall-2`).
 </div>
@@ -908,11 +909,13 @@ Furthermore, certain edits can cause the TrackMasterPro to behave in unexpected 
 2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
 
 3. **Strict Name Validation:** The current system only accepts alphabetic characters and spaces for student names. Names containing special characters such as hyphens (e.g., `Al-Haddad`) or apostrophes (e.g., `D'Souza`) will currently trigger a validation error.
-**Workaround**: Enter the name without the special character (e.g., `Al Haddad` or `DSouza`) until a future update expands the character support. Removing special characters from the requirements allows for faster command entry and fewer parsing errors during high-pressure facility management scenarios
+**Workaround:** Enter the name without the special character (e.g., `Al Haddad` or `DSouza`) until a future update expands the character support. Removing special characters from the requirements allows for faster command entry and fewer parsing errors during high-pressure facility management scenarios
 
 4. **UI Refresh Latency:** The student list does not refresh in real-time when a reservation or equipment loan becomes overdue. While the system correctly identifies the status change in the database, the Graphical User Interface (GUI) may still show the old status (e.g., "Booked" instead of "Overdue").
 **Workaround:*** Simply click anywhere within the application window to force the UI to refresh and display the most current statuses.
 
+5. **Room Name Based Uniqueness:** The current iteration of the system does not support identical room names across different locations. (e.g., `add-r n/seminar-room-1 l/Com1` and following that input `add-r n/seminar-room-1 l/Rc4`) will trigger room already exists in system.
+   **Workaround:** Input `add-r n/seminar-room-1 l/Com1` for location Com1 and input `add-r n/SR1 l/Rc4` for location Rc4.
 --------------------------------------------------------------------------------------------------------------------
 
 ## 6. Command summary
