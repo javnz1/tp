@@ -363,7 +363,8 @@ The room should not be in **Booked** status, before editing it.
 </div>
 
 **Duplicate handling:**
-* The system enforces unique names across the room list.
+* *Name-Based Uniqueness:* The system enforces unique names across the entire room list, regardless of location.
+* *Scope of Detection:* Two rooms are considered duplicates if they share the exact same name (e.g., seminar-room-1), even if they are situated in different buildings or locations.
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 To add multiple Room of the same name, append a unique number (e.g., `Sports-Hall-1`, `Sports-Hall-2`).
 </div>
@@ -386,7 +387,7 @@ Output of Name and Location will be title case -> `MPSH-1` will be `Mpsh-1` in t
 * *This room is currently 'Booked':* Attempting to edit a reserved room.
 * *This room already exists:* Renaming room to a name already in use.
 * *Invalid status transition:* Trying to move a room status from Maintenance to Booked.
-* *Invalid command:* Missing `n/`, `c/`, or `s/` prefix.
+* *Invalid command:* Missing `n/`, `l/`, or `s/` prefix.
 
 ---
 
