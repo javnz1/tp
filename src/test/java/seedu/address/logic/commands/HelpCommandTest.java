@@ -35,7 +35,7 @@ public class HelpCommandTest {
 
         CommandResult commandResult = helpCommand.execute(model);
 
-        assertTrue(commandResult.getFeedbackToUser().contains("SUCCESS! CANCEL COMMAND FOUND"));
+        assertTrue(commandResult.getFeedbackToUser().contains("SUCCESS! cancel COMMAND FOUND"));
         assertTrue(commandResult.getFeedbackToUser().contains(CancelReservationCommand.MESSAGE_USAGE));
     }
 
@@ -44,7 +44,7 @@ public class HelpCommandTest {
         HelpCommand helpCommand = new HelpCommand("undo");
 
         assertThrows(CommandException.class,
-                "FAILURE! UNDO COMMAND NOT FOUND", () -> helpCommand.execute(model));
+                "FAILURE! undo COMMAND NOT FOUND", () -> helpCommand.execute(model));
     }
 
     @Test
