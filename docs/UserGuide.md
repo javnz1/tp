@@ -471,7 +471,7 @@ Displays a list of all registered students in the system.
 ![ListStudentsSuccess.png](images/ListStudentsSuccess.png)
 
 * Failure <br>
-![ListCommandFailure.png](images/ListCommandFailure.png)
+![ListStudentCommandFailure.png](images/ListStudentCommandFailure.png)
 
 **Possible errors:**
 * Any extra input after `list-s`, (e.g., `list-s 1`, `list-e a` etc.) will be invalid command.
