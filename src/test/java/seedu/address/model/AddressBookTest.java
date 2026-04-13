@@ -27,6 +27,10 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.StudentId;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.reservation.Reservation;
+import seedu.address.model.room.Location;
+import seedu.address.model.room.Room;
+import seedu.address.model.room.RoomName;
+import seedu.address.model.room.Status;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddressBookTest {
@@ -120,6 +124,23 @@ public class AddressBookTest {
         addressBook.removeEquipment(equipment);
 
         assertFalse(addressBook.hasAliasName("w3"));
+    }
+
+    @Test
+    public void removeRoom_removesAssociatedAliases() {
+        Room room = new Room(
+                new RoomName("TR-16"),
+                new Location("Level-1"),
+                Status.AVAILABLE);
+
+        AliasMapping aliasMapping = new AliasMapping("TR-16", "tr16");
+
+        addressBook.addRoom(room);
+        addressBook.addAliasMapping(aliasMapping);
+
+        addressBook.removeRoom(room);
+
+        assertFalse(addressBook.hasAliasName("tr16"));
     }
 
     @Test
