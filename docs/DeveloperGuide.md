@@ -1437,16 +1437,16 @@ testers are expected to do more *exploratory* testing.
 
    1. Prerequisites: At least one room with tags exists in the system. For example, `Sports-Hall-1` has the tag "maintenance".
 
-   2. Test case: `tag-r Sports-Hall-1 maintenance`<br>
+   2. Test case: `untag-r Sports-Hall-1 maintenance`<br>
       Expected: Tag "maintenance" is deleted from Sports-Hall-1. Success message shown with room name and deleted tag. Room list updates to remove the tag.
 
-   3. Test case: `tag-r Sports-Hall-1 nonexistent`<br>
+   3. Test case: `untag-r Sports-Hall-1 nonexistent`<br>
       Expected: No tag is deleted. Error message indicates the tag does not exist for this room.
 
-   4. Test case: `tag-r NonExistentRoom maintenance`<br>
+   4. Test case: `untag-r NonExistentRoom maintenance`<br>
       Expected: No tag is deleted. Error message indicates the room does not exist in the system.
 
-   5. Other incorrect  commands to try: `tag-r`, `tag-r Sports-Hall-1`, `Sports-Hall-1 maintenance`, `tag-r Sports-Hall-1 invalid@tag`<br>
+   5. Other incorrect  commands to try: `untag-r`, `untag-r Sports-Hall-1`, `Sports-Hall-1 maintenance`, `untag-r Sports-Hall-1 invalid@tag`<br>
       Expected: Error message showing invalid command format or invalid tag name.
 
 2. Deleting a tag from equipment
@@ -1462,7 +1462,7 @@ testers are expected to do more *exploratory* testing.
    4. Test case: `untag-e NonExistentEquipment IHG`<br>
       Expected: No tag is deleted. Error message indicates the equipment does not exist in the system.
 
-   5. Other incorrect  commands to try: `tag-e`, `tag-e Wilson-Evolution`, `tag-x Wilson-Evolution IHG`<br>
+   5. Other incorrect  commands to try: `untag-e`, `untag-e Wilson-Evolution`, `untag-x Wilson-Evolution IHG`<br>
       Expected: Error message showing invalid command format or invalid flag.
 
 ### Filtering items
