@@ -859,13 +859,42 @@ Use this command to quickly find all equipment or rooms associated with a partic
 
 #### Viewing help : `help`
 
-Shows a message explaining how to access the help page.
+**Format:** `help`
+A scrollable list appears in the result box, detailing all commands, excluding system utility commands
 
-![help message](images/helpMessage.png)
+**Outputs:**
+![help message](images/help_Message.png)
 
-Format: `help`
 
 ---
+
+### Viewing help for a specific command: `help`
+
+Displays usage format of found command.
+
+**Format:** `help COMMAND`
+
+**Acceptable values:**
+* `COMMAND`: A valid command that is not case-sensitive, excluding system utility commands
+
+**Outputs:<br>**
+*Success: <br>*
+![help_add-s_success](images/help_add-s_success.png)
+<br>
+
+*Failure:<br>*
+![help_add-n_fail](images/help_add-n_fail.png)
+
+
+
+**Duplicate handling:**
+* Not applicable.
+
+
+**Examples:**
+* `help add-s`
+
+
 
 #### Clearing the program : `clear`
 
@@ -941,10 +970,11 @@ Action | Format, Examples
 **Cancel** | `cancel ITEM_OR_ROOM_ID STUDENT_ID f/START_DATE_TIME` <br> e.g., `cancel mpsh-1 a1234567a f/2099-03-15 0900`
 **Issue** | `issue ITEM_ID STUDENT_ID DUE_DATE_TIME` <br> e.g., `issue Wilson-Basketball-1 a1234567a 2027-03-05 1700`
 **Return** | `return ITEM_ID` <br> e.g., `return Wilson-Evolution-Basketball-1`
+**Alias** | `alias ITEM_OR_ROOM_ID ALIAS_NAME` <br> e.g., `alias MPSH-1 hall1`
 **Tag** | `tag-e NAME TAG` or `tag-r NAME TAG` <br> e.g., `tag-e Basketball-1 IHG` or `tag-r MPSH-1 IHG`
 **Untag** | `untag-e NAME TAG` or `untag-r NAME TAG` <br> e.g., `untag-e Basketball-1 IHG` or `untag-r MPSH-1 IHG`
 **Filter** | `filter-e TAG` or `filter-r TAG` <br> e.g., `filter-e IHG` or `filter-r IHG`
-**Alias** | `alias ITEM_OR_ROOM_ID ALIAS_NAME` <br> e.g., `alias MPSH-1 hall1`
+**Help** | `help` or `help COMMAND` <br> e.g., `help` or `help add-s`
 **Clear** | `clear`
 **Exit** | `exit`
 

@@ -128,7 +128,6 @@ public class HelpCommand extends Command {
     private static Map<String, String> createHelpEntries() {
         Map<String, String> entries = new LinkedHashMap<>();
 
-        entries.put(HelpCommand.COMMAND_WORD, HelpCommand.MESSAGE_USAGE);
 
         entries.put(AddEquipmentCommand.COMMAND_WORD, AddEquipmentCommand.MESSAGE_USAGE);
         entries.put(AddRoomCommand.COMMAND_WORD, AddRoomCommand.MESSAGE_USAGE);
