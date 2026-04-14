@@ -201,7 +201,7 @@ Step 1. The user launches the application for the first time. The `VersionedAddr
 
 ![UndoRedoState0](images/UndoRedoState0.png)
 
-Step 2. The user executes `delete-s 5` command to delete the 5th student in the address book. The `delete-s` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete-s 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
+Step 2. The user executes `delete-s a1234567a` command to delete the student in the address book. The `delete-s` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete-s a1234567a` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
 
 ![UndoRedoState1](images/UndoRedoState1.png)
 
@@ -240,7 +240,7 @@ The `redo` command does the opposite — it calls `Model#redoAddressBook()`,
 
 </div>
 
-Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged.
+Step 5. The user then decides to execute the command `list-s`. Commands that do not modify the address book, such as `list-s`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged.
 
 ![UndoRedoState4](images/UndoRedoState4.png)
 
@@ -299,50 +299,50 @@ The following activity diagram summarizes what happens when a user executes a ne
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
 
-| Priority | As a …​        | I want to …​                                                                    | So that  …​                                                                                |
-|---------|----------------|---------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------|
-| `* * *` | new user       | type help to see all the commands                                               | I can learn the system independently without a manual.                                     |
-| `* * *` | user           | reserve the equipment/room on a specified time/date                             | I can lend it on a specific time/date.                                                     |
-| `* * *` | user           | issue an item to a student                                                      | I can the system records that the item is no longer in the store.                          |
-| `* * *` | user           | remove an equipment from inventory                                              | I can remove it to keep the inventory clean.                                               |
-| `* * *` | user           | remove an equipment name from a student                                         | I can mark the item as "Returned" when they bring it back.                                 |
-| `* * *` | user           | check if an equipment is in use                                                 | I can quickly verify if an equipment is in use                                             |
-| `* * *` | user           | find a student by name                                                          | I can quickly check the loan status of a specific person standing at the counter.          |
-| `* * *` | user           | add a new student with their name                                               | I can create a record for them in the system.                                              |
-| `* * *` | user           | add a new student with their matric number                                      | I can create a record for them in the system.                                              |
-| `* * *` | user           | add a new student with their phone number                                       | I can create a record for them in the system.                                              |
-| `* * *` | user           | add a new student with their school email                                       | I can create a record for them in the system.                                              |
-| `* * *` | user           | delete a student                                                                | I can remove records of students who have graduated or left the university.                |
-| `* *`   | user           | have a checklist of ALL equipment in inventory                                  | I can verify if the equipment is available                                                 |
-| `* *`   | user           | find which student has borrowed a specific item                                 | I can update the status of an equipment manually                                           |
-| `* *`   | user           | update an equipment details                                                     | I can correct any misinput                                                                 |
-| `* *`   | user           | block a facility for "Maintenance"                                              | I can no one can book the room.                                                            |
-| `* *`   | user           | be warned when adding duplicate name                                            | I can no redundant information is stored                                                   |
-| `* *`   | user           | keep track of history of the loans                                              | I can have the transaction on record                                                       |
-| `* *`   | user           | keep track of the date of the loan                                              | I can have the date on record                                                              |
-| `* *`   | user           | keep track of the time of the loan                                              | I can have the time on record                                                              |
-| `* *`   | user           | blacklist a student                                                             | I can the system will warn me if I try to loan to a student with a history of overdue loans |
-| `* *`   | user           | undo my last command                                                            | I can recover from accidental deletions or typos                                           |
-| `* *`   | busy user      | simple view of equipment on loan or due                                         | I can reduce time spent chasing it                                                         |
-| `* *`   | busy user      | sort the item/room to a specified date                                          | I can know what is being used/occupied on that date                                        |
-| `* *`   | advanced user  | create tags to equipment/room as a category                                     | I can glance what is borrowed/booked for that category                                     |
-| `* *`   | advanced user  | group equipment by function                                                     | I can find alternatives for equipment loans                                                |
-| `* *`   | advanced user  | group equipment by date                                                         | I can be ready to collect them for return                                                  |
-| `* *`   | advanced user  | create a list of authorized users                                               | I can have equipment only lent to authorized users                                         |
-| `* *`   | advanced user  | create a list of authorized equipment                                           | I can have restrictions on who can borrow what equipment                                   |
-| `* `    | user           | edit a student's contact details                                                | I can correct misinputs or update contact information.                                     |
-| `* `    | user           | issue multiple items at once                                                    | I can loan out and keep track of multiple items easily in the system                       |
-| `* `    | user           | clear all records                                                               | I can reset if needed                                                                      |
-| `* `    | busy user      | automate sending reminder to borrower                                           | I can send reminders so equipment return punctually                                        |
-| `*  `   | busy user      | automate sending late reminders                                                 | I can remind the borrower to return equipment                                              |
-| `* `    | forgetful user | view a list of items due today upon launching the app                           | I can be immediately informed of what needs to be returned                                 |
-| `* `    | advanced user  | create alias to the equipment/rooms                                             | I can issue the commands faster                                                            |
-| `* `    | advanced user  | import new equipment from a file                                                | I can add items more quickly                                                               |
-| `* `    | advanced user  | import new students from a file                                                 | I can add students more quickly                                                            |
-| `* `    | advanced user  | export data as csv file                                                         | I can generate logistical reports for supervisors or hall committees.                      |
-| `* `    | advanced user  | attach events to loans                                                          | I can quicken the loan process during a large school event                                 |
-| `* `    | advanced user  | forecast future school events                                                   | I can anticipate future loans                                                              |
-| `* `    | advanced user  | automate the process of aquiring a loan by extracting from a specified request  | I can get my requests to be granted more easily                                            |
+| Priority | As a …​        | I want to …​                                                                    | So that  …​                                                                                 |
+|---------|----------------|---------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------|
+| `* * *` | new user       | type help to see all the commands                                               | I can learn the system independently without a manual.                                      |
+| `* * *` | user           | reserve the equipment/room on a specified time/date                             | I can lend it on a specific time/date.                                                      |
+| `* * *` | user           | issue an item to a student                                                      | I can ensure the system records that the item is no longer in the store.                    |
+| `* * *` | user           | remove an equipment from inventory                                              | I can remove it to keep the inventory clean.                                                |
+| `* * *` | user           | remove an equipment name from a student                                         | I can mark the item as "Returned" when they bring it back.                                  |
+| `* * *` | user           | check if an equipment is in use                                                 | I can quickly verify if an equipment is in use                                              |
+| `* * *` | user           | find a student by name                                                          | I can quickly check the loan status of a specific person standing at the counter.           |
+| `* * *` | user           | add a new student with their name                                               | I can create a record for them in the system.                                               |
+| `* * *` | user           | add a new student with their matric number                                      | I can create a record for them in the system.                                               |
+| `* * *` | user           | add a new student with their phone number                                       | I can create a record for them in the system.                                               |
+| `* * *` | user           | add a new student with their school email                                       | I can create a record for them in the system.                                               |
+| `* * *` | user           | delete a student                                                                | I can remove records of students who have graduated or left the university.                 |
+| `* *`   | user           | have a checklist of ALL equipment in inventory                                  | I can verify if the equipment is available                                                  |
+| `* *`   | user           | find which student has borrowed a specific item                                 | I can update the status of an equipment manually                                            |
+| `* *`   | user           | update an equipment details                                                     | I can correct any misinput                                                                  |
+| `* *`   | user           | block a facility for "Maintenance"                                              | no one else can book the room.                                                              |
+| `* *`   | user           | be warned when adding duplicate name                                            | no redundant information is stored                                                          |
+| `* *`   | user           | keep track of history of the loans                                              | I can have the transaction on record                                                        |
+| `* *`   | user           | keep track of the date of the loan                                              | I can have the date on record                                                               |
+| `* *`   | user           | keep track of the time of the loan                                              | I can have the time on record                                                               |
+| `* *`   | user           | blacklist a student                                                             | the system will warn me if I try to loan to a student with a history of overdue loans |
+| `* *`   | user           | undo my last command                                                            | I can recover from accidental deletions or typos                                            |
+| `* *`   | busy user      | simple view of equipment on loan or due                                         | I can reduce time spent chasing it                                                          |
+| `* *`   | busy user      | sort the item/room to a specified date                                          | I can know what is being used/occupied on that date                                         |
+| `* *`   | advanced user  | create tags to equipment/room as a category                                     | I can glance what is borrowed/booked for that category                                      |
+| `* *`   | advanced user  | group equipment by function                                                     | I can find alternatives for equipment loans                                                 |
+| `* *`   | advanced user  | group equipment by date                                                         | I can be ready to collect them for return                                                   |
+| `* *`   | advanced user  | create a list of authorized users                                               | I can have equipment only lent to authorized users                                          |
+| `* *`   | advanced user  | create a list of authorized equipment                                           | I can have restrictions on who can borrow what equipment                                    |
+| `* `    | user           | edit a student's contact details                                                | I can correct misinputs or update contact information.                                      |
+| `* `    | user           | issue multiple items at once                                                    | I can loan out and keep track of multiple items easily in the system                        |
+| `* `    | user           | clear all records                                                               | I can reset if needed                                                                       |
+| `* `    | busy user      | automate sending reminder to borrower                                           | I can send reminders so equipment return punctually                                         |
+| `*  `   | busy user      | automate sending late reminders                                                 | I can remind the borrower to return equipment                                               |
+| `* `    | forgetful user | view a list of items due today upon launching the app                           | I can be immediately informed of what needs to be returned                                  |
+| `* `    | advanced user  | create alias to the equipment/rooms                                             | I can issue the commands faster                                                             |
+| `* `    | advanced user  | import new equipment from a file                                                | I can add items more quickly                                                                |
+| `* `    | advanced user  | import new students from a file                                                 | I can add students more quickly                                                             |
+| `* `    | advanced user  | export data as csv file                                                         | I can generate logistical reports for supervisors or hall committees.                       |
+| `* `    | advanced user  | attach events to loans                                                          | I can quicken the loan process during a large school event                                  |
+| `* `    | advanced user  | forecast future school events                                                   | I can anticipate future loans                                                               |
+| `* `    | advanced user  | automate the process of acquiring a loan by extracting from a specified request  | I can get my requests to be granted more easily                                             |
 
 
 
@@ -552,7 +552,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
    *   3a1. System shows an error message for a duplicate entry.
    * Use case resumes at step 1.
 
-**Use case: UC010 - Delete a Student**
+**Use case: UC10 - Delete a Student**
 
 **MSS**
 1. User requests to delete a student by their unique matric number.
@@ -572,7 +572,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
    * Use case ends.
 
 
-**Use case: UC011 - View Student List**
+**Use case: UC11 - View Student List**
 
 **MSS**
 1. User requests to list all students.
@@ -586,7 +586,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
    *  2a1. TrackMasterPro displays a message stating that there are no students currently registered.
    * Use case ends.
 
-**Use case: UC012 - Check Student Loans**
+**Use case: UC12 - Check Student Loans**
 
 **MSS**
 1.   User requests to check the loan status for a specific matric number.
@@ -606,7 +606,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
    * 3a1. TrackMasterPro displays a message stating the student has no borrowed items.
    * Use case ends.
 
-**Use case: UC013 - Edit a student's details**
+**Use case: UC13 - Edit a student's details**
 
 **MSS**
 1. User requests to edit an existing student's details
@@ -630,7 +630,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
    * Use case ends.
 
 
-**Use case: UC014 - Reserve equipment on a specified date/time**
+**Use case: UC14 - Reserve equipment on a specified date/time**
 
 **MSS**
 
@@ -664,7 +664,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
   * 5a2. User selects a different date/time
   * Resume from step 4
 
-**Use case: UC015 - Reserve room on a specified date/time**
+**Use case: UC15 - Reserve room on a specified date/time**
 
 **MSS**
 
@@ -700,7 +700,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
   * Resume from step 5
 
 
-**Use case: UC016 - Issue an item to a student**
+**Use case: UC16 - Issue an item to a student**
 
 **MSS**
 
@@ -732,7 +732,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
   * 5a1. System shows an error message
   * Use case ends
 
-**Use case: UC017 - Remove an item from a student**
+**Use case: UC17 - Remove an item from a student**
 
 **MSS**
 
@@ -764,7 +764,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
   * Use case ends
 
 
-**Use case: UC018 - Create alias for equipment or rooms**
+**Use case: UC18 - Create alias for equipment or rooms**
 
 **MSS**
 
@@ -786,7 +786,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
   * 5a1. System shows an error message
   * Use case ends
 
-**Use case: UC019 - Cancel Reservation**
+**Use case: UC19 - Cancel Reservation**
 
 **MSS**
 
@@ -815,7 +815,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
   * 3b1. System displays a failure message.
   * Use case ends.
 
-**Use case: UC020 - Tag Equipment/Room**
+**Use case: UC20 - Tag Equipment/Room**
 
 **MSS**
 
@@ -837,7 +837,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * Use case ends.
 
 
-**Use case: UC021 - Untag Equipment/Room**
+**Use case: UC21 - Untag Equipment/Room**
 
 **MSS**
 
@@ -859,7 +859,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * Use case ends.
 
 
-**Use case: UC022 - Filter by Tag**
+**Use case: UC22 - Filter by Tag**
 
 **MSS**
 
@@ -881,7 +881,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * Use case ends.
 
 
-**Use case: UC023 - View Help Command**
+**Use case: UC23 - View Help Command**
 
 **MSS**
 
@@ -913,7 +913,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 2.  The application should be distributed in a single JAR file.
 
 **Performance and Scalability**
-1.  The system should be able to multiple rapid commands during peak period such as one command every 2 seconds.
+1.  The system should be able to handle multiple rapid commands during peak period such as one command every 2 seconds.
 
 **Reliability & Data Integrity**
 1.   All data (equipment, rooms, students, and loans) must be saved to the local storage immediately after any state-changing command is executed for persistency.
@@ -1450,7 +1450,7 @@ testers are expected to do more *exploratory* testing.
    1. Prerequisites: At least one room exists in the system, with name `Sports-Hall-1`. Use `list-r` to view all rooms.
 
    2. Test case: `tag-r Sports-Hall-1 maintenance`<br>
-      Expected: Tag "maintenance" is added to Sports-Hall-1. Success message shown with room name and tag. Room list updates to show the new tag.
+      Expected: Tag "MAINTENANCE" is added to Sports-Hall-1. Success message shown with room name and tag. Room list updates to show the new tag.
 
    3. Test case: `tag-r Sports-Hall-1 maintenance` (adding the same tag again)<br>
       Expected: No tag is added. Error message indicates the tag already exists for this room.
@@ -1484,7 +1484,7 @@ testers are expected to do more *exploratory* testing.
    1. Prerequisites: At least one room with tags exists in the system. For example, `Sports-Hall-1` has the tag "MAINTENANCE".
 
    2. Test case: `untag-r Sports-Hall-1 maintenance`<br>
-      Expected: Tag "maintenance" is deleted from Sports-Hall-1. Success message shown with room name and deleted tag. Room list updates to remove the tag.
+      Expected: Tag "MAINTENANCE" is deleted from Sports-Hall-1. Success message shown with room name and deleted tag. Room list updates to remove the tag.
 
    3. Test case: `untag-r Sports-Hall-1 nonexistent`<br>
       Expected: No tag is deleted. Error message indicates the tag does not exist for this room.
@@ -1515,10 +1515,10 @@ testers are expected to do more *exploratory* testing.
 
 1. Filtering rooms by tag
 
-   1. Prerequisites: Rooms exist with various tag. For example, `Sports-Hall-1` has "MAINTENANCE" tag, `Tennis-Court` has "outdoor" tag.
+   1. Prerequisites: Rooms exist with various tag. For example, `Sports-Hall-1` has "MAINTENANCE" tag, `Tennis-Court` has "OUTDOOR" tag.
 
    2. Test case: `filter-r maintenance`<br>
-      Expected: Only rooms with the "maintenance" tag are displayed.
+      Expected: Only rooms with the "MAINTENANCE" tag are displayed.
 
    3. Test case: `filter-r nonexistent`<br>
       Expected: No rooms are displayed. Message indicates 0 rooms listed.
@@ -1528,7 +1528,7 @@ testers are expected to do more *exploratory* testing.
 
 2. Filtering equipment by tag
 
-   1. Prerequisites: Equipment exist with various tag. For example, `Wilson-Evolution` has "IHG" tag, `Mx-Volleyball` has "borrowed" tag.
+   1. Prerequisites: Equipment exist with various tag. For example, `Wilson-Evolution` has "IHG" tag, `Mx-Volleyball` has no tag.
 
    2. Test case: `filter-e IHG`<br>
       Expected: Only equipment with the "IHG" tag are displayed. Number of filtered equipment shown in the status message.
@@ -1568,11 +1568,9 @@ testers are expected to do more *exploratory* testing.
       Expected: Failure message states that the command was not found.
 
 4. Extra input handling
-
-
-  1. Test case: `help reserve extra`<br>
-     Expected: Since the parser passes the whole remaining input as a topic, the system treats `reserve extra` as
-      one command topic and shows a command not found failure message.
+   1. Test case: `help reserve extra`<br>
+      Expected: Since the parser passes the whole remaining input as a topic, the system treats `reserve extra` as
+       one command topic and shows a command not found failure message.
 
 
 
