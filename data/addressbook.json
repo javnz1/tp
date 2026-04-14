@@ -66,6 +66,11 @@
     "location" : "Sports-Centre",
     "status" : "Available",
     "tags" : [ ]
+  }, {
+    "name" : "Mpsh-1",
+    "location" : "Sports-Centre",
+    "status" : "Available",
+    "tags" : [ ]
   } ],
   "reservations" : [ ],
   "issueRecords" : [ {
