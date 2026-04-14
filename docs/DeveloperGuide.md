@@ -1521,7 +1521,7 @@ testers are expected to do more *exploratory* testing.
       Expected: Only rooms with the "MAINTENANCE" tag are displayed.
 
    3. Test case: `filter-r nonexistent`<br>
-      Expected: No rooms are displayed. Message indicates 0 rooms listed.
+      Expected: Room list remains the same. Error message indicates no equipment has target tag.
 
    4. Other incorrect filter commands to try: `filter`, `filter maintenance`<br>
       Expected: Error message showing invalid command format or invalid tag name.
@@ -1534,7 +1534,7 @@ testers are expected to do more *exploratory* testing.
       Expected: Only equipment with the "IHG" tag are displayed. Number of filtered equipment shown in the status message.
 
    3. Test case: `filter-e nonexistent`<br>
-      Expected: No equipment are displayed. Message indicates 0 equipment listed.
+      Expected: Equipment list remains the same. Error message indicates no equipment has target tag.
 
    4. Other incorrect filter commands to try: `filter IHG`, `filter-e invalid tag` (with space)<br>
       Expected: Error message showing invalid command format or invalid flag/tag name.
