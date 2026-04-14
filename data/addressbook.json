@@ -43,7 +43,7 @@
     "tags" : [ ]
   }, {
     "name" : "Tennis-Court",
-    "location" : "Kent-Ridge",
+    "location" : "Utown",
     "status" : "Available",
     "tags" : [ ]
   }, {
@@ -78,7 +78,7 @@
     "name" : "Wilson-Evolution",
     "category" : "Basketball",
     "status" : "Available",
-    "tags" : [ "IHG" ]
+    "tags" : [ ]
   }, {
     "name" : "Mx-Volleyball",
     "category" : "Volleyball",
