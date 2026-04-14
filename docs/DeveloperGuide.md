@@ -1450,7 +1450,7 @@ testers are expected to do more *exploratory* testing.
    1. Prerequisites: At least one room exists in the system, with name `Sports-Hall-1`. Use `list-r` to view all rooms.
 
    2. Test case: `tag-r Sports-Hall-1 maintenance`<br>
-      Expected: Tag "maintenance" is added to Sports-Hall-1. Success message shown with room name and tag. Room list updates to show the new tag.
+      Expected: Tag "MAINTENANCE" is added to Sports-Hall-1. Success message shown with room name and tag. Room list updates to show the new tag.
 
    3. Test case: `tag-r Sports-Hall-1 maintenance` (adding the same tag again)<br>
       Expected: No tag is added. Error message indicates the tag already exists for this room.
@@ -1484,7 +1484,7 @@ testers are expected to do more *exploratory* testing.
    1. Prerequisites: At least one room with tags exists in the system. For example, `Sports-Hall-1` has the tag "MAINTENANCE".
 
    2. Test case: `untag-r Sports-Hall-1 maintenance`<br>
-      Expected: Tag "maintenance" is deleted from Sports-Hall-1. Success message shown with room name and deleted tag. Room list updates to remove the tag.
+      Expected: Tag "MAINTENANCE" is deleted from Sports-Hall-1. Success message shown with room name and deleted tag. Room list updates to remove the tag.
 
    3. Test case: `untag-r Sports-Hall-1 nonexistent`<br>
       Expected: No tag is deleted. Error message indicates the tag does not exist for this room.
@@ -1515,10 +1515,10 @@ testers are expected to do more *exploratory* testing.
 
 1. Filtering rooms by tag
 
-   1. Prerequisites: Rooms exist with various tag. For example, `Sports-Hall-1` has "MAINTENANCE" tag, `Tennis-Court` has "outdoor" tag.
+   1. Prerequisites: Rooms exist with various tag. For example, `Sports-Hall-1` has "MAINTENANCE" tag, `Tennis-Court` has "OUTDOOR" tag.
 
    2. Test case: `filter-r maintenance`<br>
-      Expected: Only rooms with the "maintenance" tag are displayed.
+      Expected: Only rooms with the "MAINTENANCE" tag are displayed.
 
    3. Test case: `filter-r nonexistent`<br>
       Expected: No rooms are displayed. Message indicates 0 rooms listed.
@@ -1528,7 +1528,7 @@ testers are expected to do more *exploratory* testing.
 
 2. Filtering equipment by tag
 
-   1. Prerequisites: Equipment exist with various tag. For example, `Wilson-Evolution` has "IHG" tag, `Mx-Volleyball` has "borrowed" tag.
+   1. Prerequisites: Equipment exist with various tag. For example, `Wilson-Evolution` has "IHG" tag, `Mx-Volleyball` has no tag.
 
    2. Test case: `filter-e IHG`<br>
       Expected: Only equipment with the "IHG" tag are displayed. Number of filtered equipment shown in the status message.
