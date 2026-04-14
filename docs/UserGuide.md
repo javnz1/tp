@@ -490,7 +490,7 @@ Deletes a student’s record from the system database.
 
 **Acceptable values:**
 * `MATRIC_NUMBER`: A 9-character identifier. Must start with an alphabet (usually 'A'), followed by 7 digits, and end with an alphabet (e.g., `A0123456B`).
-* *Case Sensitivity*: Case-insensitive. `A0123456B` and `a0123456b` are treated as the matric number.
+* *Case Sensitivity*: Case-insensitive. `A0123456B` and `a0123456b` are treated as the same matric number.
 
 **Examples:**
 * `delete-s A0123456B`
@@ -564,7 +564,7 @@ You **cannot** edit any details of a student if they currently have an active eq
 
 Reserves a room or equipment for a student at a specified date and time.
 
-**Format:** `reserve ITEM_OR_ROOM_ID MATRIC_NUMBER f/START_DATE_TIME t/END_DATE_TIME`
+**Format:** `reserve ITEM_OR_ROOM_NAME MATRIC_NUMBER f/START_DATE_TIME t/END_DATE_TIME`
 
 **Date/time format:**
 `yyyy-MM-dd HHmm`
@@ -602,7 +602,7 @@ Time component uses the 24-hour format.
 ![failed reserve command screenshot 2](images/itemReserveCommand.png)
 
 **Possible errors:**
-* Invalid `ITEM_OR_ROOM_ID`
+* Invalid `ITEM_OR_ROOM_NAME`
 * Invalid `MATRIC_NUMBER`
 * Invalid date/time format
 * End time is earlier than start time
@@ -614,7 +614,7 @@ Time component uses the 24-hour format.
 Cancels an **existing** reservation.
 
 **Format:**
-`cancel ITEM_OR_ROOM_ID MATRIC_NUMBER f/START_DATE_TIME`
+`cancel ITEM_OR_ROOM_NAME MATRIC_NUMBER f/START_DATE_TIME`
 
 **Date/time format:**
 `yyyy-MM-dd HHmm`
@@ -634,7 +634,7 @@ Cancels an **existing** reservation.
 ![failed cancel command screenshot](images/faliedCancelCommand.png)
 
 **Possible errors:**
-* Invalid `ITEM_OR_ROOM_ID`
+* Invalid `ITEM_OR_ROOM_NAME`
 * Invalid `MATRIC_NUMBER`
 * Invalid date/time format
 * Invalid reservation details
@@ -645,7 +645,7 @@ Cancels an **existing** reservation.
 
 Issues an equipment item to a student with a due date and time for return.
 
-**Format:** `issue ITEM_ID MATRIC_NUMBER DUE_DATE_TIME`
+**Format:** `issue ITEM_NAME MATRIC_NUMBER DUE_DATE_TIME`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 Use this command to keep track of borrowed equipment and who is responsible for returning it.
@@ -671,7 +671,7 @@ Use this command to keep track of borrowed equipment and who is responsible for 
 ![failed issue command screenshot](images/failedIssueCommand.png)
 
 **Possible errors:**
-* Invalid `ITEM_ID`
+* Invalid `ITEM_NAME`
 * Invalid `MATRIC_NUMBER`
 * Item is already issued
 * Invalid due date/time format
@@ -684,7 +684,7 @@ Use this command to keep track of borrowed equipment and who is responsible for 
 Returns an issued equipment item back to the inventory.
 
 **Format:**
-`return ITEM_ID`
+`return ITEM_NAME`
 
 **Example:**
 `return Wilson-Evolution`
@@ -698,7 +698,7 @@ Returns an issued equipment item back to the inventory.
 
 **Possible errors:**
 * Item not currently issued
-* Invalid `ITEM_ID`
+* Invalid `ITEM_NAME`
 
 **Notes**
 - aliases are supported, so if `b1` is an alias for `Wilson-Evolution-Basketball-1`, then `return b1` also works
@@ -709,10 +709,10 @@ Returns an issued equipment item back to the inventory.
 
 Creates a short alias for an equipment item or room.
 
-**Format:** `alias ITEM_OR_ROOM_ID ALIAS_NAME`
+**Format:** `alias ITEM_OR_ROOM_NAME ALIAS_NAME`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-Aliases are useful for long item or room IDs, especially during busy periods when faster command entry is helpful.
+Aliases are useful for long item or room names, especially during busy periods when faster command entry is helpful.
 </div>
 
 * Assigns a short alias to the specified item or room.
@@ -737,7 +737,7 @@ Aliases are useful for long item or room IDs, especially during busy periods whe
 ![failed alias command screenshot](images/faliedAliasCommand.png)
 
 **Possible errors:**
-* Invalid `ITEM_OR_ROOM_ID`
+* Invalid `ITEM_OR_ROOM_NAME`
 * Alias already exists.
 
 ---
@@ -823,10 +823,10 @@ Use this command to remove outdated or incorrect tags from equipment or rooms.
 
 
 **Outputs:**
-* Success: Equipment tagged with IHG <br>
+* Success: Equipment untagged with IHG <br>
 ![untag-e_success](images/untag-e_success.png)
 <br>
-* Success: Room tagged with IHG <br>
+* Success: Room untagged with IHG <br>
 ![untag-r_success](images/untag-r_success.png)
 * Failure <br>
 ![untag_failure](images/untag_failure.png)
@@ -923,7 +923,7 @@ Clears all the data in TrackMasterPro.
 Format: `clear`
 
 <div markdown="span" class="alert alert-primary">:bulb: **IMPORTANT:**
-IMPORTANT! This command is irreversible.
+This command is irreversible.
 </div>
 
 ---
@@ -973,6 +973,7 @@ Furthermore, certain edits can cause the TrackMasterPro to behave in unexpected 
 
 5. **Room Name Based Uniqueness:** The current iteration of the system does not support identical room names across different locations. (e.g., `add-r n/seminar-room-1 l/Com1` and following that input `add-r n/seminar-room-1 l/Rc4`) will trigger room already exists in system.
    **Workaround:** Input `add-r n/seminar-room-1 l/Com1` for location Com1 and input `add-r n/SR1 l/Rc4` for location Rc4.
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## 6. Command summary
@@ -992,11 +993,11 @@ Action | Format, Examples
 **List Students** | `list-s`
 **Delete Student** | `delete-s MATRIC_NUMBER` <br> e.g., `delete-s A0123456B`
 **Edit Student** | `edit-s INDEX [n/NAME] [m/MATRIC_NUMBER] [p/PHONE_NUMBER] [e/EMAIL]` <br> e.g., `edit-s 2 m/a1234567b n/Tom p/91234561 e/e1234567@u.nus.edu`
-**Reserve** | `reserve ITEM_OR_ROOM_ID MATRIC_NUMBER f/START_DATE_TIME t/END_DATE_TIME` <br> e.g., `reserve mpsh-1 a1234567a f/2027-03-01 1400 t/2027-03-01 1600`
-**Cancel** | `cancel ITEM_OR_ROOM_ID MATRIC_NUMBER f/START_DATE_TIME` <br> e.g., `cancel mpsh-1 a1234567a f/2099-03-15 0900`
-**Issue** | `issue ITEM_ID MATRIC_NUMBER DUE_DATE_TIME` <br> e.g., `issue Wilson-Basketball-1 a1234567a 2027-03-05 1700`
-**Return** | `return ITEM_ID` <br> e.g., `return Wilson-Evolution-Basketball-1`
-**Alias** | `alias ITEM_OR_ROOM_ID ALIAS_NAME` <br> e.g., `alias MPSH-1 hall1`
+**Reserve** | `reserve ITEM_OR_ROOM_NAME MATRIC_NUMBER f/START_DATE_TIME t/END_DATE_TIME` <br> e.g., `reserve mpsh-1 a1234567a f/2027-03-01 1400 t/2027-03-01 1600`
+**Cancel** | `cancel ITEM_OR_ROOM_NAME MATRIC_NUMBER f/START_DATE_TIME` <br> e.g., `cancel mpsh-1 a1234567a f/2099-03-15 0900`
+**Issue** | `issue ITEM_NAME MATRIC_NUMBER DUE_DATE_TIME` <br> e.g., `issue Wilson-Basketball-1 a1234567a 2027-03-05 1700`
+**Return** | `return ITEM_NAME` <br> e.g., `return Wilson-Evolution-Basketball-1`
+**Alias** | `alias ITEM_OR_ROOM_NAME ALIAS_NAME` <br> e.g., `alias MPSH-1 hall1`
 **Tag** | `tag-e NAME TAG` or `tag-r NAME TAG` <br> e.g., `tag-e Basketball-1 IHG` or `tag-r MPSH-1 IHG`
 **Untag** | `untag-e NAME TAG` or `untag-r NAME TAG` <br> e.g., `untag-e Basketball-1 IHG` or `untag-r MPSH-1 IHG`
 **Filter** | `filter-e TAG` or `filter-r TAG` <br> e.g., `filter-e IHG` or `filter-r IHG`
